@@ -64,7 +64,7 @@ test("hero follows the approved landing content", () => {
     /Отмечайте самочувствие, смотрите данные о шагах, сне и пульсе,/,
   );
   assert.match(hero, /href="#tasks"[^>]*>\s*С чего начать/);
-  assert.match(hero, /href="#faq"[^>]*>Читать FAQ/);
+  assert.match(hero, /href="#faq"[^>]*>Частые вопросы/);
   assert.doesNotMatch(hero, /hero-topic-(?:line|index)/);
   assert.doesNotMatch(hero, /hero__disclaimer/);
   assert.match(
@@ -87,6 +87,7 @@ test("header keeps one navigation system without a duplicate task action", () =>
   )?.[1];
 
   assert.ok(header);
+  assert.match(header, /href="#faq"[^>]*>Частые вопросы/);
   assert.match(header, /href="#documentation"[^>]*>Документация/);
   assert.doesNotMatch(header, /class="header-route"/);
   assert.doesNotMatch(header, />\s*Выбрать задачу\s*</);
@@ -381,7 +382,7 @@ test("integrations and FAQ use the supplied product copy", () => {
   }
   assert.match(
     faq,
-    /<button\b[^>]*disabled[^>]*>\s*Читать полный FAQ\s*<\/button>/,
+    /<button\b[^>]*disabled[^>]*>\s*Читать все вопросы\s*<\/button>/,
   );
 });
 
@@ -393,7 +394,7 @@ test("documentation stays honest when external destinations are absent", () => {
     documentation,
     /<button\b[^>]*class="button button--secondary support__action"[^>]*disabled[^>]*>\s*Открыть документацию\s*<\/button>/,
   );
-  assert.doesNotMatch(documentation, /href="#faq"[^>]*>Читать FAQ/);
+  assert.doesNotMatch(documentation, /href="#faq"[^>]*>Частые вопросы/);
   assert.ok(
     documentation.indexOf("Открыть документацию") <
       documentation.indexOf('class="support__content"'),
