@@ -13,7 +13,19 @@ when build starts: keep page code one documented src dir (eg `src/`), public ass
 
 ## Build, Test, and Development Commands
 
-no package manager, build script, test runner set up yet. don't assume `npm test` etc exist. before submit changes, run:
+The landing is a zero-dependency static site built with Node.js scripts.
+
+```sh
+npm run dev
+npm run build
+npm test
+```
+
+- `npm run dev` serves the repository at `http://127.0.0.1:4173`.
+- `npm run build` recreates the deployable `dist/` directory.
+- `npm test` runs the atlas state tests with Node's built-in test runner.
+
+Before submit changes, run:
 
 ```sh
 git status --short
