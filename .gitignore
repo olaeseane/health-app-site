@@ -26,5 +26,5 @@ pnpm-debug.log*
 # Generated design workspace
 .superpowers/
 .cache/
-./cursor/
+.cursor/
 .playwright-cli/
