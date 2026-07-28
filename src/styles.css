@@ -284,6 +284,7 @@ svg {
   z-index: 2;
   width: min(100%, 670px);
   height: 600px;
+  margin: 0;
   justify-self: end;
 }
 
@@ -291,50 +292,58 @@ svg {
   position: absolute;
   right: 6%;
   bottom: 0;
+  max-width: 240px;
   margin: 0;
   color: var(--graphite-soft);
   font-size: 0.74rem;
+  line-height: 1.35;
+  text-align: right;
 }
 
 .screen {
   position: absolute;
-  width: 300px;
-  height: 500px;
-  padding: 40px 30px 28px;
+  width: 252px;
+  height: auto;
+  aspect-ratio: 576 / 1280;
+  padding: 0;
   overflow: hidden;
   border-radius: 44px;
+  background: var(--white);
 }
 
 .screen--back {
   z-index: 1;
-  top: 76px;
-  left: 10%;
+  top: 58px;
+  left: 12%;
   transform: rotate(-4deg);
-  box-shadow: inset 0 0 0 2px rgba(59, 185, 184, 0.32);
-  background: #daf1ef;
+  box-shadow: var(--shadow-soft);
 }
 
 .screen--middle {
   z-index: 2;
-  top: 45px;
-  left: 31%;
+  top: 30px;
+  left: 33%;
   transform: rotate(-1.5deg);
   box-shadow: var(--shadow-soft);
-  background: #92d8d4;
 }
 
 .screen--front {
   z-index: 3;
-  top: 14px;
-  left: 52%;
+  top: 0;
+  left: 54%;
   transform: translateX(-7%) rotate(3deg);
   box-shadow: var(--shadow-front);
-  background: var(--white);
   transition:
     clip-path 420ms cubic-bezier(0.16, 1, 0.3, 1),
     transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 420ms ease-out;
   clip-path: inset(0 0 0 0 round 44px);
+}
+
+.screen__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .atlas.is-changing .screen--front {
@@ -721,6 +730,13 @@ svg {
   font-size: 1.05rem;
 }
 
+.route-detail > .route-detail__note {
+  grid-column: 2 / -1;
+  margin-top: 18px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
 .scenarios {
   padding-top: 44px;
 }
@@ -1023,15 +1039,15 @@ svg {
   }
 
   .screen--back {
-    left: 6%;
+    left: 12%;
   }
 
   .screen--middle {
-    left: 28%;
+    left: 33%;
   }
 
   .screen--front {
-    left: 51%;
+    left: 54%;
   }
 
   .hero__disclaimer {
@@ -1129,24 +1145,25 @@ svg {
   }
 
   .screen {
-    width: 236px;
-    height: 400px;
-    padding: 34px 24px 22px;
+    width: 216px;
+    height: auto;
+    aspect-ratio: 576 / 1280;
+    padding: 0;
     border-radius: 34px;
   }
 
   .screen--back {
-    top: 68px;
+    top: 48px;
     left: calc(50% - 156px);
   }
 
   .screen--middle {
-    top: 40px;
+    top: 24px;
     left: calc(50% - 103px);
   }
 
   .screen--front {
-    top: 10px;
+    top: 0;
     left: calc(50% - 54px);
   }
 
@@ -1223,6 +1240,8 @@ svg {
     bottom: 2px;
     left: 0;
     right: auto;
+    max-width: 220px;
+    text-align: left;
   }
 
   .hero__disclaimer {
@@ -1290,6 +1309,10 @@ svg {
 
   .route-detail > p {
     font-size: 1rem;
+  }
+
+  .route-detail > .route-detail__note {
+    margin-top: 18px;
   }
 
   .scenario {
@@ -1372,9 +1395,10 @@ svg {
   }
 
   .screen {
-    width: 204px;
-    height: 350px;
-    padding: 32px 18px 18px;
+    width: 190px;
+    height: auto;
+    aspect-ratio: 576 / 1280;
+    padding: 0;
     border-radius: 30px;
   }
 

@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Навигатор по возможностям приложения «Здоровье»: показатели, динамика, интеграции и материалы поддержки."
+      content="Отмечайте день, смотрите шаги, сон и пульс, храните анализы и находите нужный раздел. FAQ и документация — если нужен короткий ответ."
     />
     <meta name="theme-color" content="#f4fbfa" />
-    <title>Здоровье — навигатор по приложению</title>
+    <title>Здоровье — самочувствие, показатели и документы</title>
     <link rel="icon" href="./public/logo-mark.png" />
     <link rel="stylesheet" href="./src/styles.css" />
     <script type="module" src="./src/app.js"></script>
@@ -36,37 +36,48 @@
       </a>
 
       <nav class="site-nav" aria-label="Разделы страницы">
-        <a href="#navigator">Выбрать задачу</a>
+        <a href="#capabilities">Сценарии</a>
+        <a href="#first-route">С чего начать</a>
         <a href="#integrations">Интеграции</a>
-        <a href="#support">Помощь</a>
+        <a href="#faq">FAQ</a>
       </nav>
 
-      <a class="header-route" href="#navigator">К задачам</a>
+      <a class="header-route" href="#capabilities">Выбрать задачу</a>
     </header>
 
     <main id="main">
       <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="hero__copy">
-          <p class="hero__kicker">Пространственный атлас</p>
-          <h1 id="hero-title">Приложение —<br />слой за слоем.</h1>
+          <p class="hero__kicker">Приложение «Здоровье»</p>
+          <h1 id="hero-title">Самочувствие, показатели и документы — в одном месте</h1>
           <p class="hero__lead">
-            Выберите знакомую задачу и перейдите к нужной инструкции — без
-            необходимости разбираться во всём приложении сразу.
+            Отмечайте день, смотрите шаги, сон и пульс, храните анализы и
+            открывайте нужный раздел без блуждания по всему приложению.
           </p>
 
-          <div class="hero__actions" aria-describedby="link-status">
-            <button class="button button--primary" type="button" disabled>
+          <div class="hero__actions">
+            <button
+              class="button button--primary"
+              type="button"
+              disabled
+              aria-describedby="link-status"
+            >
               Читать FAQ
             </button>
-            <button class="button button--secondary" type="button" disabled>
+            <button
+              class="button button--secondary"
+              type="button"
+              disabled
+              aria-describedby="link-status"
+            >
               Читать документацию
             </button>
           </div>
           <p class="link-status" id="link-status">
-            Ссылки появятся после публикации материалов.
+            Ссылки станут доступны после публикации отдельных FAQ и документации.
           </p>
 
-          <a class="route-link" href="#navigator" data-focus-target="navigator-title">
+          <a class="route-link" href="#capabilities" data-focus-target="capabilities-title">
             <span>Выбрать задачу</span>
             <svg viewBox="0 0 36 12" aria-hidden="true">
               <path d="M0 6h32M27 1l5 5-5 5" />
@@ -74,77 +85,65 @@
           </a>
         </div>
 
-        <div
-          class="atlas"
-          data-atlas
-          aria-label="Демонстрационный атлас разделов приложения"
-        >
-          <p class="atlas__note">Демонстрационные экраны</p>
+        <figure class="atlas" aria-label="Атлас экранов приложения">
+          <figcaption class="atlas__note">
+            Числа на экранах — пример заполнения, не метрики продукта.
+          </figcaption>
 
           <div class="atlas__annotation atlas__annotation--left">
-            <span data-context-annotation="0">Динамика</span>
+            <span>Документы</span>
             <i aria-hidden="true"></i>
           </div>
           <div class="atlas__annotation atlas__annotation--right">
-            <span data-active-annotation>Показатели</span>
+            <span>Самочувствие</span>
             <i aria-hidden="true"></i>
           </div>
           <div class="atlas__annotation atlas__annotation--bottom">
-            <span data-context-annotation="1">Интеграции</span>
+            <span>Паспорт</span>
             <i aria-hidden="true"></i>
           </div>
 
           <div class="screen screen--back" aria-hidden="true">
-            <span class="screen__tag" data-context-screen="1">Интеграции</span>
-            <div class="screen__bar"></div>
-            <div class="screen__module screen__module--quiet"></div>
-            <div class="screen__module"></div>
-            <div class="screen__module screen__module--short"></div>
+            <img
+              class="screen__image"
+              src="./public/screenshots/documents.jpg"
+              width="576"
+              height="1280"
+              alt=""
+            />
           </div>
 
           <div class="screen screen--middle" aria-hidden="true">
-            <span class="screen__tag" data-context-screen="0">Динамика</span>
-            <div class="screen__bar"></div>
-            <div class="screen__chart">
-              <i></i><i></i><i></i><i></i><i></i>
-            </div>
-            <div class="screen__module"></div>
-            <div class="screen__module screen__module--short"></div>
+            <img
+              class="screen__image"
+              src="./public/screenshots/health-passport.jpg"
+              width="576"
+              height="1280"
+              alt=""
+            />
           </div>
 
-          <div class="screen screen--front" data-active-screen>
-            <span class="screen__tag">
-              <span>Демонстрация</span>
-              <strong data-active-status>Выбрано</strong>
-            </span>
-            <div class="screen__bar screen__bar--dark"></div>
-            <div class="screen__profile">
-              <i aria-hidden="true"></i>
-              <span>
-                <b data-active-label>Вести показатели</b>
-                <small>Раздел приложения</small>
-              </span>
-            </div>
-            <div class="screen__active-module">
-              <span data-active-title>Вести данные в понятном ритме</span>
-              <i></i>
-              <i></i>
-            </div>
-            <div class="screen__lines" aria-hidden="true">
-              <i></i><i></i><i></i><i></i>
-            </div>
+          <div class="screen screen--front">
+            <img
+              class="screen__image"
+              src="./public/screenshots/home-overview.jpg"
+              width="576"
+              height="1280"
+              alt="Главный экран приложения: самочувствие, статус и привычки"
+              fetchpriority="high"
+            />
           </div>
-        </div>
+        </figure>
 
         <p class="hero__disclaimer">
           Информационная поддержка · не заменяет консультацию врача
         </p>
       </section>
 
-      <section class="navigator" id="navigator" aria-labelledby="navigator-title">
+      <section class="navigator" id="capabilities" aria-labelledby="capabilities-title">
         <div class="section-heading">
           <p class="section-heading__label">Карта задач</p>
-          <h2 id="navigator-title" tabindex="-1">Что вы хотите сделать?</h2>
+          <h2 id="capabilities-title" tabindex="-1">Что вы хотите сделать?</h2>
           <p>
             Выберите задачу — атлас покажет нужный маршрут и сохранит соседние
             разделы в контексте.
@@ -205,6 +204,9 @@
           <p data-detail-description>
             Выберите нужный показатель в приложении и используйте подробную
             инструкцию, когда она понадобится.
+          </p>
+          <p class="route-detail__note">
+            Числа на экранах — пример заполнения, не метрики продукта.
           </p>
         </div>
       </section>
