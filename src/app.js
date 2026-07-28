@@ -62,7 +62,6 @@ if (hasCompleteExplorer) {
 document.querySelectorAll("[data-focus-target]").forEach((link) => {
   link.addEventListener("click", () => {
     const target = document.getElementById(link.dataset.focusTarget);
-
-    window.setTimeout(() => target?.focus({ preventScroll: true }), 450);
+    target?.focus({ preventScroll: true });
   });
 });

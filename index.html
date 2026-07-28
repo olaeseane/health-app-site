@@ -42,7 +42,13 @@
         <a href="#faq">FAQ</a>
       </nav>
 
-      <a class="header-route" href="#capabilities">Выбрать задачу</a>
+      <a
+        class="header-route"
+        href="#capabilities"
+        data-focus-target="capabilities-title"
+      >
+        Выбрать задачу
+      </a>
     </header>
 
     <main id="main">
@@ -85,7 +91,7 @@
           </a>
         </div>
 
-        <figure class="atlas" aria-label="Атлас экранов приложения">
+        <figure class="atlas" aria-label="Экраны приложения">
           <figcaption class="atlas__note">
             Числа на экранах — пример заполнения, не метрики продукта.
           </figcaption>
@@ -401,61 +407,234 @@
         </div>
       </section>
 
+      <section
+        class="first-route"
+        id="first-route"
+        aria-labelledby="first-route-title"
+      >
+        <div class="section-heading">
+          <p class="section-heading__label">ПЕРВЫЙ МАРШРУТ</p>
+          <h2 id="first-route-title">С чего начать</h2>
+        </div>
+
+        <ol class="first-route__grid">
+          <li class="first-route__step">
+            <span class="first-route__num" aria-hidden="true">01</span>
+            <p>
+              Отметьте самочувствие за сегодня или откройте FAQ, если нужен
+              короткий ответ.
+            </p>
+          </li>
+          <li class="first-route__step">
+            <span class="first-route__num" aria-hidden="true">02</span>
+            <p>Заполните базовые данные паспорта: рост, вес, самочувствие.</p>
+          </li>
+          <li class="first-route__step">
+            <span class="first-route__num" aria-hidden="true">03</span>
+            <p>
+              Подключите Health Connect / Google Fit / Samsung Health / Apple
+              Health или устройство, если пользуетесь ими.
+            </p>
+          </li>
+          <li class="first-route__step">
+            <span class="first-route__num" aria-hidden="true">04</span>
+            <p>
+              Добавьте первые документы: лабораторные или генетические — вручную
+              или через QR.
+            </p>
+          </li>
+          <li class="first-route__step">
+            <span class="first-route__num" aria-hidden="true">05</span>
+            <p>
+              Отмечайте привычки и смотрите прогресс за день, неделю или 90 дней.
+            </p>
+          </li>
+          <li class="first-route__step">
+            <span class="first-route__num" aria-hidden="true">06</span>
+            <p>
+              Откройте документацию, когда нужен подробный разбор раздела.
+            </p>
+          </li>
+        </ol>
+
+        <a class="route-link" href="#faq">
+          <span>Посмотреть частые вопросы на этой странице →</span>
+        </a>
+      </section>
+
       <section class="integrations" id="integrations" aria-labelledby="integrations-title">
         <div class="integrations__copy">
           <p class="section-heading__label">Подключение данных</p>
-          <h2 id="integrations-title">Привычные сервисы остаются рядом</h2>
+          <h2 id="integrations-title">
+            Подключайте данные из привычных health-платформ
+          </h2>
           <p>
-            Материалы поддержки объяснят назначение интеграций и шаги
-            подключения совместимого сервиса.
+            Приложение поддерживает интеграции и совместимые устройства как
+            источники данных для информационной поддержки.
           </p>
         </div>
 
         <ul class="integration-list" aria-label="Подтверждённые интеграции">
           <li>
             <span>Google Fit</span>
-            <small>Инструкция готовится</small>
+            <small>Health-платформа</small>
           </li>
           <li>
             <span>Samsung Health</span>
-            <small>Инструкция готовится</small>
+            <small>Health-платформа</small>
           </li>
           <li>
             <span>Apple Health</span>
-            <small>Инструкция готовится</small>
+            <small>Health-платформа</small>
+          </li>
+          <li>
+            <span>Health Connect</span>
+            <small>Обмен данными на совместимых устройствах</small>
+          </li>
+          <li>
+            <span>Кардиокарта</span>
+            <small>Совместимое устройство</small>
+          </li>
+          <li>
+            <span>NEYROX PRO</span>
+            <small>Совместимое устройство</small>
           </li>
         </ul>
       </section>
 
+      <section class="safety" id="safety" aria-labelledby="safety-title">
+        <p class="section-heading__label">БЕЗОПАСНОСТЬ</p>
+        <h2 id="safety-title">
+          Информационная поддержка, не медицинское решение
+        </h2>
+        <p>
+          «Здоровье» помогает вести данные, ориентироваться в показателях и
+          готовить вопросы для специалиста. Приложение не ставит диагноз, не
+          назначает лечение и не заменяет консультацию врача.
+        </p>
+      </section>
+
+      <section
+        class="faq-preview"
+        id="faq"
+        aria-labelledby="faq-title"
+        aria-describedby="faq-preview-note"
+      >
+        <div class="section-heading">
+          <p class="section-heading__label">FAQ</p>
+          <h2 id="faq-title">Частые вопросы</h2>
+          <p>
+            Короткие ответы: с чего начать, что вести вручную, куда положить
+            анализы и что не является диагнозом.
+          </p>
+          <p id="faq-preview-note">Превью FAQ — первые шесть вопросов.</p>
+        </div>
+
+        <div class="faq-list">
+          <details>
+            <summary>С чего начать, если я впервые открыл приложение?</summary>
+            <p>
+              Начните с одного понятного действия: отметьте
+              <strong>самочувствие сегодня</strong>, откройте
+              <strong>паспорт здоровья</strong> или добавьте документ. На
+              лендинге выберите задачу, затем перейдите в раздел приложения:
+              <strong>Главная</strong>, <strong>Я+Здоровье</strong>,
+              <strong>Документы</strong> или <strong>Настройки</strong>.
+            </p>
+          </details>
+          <details>
+            <summary>Какие данные можно вести вручную?</summary>
+            <ul>
+              <li>
+                Самочувствие сегодня: силы после пробуждения, радость жизни,
+                головная боль, тревога и напряжённость, перепады настроения
+              </li>
+              <li>Привычки (день / неделя / 90 дней)</li>
+              <li>Дневник питания: ккал, белки, жиры, углеводы</li>
+              <li>Анкеты: общие показатели, онко, питание, диабет, кардио</li>
+              <li>Ввод показателей здоровья</li>
+              <li>
+                Документы: лабораторные (базовые и расширенные), генетические
+                исследования
+              </li>
+            </ul>
+          </details>
+          <details>
+            <summary>
+              Как подключить Google Fit, Samsung Health, Apple Health или Health
+              Connect?
+            </summary>
+            <p>
+              В <strong>Настройки → Мои устройства</strong> доступен
+              <strong>Health Connect</strong>. Подключения Google Fit, Samsung
+              Health и Apple Health описаны в продуктовых материалах — точные
+              шаги будут в документации. Если пользуетесь трекером или
+              кардиоустройством, там же смотрите <strong>Кардиокарта</strong> и
+              <strong>NEYROX PRO</strong>.
+            </p>
+          </details>
+          <details>
+            <summary>Можно ли использовать приложение вместо врача?</summary>
+            <p>
+              Нет. «Здоровье» помогает вести данные, смотреть динамику и готовить
+              вопросы. Оно не ставит диагноз, не назначает лечение и не заменяет
+              консультацию специалиста.
+            </p>
+          </details>
+          <details>
+            <summary>Что означает «статус здоровья» и риски?</summary>
+            <p>
+              На экране <strong>Статус здоровья</strong> показаны ориентиры по
+              направлениям: кардио, онко, диабет, метаболизм (например, «в
+              норме», «требует внимания», «в зоне риска»). Это информационная
+              оценка по вашим данным, <strong>не диагноз</strong> и не
+              подтверждение заболевания. Подробности и рекомендации внутри
+              раздела — как подсказки для внимания к здоровью.
+            </p>
+          </details>
+          <details>
+            <summary>Где хранятся документы и анализы?</summary>
+            <p>
+              Вкладка <strong>Документы</strong>: приёмы, лабораторные
+              исследования, генетические исследования, исследования, запросы.
+              Добавить документ можно через «+» или сканирование QR-кода.
+            </p>
+          </details>
+        </div>
+      </section>
+
       <section class="support" id="support" aria-labelledby="support-title">
         <div>
-          <p class="section-heading__label">Следующий шаг</p>
-          <h2 id="support-title">Нужен короткий ответ или подробный маршрут?</h2>
+          <p class="section-heading__label">БУДУЩИЕ МАТЕРИАЛЫ</p>
+          <h2 id="support-title">Нужен подробный разбор функций?</h2>
         </div>
         <p class="support__copy">
-          FAQ поможет быстро сориентироваться, а документация проведёт по
-          последовательным шагам. Реальные ссылки будут подключены, когда
-          материалы будут опубликованы.
+          Документация поможет разобраться в разделах приложения, интеграциях и
+          сценариях ведения данных.
         </p>
-        <div class="support__actions" aria-describedby="support-status">
-          <button class="button button--primary" type="button" disabled>
+        <div class="support__actions">
+          <button
+            class="button button--primary"
+            type="button"
+            disabled
+            aria-describedby="support-status"
+          >
             Читать FAQ
           </button>
-          <button class="button button--secondary" type="button" disabled>
+          <button
+            class="button button--secondary"
+            type="button"
+            disabled
+            aria-describedby="support-status"
+          >
             Читать документацию
           </button>
         </div>
-        <p class="link-status" id="support-status">Публикация материалов ожидается.</p>
-      </section>
-
-      <aside class="medical-note" aria-label="Важная информация">
-        <strong>Важно</strong>
-        <p>
-          «Здоровье» помогает вести данные и ориентироваться в возможностях
-          приложения. Оно не заменяет консультацию врача, диагностику или
-          лечение.
+        <p class="link-status" id="support-status">
+          Отдельные FAQ и документация ещё не опубликованы. Ссылки появятся здесь
+          после публикации.
         </p>
-      </aside>
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -469,7 +648,13 @@
         />
         <span class="brand__name">Здоровье</span>
       </a>
-      <p>Навигатор по production/beta-версии приложения.</p>
+      <div>
+        <p>
+          «Здоровье» не ставит диагноз, не назначает лечение и не заменяет
+          консультацию врача.
+        </p>
+        <p>Сведения о приложении: Настройки → О приложении.</p>
+      </div>
       <a href="#top">В начало</a>
     </footer>
   </body>

@@ -16,6 +16,7 @@ const screenshots = [
 
 const landing = readFileSync(new URL("../index.html", import.meta.url), "utf8");
 const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+const app = readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
 const capabilityRoutes = [
   {
     id: "manual",
@@ -83,9 +84,60 @@ const capabilityRoutes = [
     screenshots: ["health-status.jpg", "biological-age.jpg"],
   },
 ];
+const firstRouteSteps = [
+  "Отметьте самочувствие за сегодня или откройте FAQ, если нужен короткий ответ.",
+  "Заполните базовые данные паспорта: рост, вес, самочувствие.",
+  "Подключите Health Connect / Google Fit / Samsung Health / Apple Health или устройство, если пользуетесь ими.",
+  "Добавьте первые документы: лабораторные или генетические — вручную или через QR.",
+  "Отмечайте привычки и смотрите прогресс за день, неделю или 90 дней.",
+  "Откройте документацию, когда нужен подробный разбор раздела.",
+];
+const faqPreview = [
+  {
+    question: "С чего начать, если я впервые открыл приложение?",
+    answer:
+      "Начните с одного понятного действия: отметьте самочувствие сегодня, откройте паспорт здоровья или добавьте документ. На лендинге выберите задачу, затем перейдите в раздел приложения: Главная, Я+Здоровье, Документы или Настройки.",
+  },
+  {
+    question: "Какие данные можно вести вручную?",
+    answerParts: [
+      "Самочувствие сегодня: силы после пробуждения, радость жизни, головная боль, тревога и напряжённость, перепады настроения",
+      "Привычки (день / неделя / 90 дней)",
+      "Дневник питания: ккал, белки, жиры, углеводы",
+      "Анкеты: общие показатели, онко, питание, диабет, кардио",
+      "Ввод показателей здоровья",
+      "Документы: лабораторные (базовые и расширенные), генетические исследования",
+    ],
+  },
+  {
+    question:
+      "Как подключить Google Fit, Samsung Health, Apple Health или Health Connect?",
+    answer:
+      "В Настройки → Мои устройства доступен Health Connect. Подключения Google Fit, Samsung Health и Apple Health описаны в продуктовых материалах — точные шаги будут в документации. Если пользуетесь трекером или кардиоустройством, там же смотрите Кардиокарта и NEYROX PRO.",
+  },
+  {
+    question: "Можно ли использовать приложение вместо врача?",
+    answer:
+      "Нет. «Здоровье» помогает вести данные, смотреть динамику и готовить вопросы. Оно не ставит диагноз, не назначает лечение и не заменяет консультацию специалиста.",
+  },
+  {
+    question: "Что означает «статус здоровья» и риски?",
+    answer:
+      "На экране Статус здоровья показаны ориентиры по направлениям: кардио, онко, диабет, метаболизм (например, «в норме», «требует внимания», «в зоне риска»). Это информационная оценка по вашим данным, не диагноз и не подтверждение заболевания. Подробности и рекомендации внутри раздела — как подсказки для внимания к здоровью.",
+  },
+  {
+    question: "Где хранятся документы и анализы?",
+    answer:
+      "Вкладка Документы: приёмы, лабораторные исследования, генетические исследования, исследования, запросы. Добавить документ можно через «+» или сканирование QR-кода.",
+  },
+];
 
 function normalize(value) {
   return value.replace(/\s+/g, " ").trim();
+}
+
+function plainText(value) {
+  return normalize(value.replace(/<[^>]+>/g, " ")).replace(/\s+([,.;:!?])/g, "$1");
 }
 
 function escapeRegex(value) {
@@ -269,4 +321,149 @@ test("capability section uses the approved introduction and bounded pastels", ()
   assert.match(styles, /--capability-mint:\s*#edf7f1;/);
   assert.match(styles, /--capability-blue:\s*#edf5fb;/);
   assert.match(styles, /--capability-rose:\s*#f8eef1;/);
+});
+
+test("first route is a six-step ordered guide with one FAQ preview link", () => {
+  const section = landing.match(
+    /<section\b[^>]*\bid="first-route"[^>]*>([\s\S]*?)<\/section>/,
+  );
+
+  assert.ok(section, "#first-route must exist");
+  const content = section[1];
+  assert.match(content, /<ol\b[^>]*class="first-route__grid"[^>]*>/);
+  assert.equal(
+    (content.match(/<li\b[^>]*class="first-route__step"[^>]*>/g) ?? []).length,
+    6,
+  );
+  assert.equal(
+    (content.match(/class="first-route__num" aria-hidden="true"/g) ?? []).length,
+    6,
+  );
+
+  let previousIndex = -1;
+  for (const step of firstRouteSteps) {
+    const index = normalize(content).indexOf(step);
+    assert.ok(index > previousIndex, `step must appear in order: ${step}`);
+    previousIndex = index;
+  }
+
+  assert.match(content, /<a\b[^>]*href="#faq"[^>]*>/);
+  assert.match(plainText(content), /Посмотреть частые вопросы на этой странице →/);
+});
+
+test("supporting sections use confirmed integrations, safety copy, and FAQ preview", () => {
+  const integrations = landing.match(
+    /<section\b[^>]*\bid="integrations"[^>]*>([\s\S]*?)<\/section>/,
+  );
+  const safety = landing.match(
+    /<section\b[^>]*\bid="safety"[^>]*>([\s\S]*?)<\/section>/,
+  );
+  const faq = landing.match(
+    /<section\b[^>]*\bid="faq"[^>]*>([\s\S]*?)<\/section>/,
+  );
+
+  assert.ok(integrations);
+  assert.ok(safety);
+  assert.ok(faq);
+
+  for (const name of [
+    "Google Fit",
+    "Samsung Health",
+    "Apple Health",
+    "Health Connect",
+    "Кардиокарта",
+    "NEYROX PRO",
+  ]) {
+    assert.match(normalize(integrations[1]), new RegExp(escapeRegex(name)));
+  }
+
+  assert.match(
+    normalize(safety[1]),
+    /Информационная поддержка, не медицинское решение/,
+  );
+  assert.match(
+    normalize(safety[1]),
+    /«Здоровье» помогает вести данные, ориентироваться в показателях и готовить вопросы для специалиста\. Приложение не ставит диагноз, не назначает лечение и не заменяет консультацию врача\./,
+  );
+
+  const details = [
+    ...faq[1].matchAll(/<details\b[^>]*>([\s\S]*?)<\/details>/g),
+  ];
+  assert.equal(details.length, 6);
+  assert.match(normalize(faq[1]), /Превью FAQ/);
+
+  for (const [index, item] of faqPreview.entries()) {
+    const detail = plainText(details[index][1]);
+    assert.match(detail, new RegExp(escapeRegex(item.question)));
+
+    for (const answer of item.answerParts ?? [item.answer]) {
+      assert.match(detail, new RegExp(escapeRegex(answer)));
+    }
+  }
+});
+
+test("future help remains disabled and every internal fragment resolves", () => {
+  const support = landing.match(
+    /<section\b[^>]*\bid="support"[^>]*>([\s\S]*?)<\/section>/,
+  );
+
+  assert.ok(support, "#support must exist");
+  assert.match(
+    support[1],
+    /<button\b[^>]*disabled[^>]*>\s*Читать FAQ\s*<\/button>/,
+  );
+  assert.match(
+    support[1],
+    /<button\b[^>]*disabled[^>]*>\s*Читать документацию\s*<\/button>/,
+  );
+  assert.match(
+    normalize(support[1]),
+    /Отдельные FAQ и документация ещё не опубликованы\. Ссылки появятся здесь после публикации\./,
+  );
+
+  const ids = new Set(
+    [...landing.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]),
+  );
+  for (const match of landing.matchAll(/\bhref="#([^"]+)"/g)) {
+    assert.ok(ids.has(match[1]), `fragment #${match[1]} must resolve`);
+  }
+});
+
+test("landing removes duplicate card sections, fake docs, and internal meta-language", () => {
+  const userFacing = landing.replace(/<!--[\s\S]*?-->/g, "");
+
+  assert.doesNotMatch(landing, /\bid="docs"/);
+  assert.doesNotMatch(landing, /class="[^"]*(?:pain-card|proof|gallery)[^"]*"/);
+  assert.doesNotMatch(
+    userFacing,
+    /Production\/beta|production\/beta|Пространственный атлас|Пространственный|Атлас/,
+  );
+  assert.match(
+    normalize(userFacing),
+    /«Здоровье» помогает вести данные, ориентироваться в показателях и готовить вопросы для специалиста\. Приложение не ставит диагноз, не назначает лечение и не заменяет консультацию врача\./,
+  );
+});
+
+test("fallback controls and focus handoff stay honest without delayed focus", () => {
+  assert.match(
+    styles,
+    /\.capability-grid\s*\{[^}]*display:\s*none;/,
+  );
+  assert.match(
+    styles,
+    /\[data-capability-explorer\]\[data-enhanced\]\s+\.capability-grid\s*\{[^}]*display:\s*grid;/,
+  );
+  assert.equal(
+    (
+      landing.match(
+        /data-focus-target="capabilities-title"/g,
+      ) ?? []
+    ).length,
+    2,
+  );
+  assert.doesNotMatch(app, /setTimeout/);
+  assert.match(
+    styles,
+    /\.site-footer\s*>\s*a:last-child\s*\{[^}]*min-height:\s*44px;/,
+  );
 });
