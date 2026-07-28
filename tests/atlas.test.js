@@ -14,6 +14,7 @@ test("atlas state module is available to the landing page", () => {
 
 test("atlas state exposes route selection behavior", () => {
   assert.equal(typeof atlas.createAtlasState, "function");
+  assert.equal(typeof atlas.describeRoute, "function");
   assert.equal(typeof atlas.selectRoute, "function");
 });
 
@@ -23,6 +24,14 @@ test("atlas exposes the canonical route order", () => {
 
 test("atlas starts with the manual route selected", () => {
   assert.deepEqual(atlas.createAtlasState(), { activeRouteId: "manual" });
+});
+
+test("atlas describes the selected task and canonical scenario", () => {
+  assert.equal(
+    atlas.describeRoute("care"),
+    "Выбрана задача «Сводка здоровья». Показан сценарий «Ориентироваться и готовиться к разговору со специалистом».",
+  );
+  assert.equal(atlas.describeRoute("missing"), "");
 });
 
 for (const routeId of ["sync", "archive", "care"]) {

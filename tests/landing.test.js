@@ -2,423 +2,405 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 
-const screenshots = [
-  "home-overview.jpg",
-  "health-passport.jpg",
-  "documents.jpg",
-  "wellbeing-and-questionnaires.jpg",
-  "wellbeing-today.jpg",
-  "health-metrics.jpg",
-  "devices-and-hrv.jpg",
-  "health-status.jpg",
-  "biological-age.jpg",
-];
-
 const landing = readFileSync(new URL("../index.html", import.meta.url), "utf8");
-const styles = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+const styles = readFileSync(
+  new URL("../src/styles.css", import.meta.url),
+  "utf8",
+);
 const app = readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
-const capabilityRoutes = [
-  {
-    id: "manual",
-    badge: "ВВОД",
-    title: "Добавить данные",
-    scenario: "Вести вручную",
-    description: "Самочувствие, привычки, питание и показатели.",
-    detail: "Фиксируйте то, что обычно теряется между заметками и памятью.",
-    capabilities: ["Самочувствие", "Привычки", "Питание", "Анкеты", "Показатели"],
-    screenshots: ["wellbeing-and-questionnaires.jpg", "wellbeing-today.jpg"],
-  },
-  {
-    id: "sync",
-    badge: "СВЯЗЬ",
-    title: "Подключить устройства",
-    scenario: "Подключить из платформ и устройств",
-    description: "Health-платформы, устройства, шаги, сон и пульс.",
-    detail: "Соберите базовую картину из привычных health-сервисов и устройств.",
-    capabilities: [
-      "Активность",
-      "Сон",
-      "Пульс",
-      "ВСР",
-      "Кардиокарта",
-      "NEYROX PRO",
-      "Health Connect",
-      "Google Fit",
-      "Samsung Health",
-      "Apple Health",
-    ],
-    screenshots: ["health-metrics.jpg", "devices-and-hrv.jpg"],
-  },
-  {
-    id: "archive",
-    badge: "АРХИВ",
-    title: "История здоровья",
-    scenario: "Хранить историю",
-    description: "Паспорт, документы и результаты исследований.",
-    detail: "Держите важные медицинские материалы рядом с контекстом самочувствия.",
-    capabilities: [
-      "Паспорт здоровья",
-      "Приёмы",
-      "Лабораторные исследования",
-      "Генетические исследования",
-      "Исследования",
-      "Запросы",
-      "Добавление через QR",
-    ],
-    screenshots: ["documents.jpg", "health-passport.jpg"],
-  },
-  {
-    id: "care",
-    badge: "ЗАБОТА",
-    title: "Сводка здоровья",
-    scenario: "Ориентироваться и готовиться к разговору со специалистом",
-    description: "Статусы, расчётные оценки и вопросы для специалиста.",
-    detail: "Собирайте вопросы и подсказки как информационную поддержку, не диагноз.",
-    capabilities: [
-      "Статус здоровья",
-      "Биологический возраст",
-      "Чат-бот «Практический»",
-      "Информационные материалы",
-      "Экспериментальная аналитика",
-    ],
-    screenshots: ["health-status.jpg", "biological-age.jpg"],
-  },
-];
-const firstRouteSteps = [
-  "Отметьте самочувствие за сегодня или откройте FAQ, если нужен короткий ответ.",
-  "Заполните базовые данные паспорта: рост, вес, самочувствие.",
-  "Подключите Health Connect / Google Fit / Samsung Health / Apple Health или устройство, если пользуетесь ими.",
-  "Добавьте первые документы: лабораторные или генетические — вручную или через QR.",
-  "Отмечайте привычки и смотрите прогресс за день, неделю или 90 дней.",
-  "Откройте документацию, когда нужен подробный разбор раздела.",
-];
-const faqPreview = [
-  {
-    question: "С чего начать, если я впервые открыл приложение?",
-    answer:
-      "Начните с одного понятного действия: отметьте самочувствие сегодня, откройте паспорт здоровья или добавьте документ. На лендинге выберите задачу, затем перейдите в раздел приложения: Главная, Я+Здоровье, Документы или Настройки.",
-  },
-  {
-    question: "Какие данные можно вести вручную?",
-    answerParts: [
-      "Самочувствие сегодня: силы после пробуждения, радость жизни, головная боль, тревога и напряжённость, перепады настроения",
-      "Привычки (день / неделя / 90 дней)",
-      "Дневник питания: ккал, белки, жиры, углеводы",
-      "Анкеты: общие показатели, онко, питание, диабет, кардио",
-      "Ввод показателей здоровья",
-      "Документы: лабораторные (базовые и расширенные), генетические исследования",
-    ],
-  },
-  {
-    question:
-      "Как подключить Google Fit, Samsung Health, Apple Health или Health Connect?",
-    answer:
-      "В Настройки → Мои устройства доступен Health Connect. Подключения Google Fit, Samsung Health и Apple Health описаны в продуктовых материалах — точные шаги будут в документации. Если пользуетесь трекером или кардиоустройством, там же смотрите Кардиокарта и NEYROX PRO.",
-  },
-  {
-    question: "Можно ли использовать приложение вместо врача?",
-    answer:
-      "Нет. «Здоровье» помогает вести данные, смотреть динамику и готовить вопросы. Оно не ставит диагноз, не назначает лечение и не заменяет консультацию специалиста.",
-  },
-  {
-    question: "Что означает «статус здоровья» и риски?",
-    answer:
-      "На экране Статус здоровья показаны ориентиры по направлениям: кардио, онко, диабет, метаболизм (например, «в норме», «требует внимания», «в зоне риска»). Это информационная оценка по вашим данным, не диагноз и не подтверждение заболевания. Подробности и рекомендации внутри раздела — как подсказки для внимания к здоровью.",
-  },
-  {
-    question: "Где хранятся документы и анализы?",
-    answer:
-      "Вкладка Документы: приёмы, лабораторные исследования, генетические исследования, исследования, запросы. Добавить документ можно через «+» или сканирование QR-кода.",
-  },
+const design = readFileSync(new URL("../DESIGN.md", import.meta.url), "utf8");
+
+const taskHeadings = [
+  "Понять, как меняется самочувствие",
+  "Собрать свой паспорт здоровья",
+  "Пройти анкеты",
+  "Посмотреть статус здоровья",
+  "Хранить анализы и документы",
+  "Следить за питанием и весом",
+  "Наблюдать за привычками",
+  "Узнать биологический возраст",
+  "Следить за ежедневными показателями",
+  "Выполнять задания и получать награды",
+  "Задать вопрос чат-боту",
 ];
 
-function normalize(value) {
-  return value.replace(/\s+/g, " ").trim();
+const taskLocations = [
+  "Самочувствие",
+  "Паспорт здоровья",
+  "Анкеты",
+  "Статус здоровья",
+  "Документы",
+  "Питание и вес",
+  "Привычки",
+  "Биологический возраст",
+  "Ежедневные показатели",
+  "Задания и награды",
+  "Практический чат-бот",
+];
+
+const faqQuestions = [
+  "С чего начать, если я впервые открыл приложение?",
+  "Какие данные можно вести вручную?",
+  "Как подключить Google Fit, Samsung Health, Apple Health или Health Connect?",
+  "Можно ли использовать приложение вместо врача?",
+  "Что означает «статус здоровья» и риски?",
+  "Где хранятся документы и анализы?",
+];
+
+function section(id) {
+  return landing.match(
+    new RegExp(`<section\\b[^>]*\\bid="${id}"[^>]*>([\\s\\S]*?)</section>`),
+  )?.[1];
 }
 
-function plainText(value) {
-  return normalize(value.replace(/<[^>]+>/g, " ")).replace(/\s+([,.;:!?])/g, "$1");
-}
+test("hero follows the approved landing content", () => {
+  const hero = section("top");
 
-function escapeRegex(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-test("landing screenshot paths are available to the public site", () => {
-  for (const screenshot of screenshots) {
-    assert.equal(
-      existsSync(new URL(`../public/screenshots/${screenshot}`, import.meta.url)),
-      true,
-      `public/screenshots/${screenshot} must exist`,
-    );
-  }
-});
-
-test("hero presents the approved app entry point and evidence atlas", () => {
-  const hero = landing.replace(/\s+/g, " ");
-
+  assert.ok(hero);
+  assert.match(hero, /Приложение «Здоровье»/);
+  assert.match(hero, /Всё о вашем здоровье — в одном месте/);
   assert.match(
     hero,
-    /<title>Здоровье — самочувствие, показатели и документы<\/title>/,
+    /Отмечайте самочувствие, смотрите данные о шагах, сне и пульсе,/,
+  );
+  assert.match(hero, /href="#tasks"[^>]*>\s*С чего начать/);
+  assert.match(hero, /href="#faq"[^>]*>Читать FAQ/);
+  assert.doesNotMatch(hero, /hero-topic-(?:line|index)/);
+  assert.doesNotMatch(hero, /hero__disclaimer/);
+  assert.match(
+    hero,
+    /Наблюдения складываются в историю — от утра к вечеру\./,
   );
   assert.match(
-    hero,
-    /content="Отмечайте день, смотрите шаги, сон и пульс, храните анализы и находите нужный раздел\. FAQ и документация — если нужен короткий ответ\."/,
-  );
-  assert.match(hero, />Приложение «Здоровье»</);
-  assert.match(
-    hero,
-    /<h1 id="hero-title">Самочувствие, показатели и документы — в одном месте<\/h1>/,
+    styles,
+    /\.hero \.button--primary\s*\{[^}]*background: var\(--tiffany-dark\);/,
   );
   assert.match(
-    hero,
-    /Отмечайте день, смотрите шаги, сон и пульс, храните анализы и открывайте нужный раздел без блуждания по всему приложению\./,
-  );
-
-  for (const [label, target] of [
-    ["Сценарии", "#capabilities"],
-    ["С чего начать", "#first-route"],
-    ["Интеграции", "#integrations"],
-    ["FAQ", "#faq"],
-  ]) {
-    assert.match(hero, new RegExp(`<a href="${target}">${label}</a>`));
-  }
-
-  assert.match(
-    hero,
-    /<button class="button button--primary" type="button" disabled aria-describedby="link-status"\s*>\s*Читать FAQ\s*<\/button>/,
-  );
-  assert.match(
-    hero,
-    /<button class="button button--secondary" type="button" disabled aria-describedby="link-status"\s*>\s*Читать документацию\s*<\/button>/,
-  );
-  assert.match(
-    hero,
-    /<p class="link-status" id="link-status">\s*Ссылки станут доступны после публикации отдельных FAQ и документации\.\s*<\/p>/,
-  );
-  assert.match(
-    hero,
-    /href="#capabilities" data-focus-target="capabilities-title"/,
-  );
-  assert.match(hero, /id="capabilities-title" tabindex="-1"/);
-
-  for (const screenshot of [
-    "home-overview.jpg",
-    "health-passport.jpg",
-    "documents.jpg",
-  ]) {
-    assert.match(
-      hero,
-      new RegExp(`src="\\./public/screenshots/${screenshot}"[\\s\\S]*?width="576"[\\s\\S]*?height="1280"`),
-    );
-  }
-
-  assert.match(
-    hero,
-    /alt="Главный экран приложения: самочувствие, статус и привычки"[\s\S]*?fetchpriority="high"/,
+    styles,
+    /\.day-archive__caption\s*\{[^}]*white-space: nowrap;/,
   );
 });
 
-test("capability cards expose four canonical semantic route controls", () => {
-  const routeButtons = [
-    ...landing.matchAll(/<button\b[^>]*\bdata-route="([^"]+)"[^>]*>([\s\S]*?)<\/button>/g),
-  ];
+test("header keeps one navigation system without a duplicate task action", () => {
+  const header = landing.match(
+    /<header\b[^>]*class="site-header"[^>]*>([\s\S]*?)<\/header>/,
+  )?.[1];
 
-  assert.deepEqual(
-    routeButtons.map((match) => match[1]),
-    ["manual", "sync", "archive", "care"],
-  );
-
-  for (const [index, route] of capabilityRoutes.entries()) {
-    const [button, routeId, body] = routeButtons[index];
-
-    assert.equal(routeId, route.id);
-    assert.match(button, /type="button"/);
-    assert.match(button, /aria-pressed="(?:true|false)"/);
-    assert.match(body, /data-selected-label/);
-    assert.match(normalize(body), new RegExp(escapeRegex(route.badge)));
-    assert.match(normalize(body), new RegExp(escapeRegex(route.title)));
-    assert.match(normalize(body), new RegExp(escapeRegex(route.description)));
-    assert.doesNotMatch(body, /<(?:a|button)\b/);
-  }
-
-  assert.match(normalize(routeButtons[0][2]), /data-selected-label[^>]*>Выбрано</);
-  for (const [, , body] of routeButtons.slice(1)) {
-    assert.match(body, /data-selected-label[^>]*>\s*</);
-  }
+  assert.ok(header);
+  assert.match(header, /href="#documentation"[^>]*>Документация/);
+  assert.doesNotMatch(header, /class="header-route"/);
+  assert.doesNotMatch(header, />\s*Выбрать задачу\s*</);
+  assert.doesNotMatch(styles, /\.header-route/);
 });
 
-test("capability panels keep every canonical route and its evidence in source", () => {
-  const numericCaption =
-    "Числа на экранах — пример заполнения, не метрики продукта.";
+test("section kickers use one shared visual format", () => {
+  assert.equal((landing.match(/class="section-kicker"/g) ?? []).length, 6);
+  assert.doesNotMatch(landing, /class="(?:hero__kicker|section-heading__label)"/);
+  assert.match(
+    styles,
+    /\.section-kicker\s*\{[\s\S]*?color: var\(--tiffany-deep\);[\s\S]*?font-family: var\(--body\);[\s\S]*?font-size: 0\.78rem;[\s\S]*?font-weight: 800;[\s\S]*?line-height: 1\.6;[\s\S]*?letter-spacing: 0\.14em;[\s\S]*?text-transform: uppercase;/,
+  );
+  assert.match(
+    styles,
+    /\.task-directory \.section-heading > p:not\(\.section-kicker\)/,
+  );
+  assert.match(
+    styles,
+    /\.faq-preview \.section-heading > p:not\(\.section-kicker\)/,
+  );
+  assert.match(
+    styles,
+    /\.integrations__copy > p:not\(\.section-kicker\)/,
+  );
+});
 
-  for (const route of capabilityRoutes) {
-    const match = landing.match(
-      new RegExp(
-        `<article\\b(?=[^>]*data-route-panel="${route.id}")[^>]*>[\\s\\S]*?<\\/article>`,
+test("typography uses the local Manrope variable font", () => {
+  assert.ok(
+    existsSync(
+      new URL(
+        "../public/fonts/manrope/manrope-cyrillic-variable.woff2",
+        import.meta.url,
       ),
-    );
-
-    assert.ok(match, `data-route-panel="${route.id}" must exist`);
-    const panel = match[0];
-    const openingTag = panel.slice(0, panel.indexOf(">") + 1);
-    assert.doesNotMatch(openingTag, /\bhidden\b/);
-
-    for (const text of [
-      route.badge,
-      route.scenario,
-      route.detail,
-      route.description,
-      ...route.capabilities,
-      numericCaption,
-    ]) {
-      assert.match(normalize(panel), new RegExp(escapeRegex(text)));
-    }
-
-    assert.match(
-      panel,
-      new RegExp(
-        `src="\\./public/screenshots/${route.screenshots[0]}"[\\s\\S]*?width="576"[\\s\\S]*?height="1280"[\\s\\S]*?src="\\./public/screenshots/${route.screenshots[1]}"[\\s\\S]*?width="576"[\\s\\S]*?height="1280"`,
+    ),
+  );
+  assert.ok(
+    existsSync(
+      new URL(
+        "../public/fonts/manrope/manrope-latin-variable.woff2",
+        import.meta.url,
       ),
-    );
-
-    const altTexts = [...panel.matchAll(/<img\b[^>]*\balt="([^"]+)"[^>]*>/g)].map(
-      (image) => image[1],
-    );
-    assert.equal(altTexts.length, 2);
-    assert.notEqual(altTexts[0], altTexts[1]);
-    assert.ok(altTexts.every(Boolean));
-  }
-
-  assert.doesNotMatch(landing, /Больничный лист|Результаты анализов/);
-});
-
-test("capability explorer has one local atomic live result and safety note", () => {
-  assert.equal((landing.match(/\baria-live="polite"/g) ?? []).length, 1);
-  assert.equal((landing.match(/\baria-atomic="true"/g) ?? []).length, 1);
+    ),
+  );
   assert.match(
     landing,
-    /<div class="route-results" data-route-results aria-live="polite" aria-atomic="true">/,
+    /rel="preload"[\s\S]*?manrope-cyrillic-variable\.woff2/,
+  );
+  assert.match(styles, /@font-face\s*\{[\s\S]*?font-family: "Manrope";/);
+  assert.match(styles, /--display: "Manrope", "Segoe UI", Arial, sans-serif;/);
+  assert.match(styles, /--body: "Manrope", "Segoe UI", Arial, sans-serif;/);
+  assert.match(
+    styles,
+    /\.hero h1,[\s\S]*?\.support h2\s*\{[^}]*font-weight: 700;[^}]*letter-spacing: -0\.04em;/,
+  );
+  assert.match(design, /fontFamily: '"Manrope", "Segoe UI", Arial, sans-serif'/);
+});
+
+test("hero and section headlines keep a clear responsive hierarchy", () => {
+  assert.match(
+    styles,
+    /\.hero h1\s*\{[^}]*font-size: clamp\(3rem, 6\.7vw, 6rem\);/,
   );
   assert.match(
-    normalize(landing),
-    /Оценки и подсказки в приложении не являются диагнозом и не означают наличие заболевания\. При вопросах о здоровье обсуждайте показатели со специалистом\./,
+    styles,
+    /\.section-heading h2,[\s\S]*?\.support h2\s*\{[^}]*font-size: clamp\(2\.2rem, 4\.45vw, 4rem\);/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.hero h1\s*\{[^}]*font-size: clamp\(3rem, 12\.3vw, 4rem\);/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.section-heading h2,[\s\S]*?\.support h2\s*\{[^}]*font-size: clamp\(2\.2rem, 9vw, 2\.4rem\);/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.task-item h3\s*\{[^}]*font-size: clamp\(1\.55rem, 7vw, 1\.9rem\);/,
+  );
+  assert.doesNotMatch(
+    styles,
+    /\.first-route \.section-heading h2\s*\{[^}]*font-size:/,
   );
 });
 
-test("capability section uses the approved introduction and bounded pastels", () => {
-  const normalizedLanding = normalize(landing);
+test("desktop sections use the approved compact density", () => {
+  assert.match(styles, /--max-width:\s*1320px;/);
+  assert.match(
+    styles,
+    /\.task-directory\s*\{[^}]*padding: clamp\(88px, 7\.8vw, 112px\) var\(--page-pad\);/,
+  );
+  assert.match(
+    styles,
+    /\.task-proof\s*\{[^}]*height: 660px;/,
+  );
+  assert.match(
+    styles,
+    /\.task-item\s*\{[^}]*padding: clamp\(30px, 3vw, 40px\) 0;/,
+  );
+  assert.match(
+    styles,
+    /\.first-route__step\s*\{[^}]*min-height: 220px;/,
+  );
+  assert.match(
+    styles,
+    /\.integration-list li\s*\{[^}]*min-height: 80px;/,
+  );
+});
 
-  for (const text of [
-    "КАРТА ВОЗМОЖНОСТЕЙ",
-    "Выберите знакомую задачу",
-    "Самочувствие, данные с устройств, документы и ориентиры по статусу — четыре входа в одно приложение.",
-    "Главная, Я+Здоровье, Документы и Настройки закрывают разные задачи. На этой странице — короткие сценарии и ответы на частые вопросы, чтобы быстрее найти нужное.",
+test("hero uses the generated one-day archive while tasks keep screenshot evidence", () => {
+  const hero = section("top");
+  const tasks = section("tasks");
+
+  assert.ok(hero);
+  assert.ok(tasks);
+  assert.equal(
+    existsSync(
+      new URL(
+        "../public/illustrations/one-day-archive-labeled-transparent.webp",
+        import.meta.url,
+      ),
+    ),
+    true,
+  );
+  assert.match(hero, /class="day-archive"/);
+  assert.match(
+    hero,
+    /src="\.\/public\/illustrations\/one-day-archive-labeled-transparent\.webp"[\s\S]*?width="1254"[\s\S]*?height="1254"[\s\S]*?fetchpriority="high"/,
+  );
+  assert.match(
+    hero,
+    /alt="Слоистый архив дня с маршрутом между самочувствием, активностью, документами и подсказками"/,
+  );
+  assert.doesNotMatch(hero, /class="atlas"/);
+  assert.match(tasks, /class="task-proof"/);
+  assert.match(tasks, /<img\b/);
+});
+
+test("first route contains the four approved steps", () => {
+  const route = section("first-route");
+
+  assert.ok(route);
+  assert.ok(
+    landing.indexOf('id="tasks"') < landing.indexOf('id="first-route"'),
+    "tasks must come before the first route",
+  );
+  assert.ok(
+    landing.indexOf('id="first-route"') < landing.indexOf('id="integrations"'),
+    "first route must come before integrations",
+  );
+  assert.match(route, /Начните с простого пути/);
+  assert.equal((route.match(/class="first-route__step"/g) ?? []).length, 4);
+  assert.equal((route.match(/class="first-route__num"/g) ?? []).length, 4);
+  assert.doesNotMatch(route, /class="route-link"/);
+  for (const heading of [
+    "Выберите задачу",
+    "Добавьте то, что уже есть",
+    "Посмотрите общую картину",
+    "Продолжайте в удобном темпе",
   ]) {
-    assert.match(normalizedLanding, new RegExp(escapeRegex(text)));
+    assert.ok(route.includes(heading), heading);
   }
-
-  assert.match(styles, /--capability-mint:\s*#edf7f1;/);
-  assert.match(styles, /--capability-blue:\s*#edf5fb;/);
-  assert.match(styles, /--capability-rose:\s*#f8eef1;/);
+  assert.match(
+    styles,
+    /\.first-route\s*\{[\s\S]*?background: linear-gradient\(180deg, var\(--tiffany-fog\) 0%, var\(--white\) 100%\);/,
+  );
+  assert.match(
+    styles,
+    /@media \(min-width: 1081px\)[\s\S]*?\.first-route__grid\s*\{[^}]*grid-template-columns: repeat\(4,/,
+  );
 });
 
-test("first route is a six-step ordered guide with one FAQ preview link", () => {
-  const section = landing.match(
-    /<section\b[^>]*\bid="first-route"[^>]*>([\s\S]*?)<\/section>/,
-  );
+test("task directory contains all eleven tasks and app locations", () => {
+  const tasks = section("tasks");
 
-  assert.ok(section, "#first-route must exist");
-  const content = section[1];
-  assert.match(content, /<ol\b[^>]*class="first-route__grid"[^>]*>/);
-  assert.equal(
-    (content.match(/<li\b[^>]*class="first-route__step"[^>]*>/g) ?? []).length,
-    6,
+  assert.ok(tasks);
+  assert.match(
+    tasks,
+    /Выберите задачу — покажем соответствующие экраны\s+приложения\./,
   );
   assert.equal(
-    (content.match(/class="first-route__num" aria-hidden="true"/g) ?? []).length,
-    6,
+    (tasks.match(/class="task-item(?:\s[^"]*)?"/g) ?? []).length,
+    11,
   );
+  assert.equal((tasks.match(/class="task-item__location"/g) ?? []).length, 11);
+  assert.equal((tasks.match(/class="task-item__state"/g) ?? []).length, 11);
+  assert.equal((tasks.match(/data-task-select=/g) ?? []).length, 11);
+  assert.equal((tasks.match(/aria-pressed="true"/g) ?? []).length, 1);
+  assert.equal((tasks.match(/aria-pressed="false"/g) ?? []).length, 10);
 
-  let previousIndex = -1;
-  for (const step of firstRouteSteps) {
-    const index = normalize(content).indexOf(step);
-    assert.ok(index > previousIndex, `step must appear in order: ${step}`);
-    previousIndex = index;
+  for (const value of [...taskHeadings, ...taskLocations]) {
+    assert.ok(tasks.includes(value), value);
   }
 
-  assert.match(content, /<a\b[^>]*href="#faq"[^>]*>/);
-  assert.match(plainText(content), /Посмотреть частые вопросы на этой странице →/);
+  assert.doesNotMatch(tasks, /class="task-item__location"[^>]*>\s*(?:Открыть|Выбрать|Добавить|Посмотреть|Рассчитать)/);
+  assert.match(tasks, /Это информационная оценка, а не диагноз\./);
+  assert.doesNotMatch(styles, /content: "(?:Смотреть|Показано)"/);
+  assert.match(
+    styles,
+    /\.task-item\.is-selected \.task-item__state::before\s*\{[^}]*border-width: 0 0 2px 2px/,
+  );
+  for (const screenshot of [
+    "practical-chatbot.jpg",
+    "questionnaires.jpg",
+    "nutrition.jpg",
+    "habits.jpg",
+    "rewards.jpg",
+    "daily-tasks.jpg",
+    "document-add.jpg",
+  ]) {
+    assert.ok(
+      existsSync(
+        new URL(`../public/screenshots/${screenshot}`, import.meta.url),
+      ),
+      screenshot,
+    );
+    assert.ok(app.includes(`./public/screenshots/${screenshot}`), screenshot);
+  }
+
+  assert.match(app, /function selectTask\(taskId\)/);
+  assert.match(app, /aria-pressed/);
+  assert.match(app, /item\.addEventListener\("click", \(event\) =>/);
+  assert.match(styles, /\.task-item\s*\{[^}]*cursor: pointer;/);
+  assert.match(styles, /\.task-item\.is-selected/);
+  assert.match(styles, /\.task-mobile-proof/);
 });
 
-test("supporting sections use confirmed integrations, safety copy, and FAQ preview", () => {
-  const integrations = landing.match(
-    /<section\b[^>]*\bid="integrations"[^>]*>([\s\S]*?)<\/section>/,
+test("task screen changes keep the proof visually stable", () => {
+  assert.doesNotMatch(app, /screen\.animate\(/);
+  assert.match(app, /task\.screens\.length === 1[\s\S]*?\[null, task\.screens\[0\], null\]/);
+  assert.doesNotMatch(
+    styles,
+    /\.task-proof\[data-screen-count="(?:1|2)"\]\s+\.task-proof__screen/,
   );
-  const safety = landing.match(
-    /<section\b[^>]*\bid="safety"[^>]*>([\s\S]*?)<\/section>/,
+  assert.doesNotMatch(
+    styles,
+    /\.task-item\.is-selected\s*\{[^}]*background/,
   );
-  const faq = landing.match(
-    /<section\b[^>]*\bid="faq"[^>]*>([\s\S]*?)<\/section>/,
+});
+
+test("task screenshots come forward on precise-pointer hover", () => {
+  assert.match(
+    landing,
+    /class="task-proof__hint"[^>]*aria-hidden="true"[\s\S]*?Наведите, чтобы увеличить/,
   );
+  assert.match(
+    styles,
+    /@media \(hover: hover\) and \(pointer: fine\)[\s\S]*?\.task-proof__screen\s*\{[\s\S]*?cursor: zoom-in;[\s\S]*?\.task-proof__screen:hover\s*\{[\s\S]*?z-index: 10;[\s\S]*?transform: rotate\(0deg\) scale\(1\.12\);/,
+  );
+  assert.match(
+    styles,
+    /@media \(hover: hover\) and \(pointer: fine\)[\s\S]*?\.task-proof figcaption \.task-proof__hint\s*\{[\s\S]*?display: inline-flex;/,
+  );
+  assert.match(
+    styles,
+    /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.task-proof__screen:hover\s*\{[\s\S]*?transform: rotate\(var\(--screen-rotation\)\);/,
+  );
+});
+
+test("integrations and FAQ use the supplied product copy", () => {
+  const integrations = section("integrations");
+  const faq = section("faq");
 
   assert.ok(integrations);
-  assert.ok(safety);
   assert.ok(faq);
 
   for (const name of [
-    "Google Fit",
-    "Samsung Health",
-    "Apple Health",
     "Health Connect",
     "Кардиокарта",
     "NEYROX PRO",
+    "Apple Health",
+    "Google Fit",
+    "Samsung Health",
   ]) {
-    assert.match(normalize(integrations[1]), new RegExp(escapeRegex(name)));
+    assert.ok(integrations.includes(name), name);
   }
 
+  assert.doesNotMatch(integrations, /По данным продукта/);
+  assert.doesNotMatch(integrations, /Подключить устройство/);
   assert.match(
-    normalize(safety[1]),
-    /Информационная поддержка, не медицинское решение/,
+    integrations,
+    /Подключение выполняется в разделе «Настройки»\./,
   );
   assert.match(
-    normalize(safety[1]),
-    /«Здоровье» помогает вести данные, ориентироваться в показателях и готовить вопросы для специалиста\. Приложение не ставит диагноз, не назначает лечение и не заменяет консультацию врача\./,
+    styles,
+    /\.integrations\s*\{[\s\S]*?background: linear-gradient\(180deg, var\(--white\) 0%, var\(--tiffany-fog\) 100%\);/,
   );
 
-  const details = [
-    ...faq[1].matchAll(/<details\b[^>]*>([\s\S]*?)<\/details>/g),
-  ];
-  assert.equal(details.length, 6);
-  assert.match(normalize(faq[1]), /Превью FAQ/);
-
-  for (const [index, item] of faqPreview.entries()) {
-    const detail = plainText(details[index][1]);
-    assert.match(detail, new RegExp(escapeRegex(item.question)));
-
-    for (const answer of item.answerParts ?? [item.answer]) {
-      assert.match(detail, new RegExp(escapeRegex(answer)));
-    }
+  assert.equal((faq.match(/<details>/g) ?? []).length, 6);
+  for (const question of faqQuestions) {
+    assert.ok(faq.includes(question), question);
   }
+  assert.match(
+    faq,
+    /<button\b[^>]*disabled[^>]*>\s*Читать полный FAQ\s*<\/button>/,
+  );
 });
 
-test("future help remains disabled and every internal fragment resolves", () => {
-  const support = landing.match(
-    /<section\b[^>]*\bid="support"[^>]*>([\s\S]*?)<\/section>/,
-  );
+test("documentation stays honest when external destinations are absent", () => {
+  const documentation = section("documentation");
 
-  assert.ok(support, "#support must exist");
+  assert.ok(documentation);
   assert.match(
-    support[1],
-    /<button\b[^>]*disabled[^>]*>\s*Читать FAQ\s*<\/button>/,
+    documentation,
+    /<button\b[^>]*class="button button--secondary support__action"[^>]*disabled[^>]*>\s*Открыть документацию\s*<\/button>/,
+  );
+  assert.doesNotMatch(documentation, /href="#faq"[^>]*>Читать FAQ/);
+  assert.ok(
+    documentation.indexOf("Открыть документацию") <
+      documentation.indexOf('class="support__content"'),
   );
   assert.match(
-    support[1],
-    /<button\b[^>]*disabled[^>]*>\s*Читать документацию\s*<\/button>/,
-  );
-  assert.match(
-    normalize(support[1]),
-    /Отдельные FAQ и документация ещё не опубликованы\. Ссылки появятся здесь после публикации\./,
+    landing,
+    /Приложение не ставит диагноз, не назначает лечение и не заменяет\s+консультацию врача\./,
   );
 
   const ids = new Set(
@@ -427,43 +409,7 @@ test("future help remains disabled and every internal fragment resolves", () => 
   for (const match of landing.matchAll(/\bhref="#([^"]+)"/g)) {
     assert.ok(ids.has(match[1]), `fragment #${match[1]} must resolve`);
   }
-});
 
-test("landing removes duplicate card sections, fake docs, and internal meta-language", () => {
-  const userFacing = landing.replace(/<!--[\s\S]*?-->/g, "");
-
-  assert.doesNotMatch(landing, /\bid="docs"/);
-  assert.doesNotMatch(landing, /class="[^"]*(?:pain-card|proof|gallery)[^"]*"/);
-  assert.doesNotMatch(
-    userFacing,
-    /Production\/beta|production\/beta|Пространственный атлас|Пространственный|Атлас/,
-  );
-  assert.match(
-    normalize(userFacing),
-    /«Здоровье» помогает вести данные, ориентироваться в показателях и готовить вопросы для специалиста\. Приложение не ставит диагноз, не назначает лечение и не заменяет консультацию врача\./,
-  );
-});
-
-test("fallback controls and focus handoff stay honest without delayed focus", () => {
-  assert.match(
-    styles,
-    /\.capability-grid\s*\{[^}]*display:\s*none;/,
-  );
-  assert.match(
-    styles,
-    /\[data-capability-explorer\]\[data-enhanced\]\s+\.capability-grid\s*\{[^}]*display:\s*grid;/,
-  );
-  assert.equal(
-    (
-      landing.match(
-        /data-focus-target="capabilities-title"/g,
-      ) ?? []
-    ).length,
-    2,
-  );
-  assert.doesNotMatch(app, /setTimeout/);
-  assert.match(
-    styles,
-    /\.site-footer\s*>\s*a:last-child\s*\{[^}]*min-height:\s*44px;/,
-  );
+  assert.match(styles, /\.task-directory__layout/);
+  assert.match(styles, /@media \(max-width: 600px\)/);
 });
