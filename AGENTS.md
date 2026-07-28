@@ -2,14 +2,21 @@
 
 ## Project Structure & Module Organization
 
-repo got product+design specs for russian "Здоровье" landing page now; no app code yet.
+This repository contains the implemented zero-dependency Russian landing
+navigator for the «Здоровье» application.
 
-- `PRODUCT.md` = users, product purpose, claims, brand constraints.
-- `docs/landing-brief.md` = implementation brief; `docs/logo.jpeg` = approved logo.
-- `.impeccable/surfaces/landing.md` = chosen landing-page direction, interaction states, release blockers.
-- `.agents/skills/` = local agent workflows. `.superpowers/` and `.impeccable/questions/` = working artifacts, not product source.
-
-when build starts: keep page code one documented src dir (eg `src/`), public assets in `public/`, tests beside modules or in `tests/`. update this guide once stack picked.
+- `index.html` defines the page structure and accessible content.
+- `src/styles.css` contains the visual system and responsive layouts;
+  `src/app.js` owns task-screen interactions; `src/atlas.js` owns canonical
+  route state.
+- `public/` contains the logo, local Manrope fonts, illustrations, and real
+  application screenshots.
+- `tests/` contains Node-based state and observable landing-contract tests.
+- `PRODUCT.md` and `DESIGN.md` are the durable product and design-system
+  sources. `docs/landing-content.md`, `docs/faq.md`, and
+  `docs/screenshots.md` provide approved copy and evidence mapping.
+- `.impeccable/surfaces/landing.md` records the chosen landing direction and
+  interaction constraints.
 
 ## Build, Test, and Development Commands
 
@@ -23,7 +30,8 @@ npm test
 
 - `npm run dev` serves the repository at `http://127.0.0.1:4173`.
 - `npm run build` recreates the deployable `dist/` directory.
-- `npm test` runs the atlas state tests with Node's built-in test runner.
+- `npm test` runs atlas-state and landing-contract tests with Node's built-in
+  test runner.
 
 Before submit changes, run:
 
@@ -32,15 +40,21 @@ git status --short
 git diff --check
 ```
 
-once tooling added, expose common workflows via package scripts like `npm run dev`, `npm run build`, `npm test`, doc their exact behavior here.
-
 ## Coding Style & Naming Conventions
 
-use UTF-8, LF endings, two-space indent for Markdown/JSON/CSS/JS/TS unless formatter says otherwise. prefer lowercase kebab-case filenames (`landing-brief.md`) and descriptive component names (`TaskNavigator.tsx`). keep russian user-facing copy consistent w/ `PRODUCT.md`; english for code identifiers and contributor docs.
+Use UTF-8, LF endings, and two-space indentation for Markdown, JSON, CSS, and
+JavaScript. Prefer lowercase kebab-case filenames (`landing-content.md`) and
+descriptive selectors and identifiers (`task-proof`, `selectTask`). Keep
+Russian user-facing copy consistent with the approved content files; use
+English for code identifiers and contributor documentation.
 
 ## Testing Guidelines
 
-no test framework or coverage threshold yet. every UI change: check mobile+desktop widths, keyboard nav, visible focus, reduced-motion behavior, no horizontal overflow. add automated tests w/ first implementation, name after observable behavior, eg `task-navigator.test.tsx`.
+The project uses Node's built-in test runner and has no coverage threshold.
+Name tests after observable behavior. For every UI change, check desktop and
+mobile widths, keyboard navigation, visible focus, reduced motion, 200% zoom,
+and horizontal overflow. Run `npm test`, `npm run build`, and
+`git diff --check` before handoff.
 
 ## Git Workflow
 
@@ -52,4 +66,7 @@ keep PR titles/bodies consistent w/ recent repo PRs: use established `[codex] ..
 
 ## Product Safety & Content
 
-don't invent metrics, testimonials, features, FAQ URLs, or medical outcomes. landing page must not imply diagnosis, treatment, or replacement of professional care. missing FAQ/doc URLs and final screenshots stay release blockers.
+Do not invent metrics, testimonials, features, FAQ URLs, or medical outcomes.
+The landing page must not imply diagnosis, treatment, or replacement of
+professional care. FAQ and documentation controls stay disabled until real
+destinations are supplied.
