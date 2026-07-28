@@ -1,0 +1,370 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-28T11:57:20Z",
+  "title": "Design System: Здоровье",
+  "extensions": {
+    "colorMeta": {
+      "tiffany": {
+        "role": "primary",
+        "displayName": "Навигационный Tiffany",
+        "canonical": "#3bb9b8",
+        "tonalRamp": [
+          "oklch(15% 0.107 194.3)",
+          "oklch(25% 0.107 194.3)",
+          "oklch(35% 0.107 194.3)",
+          "oklch(45% 0.107 194.3)",
+          "oklch(55% 0.107 194.3)",
+          "oklch(65% 0.107 194.3)",
+          "oklch(80% 0.107 194.3)",
+          "oklch(95% 0.107 194.3)"
+        ]
+      },
+      "tiffany-dark": {
+        "role": "primary",
+        "displayName": "Тёмный Tiffany",
+        "canonical": "#177f82",
+        "tonalRamp": [
+          "oklch(15% 0.087 198.0)",
+          "oklch(25% 0.087 198.0)",
+          "oklch(35% 0.087 198.0)",
+          "oklch(45% 0.087 198.0)",
+          "oklch(55% 0.087 198.0)",
+          "oklch(65% 0.087 198.0)",
+          "oklch(80% 0.087 198.0)",
+          "oklch(95% 0.087 198.0)"
+        ]
+      },
+      "tiffany-deep": {
+        "role": "primary",
+        "displayName": "Глубокий Tiffany",
+        "canonical": "#12686b",
+        "tonalRamp": [
+          "oklch(15% 0.075 198.6)",
+          "oklch(25% 0.075 198.6)",
+          "oklch(35% 0.075 198.6)",
+          "oklch(45% 0.075 198.6)",
+          "oklch(55% 0.075 198.6)",
+          "oklch(65% 0.075 198.6)",
+          "oklch(80% 0.075 198.6)",
+          "oklch(95% 0.075 198.6)"
+        ]
+      },
+      "tiffany-mist": {
+        "role": "neutral",
+        "displayName": "Tiffany-дымка",
+        "canonical": "#e8f7f6",
+        "tonalRamp": [
+          "oklch(15% 0.016 192.1)",
+          "oklch(25% 0.016 192.1)",
+          "oklch(35% 0.016 192.1)",
+          "oklch(45% 0.016 192.1)",
+          "oklch(55% 0.016 192.1)",
+          "oklch(65% 0.016 192.1)",
+          "oklch(80% 0.016 192.1)",
+          "oklch(95% 0.016 192.1)"
+        ]
+      },
+      "tiffany-fog": {
+        "role": "neutral",
+        "displayName": "Воздушный Tiffany-туман",
+        "canonical": "#f4fbfa",
+        "tonalRamp": [
+          "oklch(15% 0.008 186.9)",
+          "oklch(25% 0.008 186.9)",
+          "oklch(35% 0.008 186.9)",
+          "oklch(45% 0.008 186.9)",
+          "oklch(55% 0.008 186.9)",
+          "oklch(65% 0.008 186.9)",
+          "oklch(80% 0.008 186.9)",
+          "oklch(95% 0.008 186.9)"
+        ]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Опорный графит",
+        "canonical": "#35333f",
+        "tonalRamp": [
+          "oklch(15% 0.021 292.8)",
+          "oklch(25% 0.021 292.8)",
+          "oklch(35% 0.021 292.8)",
+          "oklch(45% 0.021 292.8)",
+          "oklch(55% 0.021 292.8)",
+          "oklch(65% 0.021 292.8)",
+          "oklch(80% 0.021 292.8)",
+          "oklch(95% 0.021 292.8)"
+        ]
+      },
+      "graphite-soft": {
+        "role": "neutral",
+        "displayName": "Спокойный графит",
+        "canonical": "#5e5b67",
+        "tonalRamp": [
+          "oklch(15% 0.019 297.1)",
+          "oklch(25% 0.019 297.1)",
+          "oklch(35% 0.019 297.1)",
+          "oklch(45% 0.019 297.1)",
+          "oklch(55% 0.019 297.1)",
+          "oklch(65% 0.019 297.1)",
+          "oklch(80% 0.019 297.1)",
+          "oklch(95% 0.019 297.1)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "Чистое белое поле",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(25% 0.000 89.9)",
+          "oklch(35% 0.000 89.9)",
+          "oklch(45% 0.000 89.9)",
+          "oklch(55% 0.000 89.9)",
+          "oklch(65% 0.000 89.9)",
+          "oklch(80% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Картографическая линия",
+        "canonical": "#b8dfdc",
+        "tonalRamp": [
+          "oklch(15% 0.041 190.7)",
+          "oklch(25% 0.041 190.7)",
+          "oklch(35% 0.041 190.7)",
+          "oklch(45% 0.041 190.7)",
+          "oklch(55% 0.041 190.7)",
+          "oklch(65% 0.041 190.7)",
+          "oklch(80% 0.041 190.7)",
+          "oklch(95% 0.041 190.7)"
+        ]
+      },
+      "tiffany-ink": {
+        "role": "neutral",
+        "displayName": "Tiffany-чернила",
+        "canonical": "#153c3e",
+        "tonalRamp": [
+          "oklch(15% 0.044 199.9)",
+          "oklch(25% 0.044 199.9)",
+          "oklch(35% 0.044 199.9)",
+          "oklch(45% 0.044 199.9)",
+          "oklch(55% 0.044 199.9)",
+          "oklch(65% 0.044 199.9)",
+          "oklch(80% 0.044 199.9)",
+          "oklch(95% 0.044 199.9)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Короткий тезис первого экрана."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Названия крупных смысловых блоков."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Названия маршрутов, сценариев и активных состояний."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Объяснения, инструкции и служебный текст."
+      },
+      "label": {
+        "displayName": "Map Label",
+        "purpose": "Картографические аннотации и короткие служебные подписи."
+      },
+      "control": {
+        "displayName": "Control",
+        "purpose": "Кнопки, ссылки-действия и интерактивные маршруты."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-soft",
+        "value": "18px 26px 56px rgba(30, 94, 95, 0.14)",
+        "purpose": "Рассеянная глубина фоновых и демонстрационных плоскостей."
+      },
+      {
+        "name": "shadow-front",
+        "value": "18px 28px 48px rgba(47, 74, 78, 0.18)",
+        "purpose": "Явное отделение активного экрана атласа."
+      }
+    ],
+    "motion": [
+      {
+        "name": "atlas-shift-duration",
+        "value": "420ms",
+        "purpose": "Полная смена положения, тени и clip-path активного слоя."
+      },
+      {
+        "name": "atlas-shift-ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Экспоненциальный ease-out для смены листа атласа."
+      },
+      {
+        "name": "reduced-motion-duration",
+        "value": "0.01ms",
+        "purpose": "Практически статичная смена состояния при prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "1080px"
+      },
+      {
+        "name": "stack",
+        "value": "820px"
+      },
+      {
+        "name": "mobile",
+        "value": "600px"
+      },
+      {
+        "name": "narrow",
+        "value": "360px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Главный переход к материалам помощи; disabled-состояние используется до появления реальной ссылки.",
+      "html": "<button class=\"ds-button ds-button-primary\" type=\"button\">Читать FAQ</button>",
+      "css": ".ds-button { min-height: 50px; padding: 13px 24px; border: 0; border-radius: 999px; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Arial, sans-serif; font-size: 0.93rem; font-weight: 800; } .ds-button-primary { background: var(--graphite, #35333f); color: var(--white, #ffffff); } .ds-button-primary:focus-visible { outline: 3px solid var(--graphite, #35333f); outline-offset: 4px; } .ds-button:disabled { cursor: not-allowed; opacity: 0.52; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Вторичный переход к документации с внутренним графитовым контуром.",
+      "html": "<button class=\"ds-button ds-button-secondary\" type=\"button\">Читать документацию</button>",
+      "css": ".ds-button { min-height: 50px; padding: 13px 24px; border: 0; border-radius: 999px; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Arial, sans-serif; font-size: 0.93rem; font-weight: 800; } .ds-button-secondary { box-shadow: inset 0 0 0 1px var(--graphite, #35333f); background: transparent; color: var(--graphite, #35333f); } .ds-button-secondary:focus-visible { outline: 3px solid var(--graphite, #35333f); outline-offset: 4px; } .ds-button:disabled { cursor: not-allowed; opacity: 0.52; }"
+    },
+    {
+      "name": "Route Link",
+      "kind": "nav",
+      "refersTo": "route-link",
+      "description": "Внутренняя навигация по лендингу, намеренно отличающаяся от внешних CTA.",
+      "html": "<a class=\"ds-route-link\" href=\"#navigator\"><span>Выбрать задачу</span><svg viewBox=\"0 0 36 12\" aria-hidden=\"true\"><path d=\"M0 6h32M27 1l5 5-5 5\" /></svg></a>",
+      "css": ".ds-route-link { display: inline-flex; align-items: center; gap: 16px; color: var(--graphite, #35333f); font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Arial, sans-serif; font-weight: 800; text-decoration: none; } .ds-route-link svg { width: 36px; fill: none; stroke: currentColor; stroke-width: 1.5; } .ds-route-link:hover span { text-decoration: underline; text-underline-offset: 5px; } .ds-route-link:focus-visible { outline: 3px solid var(--graphite, #35333f); outline-offset: 4px; }"
+    },
+    {
+      "name": "Selected Task Route",
+      "kind": "button",
+      "refersTo": "route-option-selected",
+      "description": "Активная задача в карте маршрутов с цветом, геометрическим маркером и текстовым состоянием.",
+      "html": "<div class=\"ds-route-selector\"><button class=\"ds-route-option ds-is-active\" type=\"button\" aria-pressed=\"true\"><span class=\"ds-route-marker\" aria-hidden=\"true\"></span><span class=\"ds-route-label\">Вести показатели</span><strong>Выбрано</strong></button></div>",
+      "css": ".ds-route-selector { display: grid; border-top: 1px solid var(--line, #b8dfdc); border-bottom: 1px solid var(--line, #b8dfdc); } .ds-route-option { display: grid; min-height: 154px; grid-template-rows: auto 1fr auto; gap: 16px; padding: 24px 28px; border: 0; background: transparent; color: var(--graphite, #35333f); text-align: left; cursor: pointer; } .ds-route-option:hover { background: var(--tiffany-fog, #f4fbfa); } .ds-route-option.ds-is-active { background: var(--tiffany, #3bb9b8); color: var(--tiffany-ink, #153c3e); } .ds-route-marker { width: 22px; height: 9px; background: linear-gradient(90deg, currentColor 0 42%, transparent 42% 58%, currentColor 58%); } .ds-route-label { align-self: center; font-family: \"Arial Narrow\", \"Roboto Condensed\", \"Helvetica Neue\", Arial, sans-serif; font-size: 1.55rem; font-weight: 800; line-height: 1.1; } .ds-route-option strong { min-height: 1.2em; color: var(--tiffany-ink, #153c3e); font-size: 0.72rem; text-transform: uppercase; } .ds-route-option:focus-visible { outline: 3px solid var(--graphite, #35333f); outline-offset: 4px; }"
+    },
+    {
+      "name": "Atlas Front Screen",
+      "kind": "custom",
+      "refersTo": "atlas-screen-front",
+      "description": "Передний доказательный слой атласа с профилем, активным модулем и строками данных.",
+      "html": "<div class=\"ds-atlas-screen\"><div class=\"ds-screen-tag\"><span>Демонстрация</span><strong>Выбрано</strong></div><div class=\"ds-screen-bar\"></div><div class=\"ds-screen-profile\"><i aria-hidden=\"true\"></i><span><b>Вести показатели</b><small>Раздел приложения</small></span></div><div class=\"ds-screen-module\"><span>Вести данные в понятном ритме</span><i></i><i></i></div><div class=\"ds-screen-lines\"><i></i><i></i><i></i><i></i></div></div>",
+      "css": ".ds-atlas-screen { position: relative; width: 300px; height: 500px; padding: 40px 30px 28px; overflow: hidden; border-radius: 44px; box-shadow: 18px 28px 48px rgba(47, 74, 78, 0.18); background: var(--white, #ffffff); color: var(--graphite, #35333f); transition: clip-path 420ms cubic-bezier(0.16, 1, 0.3, 1), transform 420ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 420ms ease-out; } .ds-screen-tag { position: absolute; top: 18px; left: 28px; display: flex; width: calc(100% - 56px); justify-content: space-between; color: var(--graphite-soft, #5e5b67); font-size: 0.67rem; } .ds-screen-tag strong { color: var(--tiffany-deep, #12686b); } .ds-screen-bar { width: 52%; height: 13px; margin-bottom: 30px; border-radius: 4px; background: var(--graphite, #35333f); } .ds-screen-profile { display: flex; align-items: center; gap: 14px; padding: 18px; border-radius: 18px; background: var(--tiffany-fog, #f4fbfa); } .ds-screen-profile > i { width: 38px; height: 38px; flex: 0 0 auto; border-radius: 50%; background: var(--tiffany, #3bb9b8); } .ds-screen-profile span { display: grid; gap: 2px; } .ds-screen-profile b { font-size: 0.78rem; } .ds-screen-profile small { color: var(--graphite-soft, #5e5b67); font-size: 0.62rem; } .ds-screen-module { display: grid; gap: 14px; margin-top: 18px; padding: 24px 20px; border-radius: 18px; background: var(--graphite, #35333f); color: var(--white, #ffffff); } .ds-screen-module span { font-size: 0.78rem; font-weight: 800; line-height: 1.35; } .ds-screen-module i, .ds-screen-lines i { display: block; height: 7px; border-radius: 4px; } .ds-screen-module i { width: 80%; background: rgba(255, 255, 255, 0.48); } .ds-screen-module i:last-child { width: 58%; } .ds-screen-lines { display: grid; gap: 10px; margin-top: 25px; padding: 2px 12px; } .ds-screen-lines i { background: #c5dddc; } .ds-screen-lines i:first-child { width: 52%; background: var(--graphite-soft, #5e5b67); } @media (prefers-reduced-motion: reduce) { .ds-atlas-screen { transition-duration: 0.01ms; } }"
+    },
+    {
+      "name": "Demo Frame",
+      "kind": "card",
+      "refersTo": "demo-frame",
+      "description": "Подписанная заглушка будущего скриншота, сохраняющая его размер и визуальный вес.",
+      "html": "<div class=\"ds-demo-frame\"><span>Демонстрационный экран</span><div class=\"ds-demo-title\"></div><div class=\"ds-demo-row\"><i></i><b></b></div><div class=\"ds-demo-row\"><i></i><b></b></div><div class=\"ds-demo-row\"><i></i><b></b></div></div>",
+      "css": ".ds-demo-frame { position: relative; width: min(100%, 450px); min-height: 520px; padding: 72px 42px 42px; transform: rotate(2deg); box-shadow: 18px 26px 56px rgba(30, 94, 95, 0.14); border-radius: 52px; background: var(--tiffany-mist, #e8f7f6); color: var(--graphite, #35333f); } .ds-demo-frame > span { position: absolute; top: 28px; left: 42px; color: var(--graphite-soft, #5e5b67); font-size: 0.68rem; } .ds-demo-title { width: 50%; height: 16px; margin-bottom: 36px; border-radius: 5px; background: var(--graphite, #35333f); } .ds-demo-row { display: flex; align-items: center; gap: 18px; margin-top: 18px; padding: 22px; border-radius: 16px; background: var(--white, #ffffff); } .ds-demo-row i { width: 38px; height: 38px; flex: 0 0 auto; border-radius: 50%; background: var(--tiffany, #3bb9b8); } .ds-demo-row b { display: block; width: 68%; height: 10px; border-radius: 5px; background: #9eb6b6; }"
+    },
+    {
+      "name": "Primary Navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Спокойная якорная навигация без контейнеров и декоративного chrome.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Разделы страницы\"><a href=\"#navigator\">Выбрать задачу</a><a href=\"#integrations\">Интеграции</a><a href=\"#support\">Помощь</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: clamp(22px, 3vw, 44px); } .ds-nav a { color: var(--graphite-soft, #5e5b67); font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Arial, sans-serif; font-size: 0.9rem; text-decoration: none; } .ds-nav a:hover { color: var(--graphite, #35333f); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; } .ds-nav a:focus-visible { outline: 3px solid var(--graphite, #35333f); outline-offset: 4px; }"
+    },
+    {
+      "name": "Integration List",
+      "kind": "custom",
+      "refersTo": "integration-list",
+      "description": "Крупные сервисы и статусы, разделённые линиями прямо на Tiffany-поле.",
+      "html": "<ul class=\"ds-integration-list\"><li><span>Google Fit</span><small>Инструкция готовится</small></li><li><span>Samsung Health</span><small>Инструкция готовится</small></li><li><span>Apple Health</span><small>Инструкция готовится</small></li></ul>",
+      "css": ".ds-integration-list { margin: 0; padding: 0; color: var(--tiffany-ink, #153c3e); list-style: none; } .ds-integration-list li { display: flex; min-height: 92px; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid rgba(21, 60, 62, 0.38); } .ds-integration-list li:last-child { border-bottom: 1px solid rgba(21, 60, 62, 0.38); } .ds-integration-list span { font-family: \"Arial Narrow\", \"Roboto Condensed\", \"Helvetica Neue\", Arial, sans-serif; font-size: clamp(1.5rem, 2.4vw, 2.3rem); font-weight: 800; } .ds-integration-list small { color: var(--tiffany-ink, #153c3e); font-size: 0.74rem; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Атлас заботы",
+    "overview": "Система представляет приложение как спокойное, исследуемое пространство: сложность не прячется за рекламными обещаниями, а раскладывается на понятные слои, маршруты и подписи. Визуальный язык соединяет точность навигационной графики с повседневной мягкостью wellness-продукта — без ощущения больницы, тяжёлого медицинского портала или обезличенного SaaS.\n\nГлавный повторяемый приём — несколько цельных плоскостей, собранных в пространственную карту. Передний слой всегда остаётся полностью читаемым, фоновые слои дают контекст через контролируемое смещение, а тонкие аннотации объясняют связи. Подтверждённый геометрический логотип задаёт характер системе: ясная модульность, Tiffany-плоскости, графитовые опоры и белое пространство.\n\nДвижение ощущается как смена листа или маршрута в атласе. Один собранный переход меняет активный слой; остальная страница остаётся спокойной. При reduced motion та же смена выражается статически, без потери иерархии или контекста.",
+    "keyCharacteristics": [
+      "Светлое поле и спокойная, высокая читаемость.",
+      "Пространственная иерархия из цельных, смещённых слоёв.",
+      "Навигационные подписи и линии вместо декоративной инфографики.",
+      "Реальный интерфейс приложения как основное визуальное доказательство.",
+      "Мягкость без инфантильности; точность без клинической холодности."
+    ],
+    "rules": [
+      {
+        "name": "The Tiffany Field Rule",
+        "body": "Tiffany работает как материал заметной области или слоя, а не рассыпается по странице случайными маленькими акцентами.",
+        "section": "colors"
+      },
+      {
+        "name": "The Graphite Anchor Rule",
+        "body": "Вся критичная информация и доступные состояния опираются на графит и не зависят только от различий оттенков Tiffany.",
+        "section": "colors"
+      },
+      {
+        "name": "The One-Glance Rule",
+        "body": "Заголовок сначала сообщает задачу или направление, и только затем может добавлять характер; пользователь не должен расшифровывать метафору.",
+        "section": "typography"
+      },
+      {
+        "name": "The No-Condensed-Paragraph Rule",
+        "body": "Узкий характер логотипа и акцентных заголовков не переносится на абзацы, инструкции и элементы управления.",
+        "section": "typography"
+      },
+      {
+        "name": "The Whole Object Rule",
+        "body": "Главный экран, карточка или доказательный объект никогда не обрезается краем viewport; обрезка допустима только внутри заранее определённой рамки самого устройства.",
+        "section": "layout"
+      },
+      {
+        "name": "The Context Behind Rule",
+        "body": "Фоновые слои остаются видимыми ровно настолько, чтобы сохранять пространственный контекст, но не конкурировать с активным слоем.",
+        "section": "layout"
+      },
+      {
+        "name": "The Tonal-First Rule",
+        "body": "Сначала глубина решается цветовым полем и перекрытием; тень добавляется только там, где без неё теряется порядок слоёв.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Framed Softness Rule",
+        "body": "Мягкие углы принадлежат экранным рамкам и крупным плоскостям; текстовые группы и простые связи не заключаются в дополнительные капсулы без функциональной причины.",
+        "section": "shapes"
+      },
+      {
+        "name": "The State-in-Text Rule",
+        "body": "Активный маршрут всегда сочетает цветовое поле с текстовой меткой и доступным aria-pressed; один Tiffany не является состоянием.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do использовать подтверждённый логотип как источник геометрии и цветового характера.",
+      "Do показывать реальные экраны приложения целиком и делать их главным доказательным материалом после появления скриншотов.",
+      "Do сохранять видимыми контекстные слои, но отдавать активному объекту явный приоритет размером, положением и подписью.",
+      "Do помечать временные макеты как демонстрационные, если посетитель может принять их за реальный интерфейс.",
+      "Do проверять композицию на desktop и mobile, включая клавиатурный фокус, reduced motion и отсутствие горизонтального переполнения."
+    ],
+    "donts": [
+      "Don't превращать систему в стерильный медицинский интерфейс, тяжёлый портал или тревожную панель показателей.",
+      "Don't заменять реальные экраны абстрактными 3D-объектами, generic dashboard-карточками, псевдостеклом или декоративными wellness-клише.",
+      "Don't обрезать главный доказательный объект ради более эффектной композиции.",
+      "Don't кодировать маршрут, активность или выбранное состояние только цветом.",
+      "Don't заполнять белое пространство случайными акцентами, иконками или орнаментом, не помогающими навигации."
+    ]
+  }
+}
