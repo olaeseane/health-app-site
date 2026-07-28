@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Навигатор по возможностям приложения «Здоровье»: показатели, динамика, интеграции и материалы поддержки."
+    />
+    <meta name="theme-color" content="#f4fbfa" />
+    <title>Здоровье — навигатор по приложению</title>
+    <link rel="icon" href="./public/logo-mark.png" />
+    <link rel="stylesheet" href="./src/styles.css" />
+    <script type="module" src="./src/app.js"></script>
+  </head>
+  <body>
+    <!--
+      THESIS: Лендинг — рабочий атлас приложения, а не рекламная витрина.
+      OWN-WORLD: Белое поле, Tiffany-плоскости, графитовые опоры, точные линии и цельные экранные слои.
+      STORY: Посетитель выбирает знакомую задачу, видит её как активный слой и находит путь к помощи.
+      FIRST VIEWPORT: Объяснение и действия слева; полностью видимый трёхслойный атлас с аннотациями справа.
+      FORM: Утверждённый «Атлас приложения · v2» из shape; пространственная карта с одним передним и двумя контекстными слоями.
+    -->
+    <a class="skip-link" href="#main">К содержанию</a>
+
+    <header class="site-header" aria-label="Основная навигация">
+      <a class="brand" href="#top" aria-label="Здоровье — в начало страницы">
+        <img
+          class="brand__mark"
+          src="./public/logo-mark.png"
+          width="48"
+          height="48"
+          alt=""
+        />
+        <span class="brand__name">Здоровье</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Разделы страницы">
+        <a href="#navigator">Выбрать задачу</a>
+        <a href="#integrations">Интеграции</a>
+        <a href="#support">Помощь</a>
+      </nav>
+
+      <a class="header-route" href="#navigator">К задачам</a>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero__copy">
+          <p class="hero__kicker">Пространственный атлас</p>
+          <h1 id="hero-title">Приложение —<br />слой за слоем.</h1>
+          <p class="hero__lead">
+            Выберите знакомую задачу и перейдите к нужной инструкции — без
+            необходимости разбираться во всём приложении сразу.
+          </p>
+
+          <div class="hero__actions" aria-describedby="link-status">
+            <button class="button button--primary" type="button" disabled>
+              Читать FAQ
+            </button>
+            <button class="button button--secondary" type="button" disabled>
+              Читать документацию
+            </button>
+          </div>
+          <p class="link-status" id="link-status">
+            Ссылки появятся после публикации материалов.
+          </p>
+
+          <a class="route-link" href="#navigator" data-focus-target="navigator-title">
+            <span>Выбрать задачу</span>
+            <svg viewBox="0 0 36 12" aria-hidden="true">
+              <path d="M0 6h32M27 1l5 5-5 5" />
+            </svg>
+          </a>
+        </div>
+
+        <div
+          class="atlas"
+          data-atlas
+          aria-label="Демонстрационный атлас разделов приложения"
+        >
+          <p class="atlas__note">Демонстрационные экраны</p>
+
+          <div class="atlas__annotation atlas__annotation--left">
+            <span data-context-annotation="0">Динамика</span>
+            <i aria-hidden="true"></i>
+          </div>
+          <div class="atlas__annotation atlas__annotation--right">
+            <span data-active-annotation>Показатели</span>
+            <i aria-hidden="true"></i>
+          </div>
+          <div class="atlas__annotation atlas__annotation--bottom">
+            <span data-context-annotation="1">Интеграции</span>
+            <i aria-hidden="true"></i>
+          </div>
+
+          <div class="screen screen--back" aria-hidden="true">
+            <span class="screen__tag" data-context-screen="1">Интеграции</span>
+            <div class="screen__bar"></div>
+            <div class="screen__module screen__module--quiet"></div>
+            <div class="screen__module"></div>
+            <div class="screen__module screen__module--short"></div>
+          </div>
+
+          <div class="screen screen--middle" aria-hidden="true">
+            <span class="screen__tag" data-context-screen="0">Динамика</span>
+            <div class="screen__bar"></div>
+            <div class="screen__chart">
+              <i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="screen__module"></div>
+            <div class="screen__module screen__module--short"></div>
+          </div>
+
+          <div class="screen screen--front" data-active-screen>
+            <span class="screen__tag">
+              <span>Демонстрация</span>
+              <strong data-active-status>Выбрано</strong>
+            </span>
+            <div class="screen__bar screen__bar--dark"></div>
+            <div class="screen__profile">
+              <i aria-hidden="true"></i>
+              <span>
+                <b data-active-label>Вести показатели</b>
+                <small>Раздел приложения</small>
+              </span>
+            </div>
+            <div class="screen__active-module">
+              <span data-active-title>Вести данные в понятном ритме</span>
+              <i></i>
+              <i></i>
+            </div>
+            <div class="screen__lines" aria-hidden="true">
+              <i></i><i></i><i></i><i></i>
+            </div>
+          </div>
+        </div>
+
+        <p class="hero__disclaimer">
+          Информационная поддержка · не заменяет консультацию врача
+        </p>
+      </section>
+
+      <section class="navigator" id="navigator" aria-labelledby="navigator-title">
+        <div class="section-heading">
+          <p class="section-heading__label">Карта задач</p>
+          <h2 id="navigator-title" tabindex="-1">Что вы хотите сделать?</h2>
+          <p>
+            Выберите задачу — атлас покажет нужный маршрут и сохранит соседние
+            разделы в контексте.
+          </p>
+        </div>
+
+        <div class="route-selector" role="group" aria-label="Задачи в приложении">
+          <button
+            class="route-option is-active"
+            type="button"
+            data-route="indicators"
+            aria-pressed="true"
+          >
+            <span class="route-option__marker" aria-hidden="true"></span>
+            <span>Вести показатели</span>
+            <strong>Выбрано</strong>
+          </button>
+          <button
+            class="route-option"
+            type="button"
+            data-route="dynamics"
+            aria-pressed="false"
+          >
+            <span class="route-option__marker" aria-hidden="true"></span>
+            <span>Смотреть динамику</span>
+            <strong></strong>
+          </button>
+          <button
+            class="route-option"
+            type="button"
+            data-route="integrations"
+            aria-pressed="false"
+          >
+            <span class="route-option__marker" aria-hidden="true"></span>
+            <span>Подключить сервисы</span>
+            <strong></strong>
+          </button>
+          <button
+            class="route-option"
+            type="button"
+            data-route="answers"
+            aria-pressed="false"
+          >
+            <span class="route-option__marker" aria-hidden="true"></span>
+            <span>Найти ответ</span>
+            <strong></strong>
+          </button>
+        </div>
+
+        <div class="route-detail" aria-live="polite">
+          <div class="route-detail__line" aria-hidden="true">
+            <span></span>
+          </div>
+          <div>
+            <p data-detail-annotation>Показатели</p>
+            <h3 data-detail-title>Вести данные в понятном ритме</h3>
+          </div>
+          <p data-detail-description>
+            Выберите нужный показатель в приложении и используйте подробную
+            инструкцию, когда она понадобится.
+          </p>
+        </div>
+      </section>
+
+      <section class="scenarios" aria-labelledby="scenarios-title">
+        <div class="section-heading section-heading--wide">
+          <p class="section-heading__label">Основные маршруты</p>
+          <h2 id="scenarios-title">От задачи — к нужному разделу</h2>
+          <p>
+            Здесь появятся реальные экраны приложения. Пока их место занимают
+            подписанные демонстрационные макеты с тем же размером и порядком.
+          </p>
+        </div>
+
+        <article class="scenario">
+          <div class="scenario__copy">
+            <p class="scenario__annotation">Показатели</p>
+            <h3>Сначала выберите, что хотите вести</h3>
+            <p>
+              Приложение помогает вести ключевые показатели. Подробные шаги
+              будут доступны в FAQ и документации.
+            </p>
+          </div>
+          <div class="demo-frame" aria-label="Демонстрационный экран показателей">
+            <span>Демонстрационный экран</span>
+            <div class="demo-frame__title"></div>
+            <div class="demo-frame__row"><i></i><b></b></div>
+            <div class="demo-frame__row"><i></i><b></b></div>
+            <div class="demo-frame__row"><i></i><b></b></div>
+          </div>
+        </article>
+
+        <article class="scenario scenario--reverse">
+          <div class="scenario__copy">
+            <p class="scenario__annotation">Динамика</p>
+            <h3>Затем найдите нужный период</h3>
+            <p>
+              История показателей помогает ориентироваться в данных и
+              возвращаться к нужному периоду без лишних переходов.
+            </p>
+          </div>
+          <div
+            class="demo-frame demo-frame--chart"
+            aria-label="Демонстрационный экран динамики"
+          >
+            <span>Демонстрационный экран</span>
+            <div class="demo-frame__title"></div>
+            <div class="demo-chart" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="demo-frame__caption"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="integrations" id="integrations" aria-labelledby="integrations-title">
+        <div class="integrations__copy">
+          <p class="section-heading__label">Подключение данных</p>
+          <h2 id="integrations-title">Привычные сервисы остаются рядом</h2>
+          <p>
+            Материалы поддержки объяснят назначение интеграций и шаги
+            подключения совместимого сервиса.
+          </p>
+        </div>
+
+        <ul class="integration-list" aria-label="Подтверждённые интеграции">
+          <li>
+            <span>Google Fit</span>
+            <small>Инструкция готовится</small>
+          </li>
+          <li>
+            <span>Samsung Health</span>
+            <small>Инструкция готовится</small>
+          </li>
+          <li>
+            <span>Apple Health</span>
+            <small>Инструкция готовится</small>
+          </li>
+        </ul>
+      </section>
+
+      <section class="support" id="support" aria-labelledby="support-title">
+        <div>
+          <p class="section-heading__label">Следующий шаг</p>
+          <h2 id="support-title">Нужен короткий ответ или подробный маршрут?</h2>
+        </div>
+        <p class="support__copy">
+          FAQ поможет быстро сориентироваться, а документация проведёт по
+          последовательным шагам. Реальные ссылки будут подключены, когда
+          материалы будут опубликованы.
+        </p>
+        <div class="support__actions" aria-describedby="support-status">
+          <button class="button button--primary" type="button" disabled>
+            Читать FAQ
+          </button>
+          <button class="button button--secondary" type="button" disabled>
+            Читать документацию
+          </button>
+        </div>
+        <p class="link-status" id="support-status">Публикация материалов ожидается.</p>
+      </section>
+
+      <aside class="medical-note" aria-label="Важная информация">
+        <strong>Важно</strong>
+        <p>
+          «Здоровье» помогает вести данные и ориентироваться в возможностях
+          приложения. Оно не заменяет консультацию врача, диагностику или
+          лечение.
+        </p>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand brand--footer" href="#top">
+        <img
+          class="brand__mark"
+          src="./public/logo-mark.png"
+          width="40"
+          height="40"
+          alt=""
+        />
+        <span class="brand__name">Здоровье</span>
+      </a>
+      <p>Навигатор по production/beta-версии приложения.</p>
+      <a href="#top">В начало</a>
+    </footer>
+  </body>
+</html>
