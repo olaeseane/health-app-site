@@ -17,37 +17,30 @@ test("atlas state exposes route selection behavior", () => {
   assert.equal(typeof atlas.selectRoute, "function");
 });
 
-test("atlas starts with the indicators route selected", () => {
-  const state = atlas.createAtlasState();
-
-  assert.deepEqual(
-    {
-      id: state.activeRoute?.id,
-      label: state.activeRoute?.label,
-      status: state.activeRoute?.status,
-    },
-    {
-      id: "indicators",
-      label: "Вести показатели",
-      status: "Выбрано",
-    },
-  );
+test("atlas exposes the canonical route order", () => {
+  assert.deepEqual(atlas.routeIds, ["manual", "sync", "archive", "care"]);
 });
 
-test("selecting a route moves it to the active atlas layer", () => {
-  const state = atlas.createAtlasState();
-  const nextState = atlas.selectRoute(state, "integrations");
-
-  assert.equal(nextState.activeRoute?.id, "integrations");
-  assert.equal(nextState.activeRoute?.annotation, "Интеграции");
-  assert.deepEqual(
-    nextState.contextRoutes?.map(({ id }) => id),
-    ["indicators", "dynamics"],
-  );
+test("atlas starts with the manual route selected", () => {
+  assert.deepEqual(atlas.createAtlasState(), { activeRouteId: "manual" });
 });
+
+for (const routeId of ["sync", "archive", "care"]) {
+  test(`selecting ${routeId} returns that route as active`, () => {
+    assert.deepEqual(atlas.selectRoute(atlas.createAtlasState(), routeId), {
+      activeRouteId: routeId,
+    });
+  });
+}
 
 test("an unknown route leaves the current atlas state unchanged", () => {
-  const state = atlas.selectRoute(atlas.createAtlasState(), "dynamics");
+  const state = atlas.selectRoute(atlas.createAtlasState(), "sync");
 
   assert.equal(atlas.selectRoute(state, "missing"), state);
+});
+
+test("selecting the active route leaves the current atlas state unchanged", () => {
+  const state = atlas.selectRoute(atlas.createAtlasState(), "archive");
+
+  assert.equal(atlas.selectRoute(state, "archive"), state);
 });

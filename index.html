@@ -140,126 +140,265 @@
         </p>
       </section>
 
-      <section class="navigator" id="capabilities" aria-labelledby="capabilities-title">
+      <section
+        class="navigator"
+        id="capabilities"
+        aria-labelledby="capabilities-title"
+        data-capability-explorer
+      >
         <div class="section-heading">
-          <p class="section-heading__label">Карта задач</p>
-          <h2 id="capabilities-title" tabindex="-1">Что вы хотите сделать?</h2>
+          <p class="section-heading__label">КАРТА ВОЗМОЖНОСТЕЙ</p>
+          <h2 id="capabilities-title" tabindex="-1">Выберите знакомую задачу</h2>
           <p>
-            Выберите задачу — атлас покажет нужный маршрут и сохранит соседние
-            разделы в контексте.
+            Самочувствие, данные с устройств, документы и ориентиры по статусу —
+            четыре входа в одно приложение.
+          </p>
+          <p>
+            Главная, Я+Здоровье, Документы и Настройки закрывают разные задачи. На
+            этой странице — короткие сценарии и ответы на частые вопросы, чтобы
+            быстрее найти нужное.
           </p>
         </div>
 
-        <div class="route-selector" role="group" aria-label="Задачи в приложении">
+        <div class="capability-grid" role="group" aria-label="Задачи в приложении">
           <button
-            class="route-option is-active"
+            class="capability-card is-active"
             type="button"
-            data-route="indicators"
+            data-route="manual"
+            data-tone="mint"
             aria-pressed="true"
           >
-            <span class="route-option__marker" aria-hidden="true"></span>
-            <span>Вести показатели</span>
-            <strong>Выбрано</strong>
+            <span class="capability-card__badge">ВВОД</span>
+            <strong>Добавить данные</strong>
+            <span>Самочувствие, привычки, питание и показатели.</span>
+            <small data-selected-label>Выбрано</small>
           </button>
           <button
-            class="route-option"
+            class="capability-card"
             type="button"
-            data-route="dynamics"
+            data-route="sync"
+            data-tone="blue"
             aria-pressed="false"
           >
-            <span class="route-option__marker" aria-hidden="true"></span>
-            <span>Смотреть динамику</span>
-            <strong></strong>
+            <span class="capability-card__badge">СВЯЗЬ</span>
+            <strong>Подключить устройства</strong>
+            <span>Health-платформы, устройства, шаги, сон и пульс.</span>
+            <small data-selected-label></small>
           </button>
           <button
-            class="route-option"
+            class="capability-card"
             type="button"
-            data-route="integrations"
+            data-route="archive"
+            data-tone="rose"
             aria-pressed="false"
           >
-            <span class="route-option__marker" aria-hidden="true"></span>
-            <span>Подключить сервисы</span>
-            <strong></strong>
+            <span class="capability-card__badge">АРХИВ</span>
+            <strong>История здоровья</strong>
+            <span>Паспорт, документы и результаты исследований.</span>
+            <small data-selected-label></small>
           </button>
           <button
-            class="route-option"
+            class="capability-card"
             type="button"
-            data-route="answers"
+            data-route="care"
+            data-tone="tiffany"
             aria-pressed="false"
           >
-            <span class="route-option__marker" aria-hidden="true"></span>
-            <span>Найти ответ</span>
-            <strong></strong>
+            <span class="capability-card__badge">ЗАБОТА</span>
+            <strong>Сводка здоровья</strong>
+            <span>Статусы, расчётные оценки и вопросы для специалиста.</span>
+            <small data-selected-label></small>
           </button>
         </div>
 
-        <div class="route-detail" aria-live="polite">
-          <div class="route-detail__line" aria-hidden="true">
-            <span></span>
-          </div>
-          <div>
-            <p data-detail-annotation>Показатели</p>
-            <h3 data-detail-title>Вести данные в понятном ритме</h3>
-          </div>
-          <p data-detail-description>
-            Выберите нужный показатель в приложении и используйте подробную
-            инструкцию, когда она понадобится.
-          </p>
-          <p class="route-detail__note">
-            Числа на экранах — пример заполнения, не метрики продукта.
-          </p>
-        </div>
-      </section>
-
-      <section class="scenarios" aria-labelledby="scenarios-title">
-        <div class="section-heading section-heading--wide">
-          <p class="section-heading__label">Основные маршруты</p>
-          <h2 id="scenarios-title">От задачи — к нужному разделу</h2>
-          <p>
-            Здесь появятся реальные экраны приложения. Пока их место занимают
-            подписанные демонстрационные макеты с тем же размером и порядком.
-          </p>
-        </div>
-
-        <article class="scenario">
-          <div class="scenario__copy">
-            <p class="scenario__annotation">Показатели</p>
-            <h3>Сначала выберите, что хотите вести</h3>
-            <p>
-              Приложение помогает вести ключевые показатели. Подробные шаги
-              будут доступны в FAQ и документации.
-            </p>
-          </div>
-          <div class="demo-frame" aria-label="Демонстрационный экран показателей">
-            <span>Демонстрационный экран</span>
-            <div class="demo-frame__title"></div>
-            <div class="demo-frame__row"><i></i><b></b></div>
-            <div class="demo-frame__row"><i></i><b></b></div>
-            <div class="demo-frame__row"><i></i><b></b></div>
-          </div>
-        </article>
-
-        <article class="scenario scenario--reverse">
-          <div class="scenario__copy">
-            <p class="scenario__annotation">Динамика</p>
-            <h3>Затем найдите нужный период</h3>
-            <p>
-              История показателей помогает ориентироваться в данных и
-              возвращаться к нужному периоду без лишних переходов.
-            </p>
-          </div>
-          <div
-            class="demo-frame demo-frame--chart"
-            aria-label="Демонстрационный экран динамики"
-          >
-            <span>Демонстрационный экран</span>
-            <div class="demo-frame__title"></div>
-            <div class="demo-chart" aria-hidden="true">
-              <i></i><i></i><i></i><i></i><i></i><i></i>
+        <div class="route-results" data-route-results aria-live="polite" aria-atomic="true">
+          <article class="route-panel" data-route-panel="manual">
+            <div>
+              <p class="capability-card__badge">ВВОД</p>
+              <p>Вести вручную</p>
+              <h3>Фиксируйте то, что обычно теряется между заметками и памятью.</h3>
+              <p>Самочувствие, привычки, питание и показатели.</p>
+              <ul aria-label="Подтверждённые возможности">
+                <li>Самочувствие</li>
+                <li>Привычки</li>
+                <li>Питание</li>
+                <li>Анкеты</li>
+                <li>Показатели</li>
+              </ul>
             </div>
-            <div class="demo-frame__caption"></div>
-          </div>
-        </article>
+            <div class="route-panel__screens">
+              <figure>
+                <img
+                  src="./public/screenshots/wellbeing-and-questionnaires.jpg"
+                  width="576"
+                  height="1280"
+                  alt="Экран «Я+Здоровье»: самочувствие, анкеты и показатели"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>Основной экран: самочувствие и анкеты.</figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="./public/screenshots/wellbeing-today.jpg"
+                  width="576"
+                  height="1280"
+                  alt="Экран дневной отметки самочувствия"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>Контекст: самочувствие сегодня.</figcaption>
+              </figure>
+              <p>Числа на экранах — пример заполнения, не метрики продукта.</p>
+            </div>
+          </article>
+
+          <article class="route-panel" data-route-panel="sync">
+            <div>
+              <p class="capability-card__badge">СВЯЗЬ</p>
+              <p>Подключить из платформ и устройств</p>
+              <h3>
+                Соберите базовую картину из привычных health-сервисов и устройств.
+              </h3>
+              <p>Health-платформы, устройства, шаги, сон и пульс.</p>
+              <ul aria-label="Подтверждённые возможности">
+                <li>Активность</li>
+                <li>Сон</li>
+                <li>Пульс</li>
+                <li>ВСР</li>
+                <li>Кардиокарта</li>
+                <li>NEYROX PRO</li>
+                <li>Health Connect</li>
+                <li>Google Fit</li>
+                <li>Samsung Health</li>
+                <li>Apple Health</li>
+              </ul>
+            </div>
+            <div class="route-panel__screens">
+              <figure>
+                <img
+                  src="./public/screenshots/health-metrics.jpg"
+                  width="576"
+                  height="1280"
+                  alt="Главный экран с шагами, сном и пульсом"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>Основной экран: шаги, сон и пульс.</figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="./public/screenshots/devices-and-hrv.jpg"
+                  width="576"
+                  height="1280"
+                  alt="Настройки устройств и вариабельности сердечного ритма"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>Контекст: устройства и ВСР.</figcaption>
+              </figure>
+              <p>Числа на экранах — пример заполнения, не метрики продукта.</p>
+            </div>
+          </article>
+
+          <article class="route-panel" data-route-panel="archive">
+            <div>
+              <p class="capability-card__badge">АРХИВ</p>
+              <p>Хранить историю</p>
+              <h3>
+                Держите важные медицинские материалы рядом с контекстом
+                самочувствия.
+              </h3>
+              <p>Паспорт, документы и результаты исследований.</p>
+              <ul aria-label="Подтверждённые возможности">
+                <li>Паспорт здоровья</li>
+                <li>Приёмы</li>
+                <li>Лабораторные исследования</li>
+                <li>Генетические исследования</li>
+                <li>Исследования</li>
+                <li>Запросы</li>
+                <li>Добавление через QR</li>
+              </ul>
+            </div>
+            <div class="route-panel__screens">
+              <figure>
+                <img
+                  src="./public/screenshots/documents.jpg"
+                  width="576"
+                  height="1280"
+                  alt="Раздел документов с доступными категориями"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>Основной экран: категории документов.</figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="./public/screenshots/health-passport.jpg"
+                  width="576"
+                  height="1280"
+                  alt="Экран паспорта здоровья"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>Контекст: паспорт здоровья.</figcaption>
+              </figure>
+              <p>Числа на экранах — пример заполнения, не метрики продукта.</p>
+            </div>
+          </article>
+
+          <article class="route-panel" data-route-panel="care">
+            <div>
+              <p class="capability-card__badge">ЗАБОТА</p>
+              <p>Ориентироваться и готовиться к разговору со специалистом</p>
+              <h3>
+                Собирайте вопросы и подсказки как информационную поддержку, не
+                диагноз.
+              </h3>
+              <p>Статусы, расчётные оценки и вопросы для специалиста.</p>
+              <ul aria-label="Подтверждённые возможности">
+                <li>Статус здоровья</li>
+                <li>Биологический возраст</li>
+                <li>Чат-бот «Практический»</li>
+                <li>Информационные материалы</li>
+                <li>Экспериментальная аналитика</li>
+              </ul>
+              <aside aria-label="О медицинских оценках">
+                <strong>Важно</strong>
+                <p>
+                  Оценки и подсказки в приложении не являются диагнозом и не
+                  означают наличие заболевания. При вопросах о здоровье обсуждайте
+                  показатели со специалистом.
+                </p>
+              </aside>
+            </div>
+            <div class="route-panel__screens">
+              <figure>
+                <img
+                  src="./public/screenshots/health-status.jpg"
+                  width="576"
+                  height="1280"
+                  alt="Экран информационного статуса здоровья"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>Основной экран: статус здоровья.</figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="./public/screenshots/biological-age.jpg"
+                  width="576"
+                  height="1280"
+                  alt="Экран расчётной оценки биологического возраста"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>Контекст: биологический возраст.</figcaption>
+              </figure>
+              <p>Числа на экранах — пример заполнения, не метрики продукта.</p>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section class="integrations" id="integrations" aria-labelledby="integrations-title">
