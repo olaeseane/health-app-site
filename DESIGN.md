@@ -7,6 +7,9 @@ colors:
   tiffany-deep: "#12686b"
   tiffany-mist: "#e8f7f6"
   tiffany-fog: "#f4fbfa"
+  capability-mint: "#edf7f1"
+  capability-blue: "#edf5fb"
+  capability-rose: "#f8eef1"
   graphite: "#35333f"
   graphite-soft: "#5e5b67"
   white: "#ffffff"
@@ -79,18 +82,28 @@ components:
     rounded: "{rounded.pill}"
     padding: "13px 24px"
     height: "50px"
-  route-option:
-    backgroundColor: "transparent"
+  capability-card:
+    backgroundColor: "{colors.capability-mint}"
     textColor: "{colors.graphite}"
     typography: "{typography.body}"
     padding: "24px 28px"
     height: "154px"
-  route-option-selected:
+  capability-card-selected:
     backgroundColor: "{colors.tiffany}"
-    textColor: "{colors.tiffany-ink}"
+    textColor: "{colors.graphite}"
     typography: "{typography.body}"
     padding: "24px 28px"
     height: "154px"
+  first-route-step:
+    backgroundColor: "{colors.white}"
+    textColor: "{colors.graphite}"
+    typography: "{typography.body}"
+    rounded: "{rounded.card}"
+    borderColor: "{colors.line}"
+    padding: "24px 28px"
+  first-route-step-number:
+    backgroundColor: "transparent"
+    textColor: "{colors.tiffany}"
   atlas-screen-front:
     backgroundColor: "{colors.white}"
     textColor: "{colors.graphite}"
@@ -168,6 +181,8 @@ components:
 
 **The Graphite Anchor Rule.** Вся критичная информация и доступные состояния опираются на графит и не зависят только от различий оттенков Tiffany.
 
+**The Capability Pastel Rule.** `capability-mint`, `capability-blue`, `capability-rose` и существующий `tiffany-mist` используются только как фоны карточек возможностей в `#capabilities`. Текст на этих полях остаётся графитовым; эти роли дополняют, а не заменяют Tiffany, белый и графит системы.
+
 ## Typography
 
 **Display Font:** узкий системный гротеск с безопасными fallback-начертаниями.
@@ -230,21 +245,39 @@ components:
 - **Style:** текстовое действие с тонкой горизонтальной стрелкой; оно не выглядит третьей CTA-кнопкой.
 - **Hover / Focus:** подпись подчёркивается, а focus использует общее графитовое кольцо.
 
-### Task Route
+### Capability Card
 
-- **Default:** прозрачная ячейка с картографическими разделителями и геометрическим маркером.
-- **Hover:** лёгкое Tiffany-поле.
-- **Selected:** насыщенное Tiffany-поле, Tiffany-чернила и текстовая метка «Выбрано».
+- **Scope:** четыре большие пастельные route-control только в `#capabilities`; этот паттерн заменяет `Task Route` на данном лендинге.
+- **Mapping:**
+
+  | Badge | Card title | Canonical scenario | Background |
+  | --- | --- | --- | --- |
+  | ВВОД | Добавить данные | Вести вручную | `capability-mint` |
+  | СВЯЗЬ | Подключить устройства | Подключить из платформ и устройств | `capability-blue` |
+  | АРХИВ | История здоровья | Хранить историю | `capability-rose` |
+  | ЗАБОТА | Сводка здоровья | Ориентироваться и готовиться к разговору со специалистом | `tiffany-mist` |
+
+- **Text and badges:** весь текст остаётся графитовым. Badges — текстовые метки, не иконография; русские badges имеют intrinsic width и могут переноситься на узких экранах.
+- **Interaction:** вся карточка — один элемент выбора. Выбранное состояние использует существующий Tiffany вместе с видимым текстом «Выбрано», `aria-pressed` и общим видимым focus-кольцом; оно не выражается только цветом.
+- **Scenario Result:** каждая карточка управляет одной локальной evidence-областью `Scenario Result` с основным и контекстным скриншотами, текстовым объяснением и опциональной safety note. Эта область не является третьим карточным паттерном.
 - **Responsive:** четыре колонки, затем две, затем один вертикальный список.
+
+### First Route Step
+
+- **Scope:** белые нумерованные карточки только в `#first-route`.
+- **Style:** белый фон, существующий цвет линии, существующий мягкий card-radius, Tiffany-номер и отсутствие card shadow.
+- **Boundary:** ни `Capability Card`, ни `First Route Step` не разрешают дополнительные сетки карточек в других секциях.
 
 ### Atlas Screen
 
 - **Front layer:** белая цельная экранная рамка с `shadow-front`.
 - **Context layers:** Tiffany-поверхности со смещением, лёгким поворотом и разной тональной плотностью.
+- **Evidence:** использует реальные скриншоты в фиксированной hero-привязке: передний `2026-07-28 14.38.27.jpg` (главная), контекстные `2026-07-28 14.38.10.jpg` (паспорт здоровья) и `2026-07-28 14.38.25.jpg` (документы).
 - **State change:** передний слой меняет положение, тень и clip-path одним переходом; reduced motion сводит его к статической смене.
 
 ### Demo Frame
 
+- **Scope:** fallback-компонент только для случая отсутствия подтверждённых скриншотов; при наличии подтверждённых скриншотов этого плана не используется.
 - **Style:** крупная экранная заглушка на Tiffany-дымке или насыщенном Tiffany.
 - **Content:** подпись явно сообщает, что экран демонстрационный; внутренние строки и графики сохраняют место будущего скриншота.
 - **Depth:** использует `shadow-soft`, небольшой поворот и крупный showcase-радиус.
@@ -263,6 +296,8 @@ components:
 ### Named Rules
 
 **The State-in-Text Rule.** Активный маршрут всегда сочетает цветовое поле с текстовой меткой и доступным `aria-pressed`; один Tiffany не является состоянием.
+
+**The Bounded Patterns Rule.** Существующие правила типографики, белого пространства, Tiffany, графита, focus, Whole Object и State-in-Text остаются обязательными для обоих новых паттернов. Они не создают основания распространять карточный язык на интеграции, безопасность, FAQ, footer или будущие назначения.
 
 ## Do's and Don'ts
 
