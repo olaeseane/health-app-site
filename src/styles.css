@@ -63,6 +63,11 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+.health-site-main {
+  background: var(--white);
+  color: var(--graphite);
+}
+
 button,
 a {
   font: inherit;
