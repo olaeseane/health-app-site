@@ -4,6 +4,7 @@ import { extname, posix, resolve } from "node:path";
 const projectRoot = new URL("../", import.meta.url);
 const distDirectory = new URL("../dist/", import.meta.url);
 const outputFile = new URL("../dist/portal-inline.html", import.meta.url);
+const asciiOutputFile = new URL("../dist/portal-inline-ascii.html", import.meta.url);
 
 const mimeTypes = new Map([
   [".css", "text/css"],
@@ -32,6 +33,66 @@ async function dataUrlFromDist(relativePath) {
 
 function escapeScript(text) {
   return text.replaceAll("</script", "<\\/script");
+}
+
+function escapeNonAsciiForHtml(text) {
+  return text.replace(/[\u0080-\uFFFF]/g, (character) => {
+    return `&#${character.codePointAt(0)};`;
+  });
+}
+
+function escapeNonAsciiForJavaScript(text) {
+  return text.replace(/[\u0080-\uFFFF]/g, (character) => {
+    const codePoint = character.codePointAt(0);
+
+    if (codePoint <= 0xffff) {
+      return `\\u${codePoint.toString(16).padStart(4, "0")}`;
+    }
+
+    return `\\u{${codePoint.toString(16)}}`;
+  });
+}
+
+function escapeNonAsciiForCss(text) {
+  return text.replace(/[\u0080-\uFFFF]/g, (character) => {
+    return `\\${character.codePointAt(0).toString(16)} `;
+  });
+}
+
+function makeAsciiSafeHtml(html) {
+  const blocks = [];
+
+  let protectedHtml = html.replace(
+    /<style data-portal-inline="styles">([\s\S]*?)<\/style>/,
+    (_, styleBody) => {
+      const token = `__PORTAL_INLINE_BLOCK_${blocks.length}__`;
+      blocks.push(
+        `<style data-portal-inline="styles">${escapeNonAsciiForCss(styleBody)}</style>`,
+      );
+
+      return token;
+    },
+  );
+
+  protectedHtml = protectedHtml.replace(
+    /<script data-portal-inline="app">([\s\S]*?)<\/script>/,
+    (_, scriptBody) => {
+      const token = `__PORTAL_INLINE_BLOCK_${blocks.length}__`;
+      blocks.push(
+        `<script data-portal-inline="app">${escapeNonAsciiForJavaScript(scriptBody)}</script>`,
+      );
+
+      return token;
+    },
+  );
+
+  protectedHtml = escapeNonAsciiForHtml(protectedHtml);
+
+  blocks.forEach((block, index) => {
+    protectedHtml = protectedHtml.replace(`__PORTAL_INLINE_BLOCK_${index}__`, block);
+  });
+
+  return protectedHtml;
 }
 
 async function inlineCssUrls(css) {
@@ -120,8 +181,12 @@ async function buildPortalInline() {
   );
 
   await writeFile(outputFile, html, "utf8");
+  await writeFile(asciiOutputFile, makeAsciiSafeHtml(html), "utf8");
 
   console.log(`Built preliminary portal inline file: ${outputFile.pathname}`);
+  console.log(
+    `Built ASCII-safe portal inline file: ${asciiOutputFile.pathname}`,
+  );
 }
 
 await buildPortalInline();

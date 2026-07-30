@@ -10,13 +10,16 @@
 npm run build:portal-inline
 ```
 
-Создаёт:
+Создаёт два файла:
 
 ```text
 dist/portal-inline.html
+dist/portal-inline-ascii.html
 ```
 
-Это один HTML-файл, в котором встроены:
+`portal-inline-ascii.html` — предпочтительный вариант для HTML_Portlet, если есть проблемы с кодировкой. В нём русские символы в HTML заменены на numeric entities, а русские строки в JS — на `\\uXXXX` escapes.
+
+Оба файла — single-file HTML, в котором встроены:
 
 - HTML-разметка лендинга;
 - CSS внутри `<style data-portal-inline="styles">`;
