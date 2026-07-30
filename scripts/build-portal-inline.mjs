@@ -147,6 +147,12 @@ async function inlineHtmlAssetUrls(html) {
   return inlinedHtml;
 }
 
+function removePortalDuplicateChrome(html) {
+  return html
+    .replace(/\n\s*<a class="skip-link"[\s\S]*?<\/a>\n/, "\n")
+    .replace(/\n\s*<header class="site-header"[\s\S]*?<\/header>\n/, "\n");
+}
+
 async function buildPortalInline() {
   await mkdir(distDirectory, { recursive: true });
 
@@ -158,6 +164,7 @@ async function buildPortalInline() {
     await readFile(new URL("src/app.js", projectRoot), "utf8"),
   );
 
+  html = removePortalDuplicateChrome(html);
   html = await inlineHtmlAssetUrls(html);
   html = html.replaceAll(
     /\n\s*<link\s+rel="preload"[\s\S]*?\/>/g,

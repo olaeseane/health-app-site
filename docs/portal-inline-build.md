@@ -21,9 +21,9 @@ dist/portal-inline-ascii.html
 
 Оба файла — single-file HTML, в котором встроены:
 
-- HTML-разметка лендинга;
+- HTML-разметка лендинга без внутреннего header/menu, чтобы не конфликтовать с меню корпоративного портала;
 - CSS внутри `<style data-portal-inline="styles">`;
-- JS внутри `<script data-portal-inline="app" defer>`;
+- JS внутри `<script data-portal-inline="app">`;
 - изображения, логотип и шрифты как `data:` URLs.
 
 ## Для чего подходит
