@@ -81,6 +81,11 @@ test("hero follows the approved landing content", () => {
   );
 });
 
+test("client interaction script works when index.html is opened directly", () => {
+  assert.match(landing, /<script defer src="\.\/src\/app\.js"><\/script>/);
+  assert.doesNotMatch(landing, /<script[^>]+type="module"[^>]+src="\.\/src\/app\.js"/);
+});
+
 test("header keeps one navigation system without a duplicate task action", () => {
   const header = landing.match(
     /<header\b[^>]*class="site-header"[^>]*>([\s\S]*?)<\/header>/,
