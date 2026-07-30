@@ -171,13 +171,19 @@ const taskScreens = {
   },
 };
 
-const taskProof = document.querySelector("[data-task-proof]");
-const taskProofTitle = taskProof?.querySelector("[data-task-proof-title]");
-const taskProofScreens = [
-  ...(taskProof?.querySelectorAll("[data-task-screen]") ?? []),
-];
-const taskControls = [...document.querySelectorAll("[data-task-select]")];
-const taskItems = [...document.querySelectorAll("[data-task-item]")];
+function getTaskElements() {
+  const taskProof = document.querySelector("[data-task-proof]");
+
+  return {
+    taskControls: [...document.querySelectorAll("[data-task-select]")],
+    taskItems: [...document.querySelectorAll("[data-task-item]")],
+    taskProof,
+    taskProofScreens: [
+      ...(taskProof?.querySelectorAll("[data-task-screen]") ?? []),
+    ],
+    taskProofTitle: taskProof?.querySelector("[data-task-proof-title]"),
+  };
+}
 
 function preloadTask(taskId) {
   taskScreens[taskId]?.screens.forEach(({ src }) => {
@@ -213,6 +219,13 @@ function renderMobileProof(item, task) {
 }
 
 function selectTask(taskId) {
+  const {
+    taskControls,
+    taskItems,
+    taskProof,
+    taskProofScreens,
+    taskProofTitle,
+  } = getTaskElements();
   const task = taskScreens[taskId];
   const selectedItem = taskItems.find(
     ({ dataset }) => dataset.taskItem === taskId,
@@ -263,16 +276,10 @@ function selectTask(taskId) {
   renderMobileProof(selectedItem, task);
 }
 
-if (
-  taskProof &&
-  taskProofTitle &&
-  taskProofScreens.length === 3 &&
-  taskControls.length === Object.keys(taskScreens).length
-) {
+function installTaskInteractions() {
+  const { taskControls } = getTaskElements();
+
   taskControls.forEach((control) => {
-    control.addEventListener("click", () => {
-      selectTask(control.dataset.taskSelect);
-    });
     control.addEventListener("focus", () => {
       preloadTask(control.dataset.taskSelect);
     });
@@ -280,32 +287,65 @@ if (
       preloadTask(control.dataset.taskSelect);
     });
   });
-  taskItems.forEach((item) => {
-    item.addEventListener("click", (event) => {
-      if (
-        event.target.closest("[data-task-select]") ||
-        event.target.closest("[data-mobile-task-proof]")
-      ) {
+
+  selectTask(taskControls[0]?.dataset.taskSelect ?? "wellbeing");
+}
+
+window.healthSiteSelectTask = (taskId) => {
+  selectTask(taskId);
+  return false;
+};
+
+document.addEventListener("click", (event) => {
+  const target = event.target;
+
+  if (!(target instanceof Element)) {
+    return;
+  }
+
+  const control = target.closest("[data-task-select]");
+
+  if (control) {
+    event.preventDefault();
+    selectTask(control.dataset.taskSelect);
+    return;
+  }
+
+  const item = target.closest("[data-task-item]");
+
+  if (!item || target.closest("[data-mobile-task-proof]")) {
+    return;
+  }
+
+  event.preventDefault();
+  selectTask(item.dataset.taskItem);
+});
+
+function installFocusTargetLinks() {
+  document.querySelectorAll("[data-focus-target]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const target = document.getElementById(link.dataset.focusTarget);
+
+      if (!target) {
         return;
       }
 
-      item.querySelector("[data-task-select]")?.click();
+      event.preventDefault();
+      history.pushState(null, "", link.hash);
+      target.focus();
     });
   });
-
-  selectTask(taskControls[0].dataset.taskSelect);
 }
 
-document.querySelectorAll("[data-focus-target]").forEach((link) => {
-  link.addEventListener("click", (event) => {
-    const target = document.getElementById(link.dataset.focusTarget);
+function initLandingInteractions() {
+  installTaskInteractions();
+  installFocusTargetLinks();
+}
 
-    if (!target) {
-      return;
-    }
-
-    event.preventDefault();
-    history.pushState(null, "", link.hash);
-    target.focus();
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initLandingInteractions, {
+    once: true,
   });
-});
+} else {
+  initLandingInteractions();
+}

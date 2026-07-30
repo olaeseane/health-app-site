@@ -153,6 +153,16 @@ function removePortalDuplicateChrome(html) {
     .replace(/\n\s*<header class="site-header"[\s\S]*?<\/header>\n/, "\n");
 }
 
+function addPortalInlineTaskHandlers(html) {
+  return html
+    .replace(/(<li class="task-item[^"]*" data-task-item="([^"]+)")/g, (_, prefix, taskId) => {
+      return `${prefix} onclick="return window.healthSiteSelectTask ? window.healthSiteSelectTask('${taskId}') : true"`;
+    })
+    .replace(/(<button class="task-item__select" type="button" data-task-select="([^"]+)")/g, (_, prefix, taskId) => {
+      return `${prefix} onclick="return window.healthSiteSelectTask ? window.healthSiteSelectTask('${taskId}') : true"`;
+    });
+}
+
 async function buildPortalInline() {
   await mkdir(distDirectory, { recursive: true });
 
@@ -165,6 +175,7 @@ async function buildPortalInline() {
   );
 
   html = removePortalDuplicateChrome(html);
+  html = addPortalInlineTaskHandlers(html);
   html = await inlineHtmlAssetUrls(html);
   html = html.replaceAll(
     /\n\s*<link\s+rel="preload"[\s\S]*?\/>/g,
