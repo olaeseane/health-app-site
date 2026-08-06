@@ -53,18 +53,19 @@ function section(id) {
   )?.[1];
 }
 
-test("hero follows the approved landing content", () => {
+test("hero presents one focused entry point", () => {
   const hero = section("top");
 
   assert.ok(hero);
-  assert.match(hero, /Приложение «Здоровье»/);
-  assert.match(hero, /Всё о вашем здоровье — в одном месте/);
+  assert.doesNotMatch(hero, /Приложение «Здоровье»/);
+  assert.match(hero, /Каждый день - возможность/);
   assert.match(
     hero,
-    /Отмечайте самочувствие, смотрите данные о шагах, сне и пульсе,/,
+    /Чтобы предупредить болезнь, сначала нужно заметить изменения за\s+тысячей рутинных дел/,
   );
-  assert.match(hero, /href="#tasks"[^>]*>\s*С чего начать/);
-  assert.match(hero, /href="#faq"[^>]*>Частые вопросы/);
+  assert.match(hero, /href="#first-route"[^>]*>\s*С чего начать/);
+  assert.doesNotMatch(hero, /href="#faq"/);
+  assert.equal((hero.match(/class="button\b/g) ?? []).length, 1);
   assert.doesNotMatch(hero, /hero-topic-(?:line|index)/);
   assert.doesNotMatch(hero, /hero__disclaimer/);
   assert.match(
@@ -86,12 +87,18 @@ test("client interaction script works when index.html is opened directly", () =>
   assert.doesNotMatch(landing, /<script[^>]+type="module"[^>]+src="\.\/src\/app\.js"/);
 });
 
-test("header keeps one navigation system without a duplicate task action", () => {
+test("header links to getting started before the task directory", () => {
   const header = landing.match(
     /<header\b[^>]*class="site-header"[^>]*>([\s\S]*?)<\/header>/,
   )?.[1];
 
   assert.ok(header);
+  assert.match(header, /href="#first-route"[^>]*>С чего начать/);
+  assert.match(header, /href="#tasks"[^>]*>Основные задачи/);
+  assert.ok(
+    header.indexOf('href="#first-route"') < header.indexOf('href="#tasks"'),
+    "getting started must come before the task directory",
+  );
   assert.match(header, /href="#faq"[^>]*>Частые вопросы/);
   assert.match(header, /href="#documentation"[^>]*>Документация/);
   assert.doesNotMatch(header, /class="header-route"/);
@@ -100,7 +107,7 @@ test("header keeps one navigation system without a duplicate task action", () =>
 });
 
 test("section kickers use one shared visual format", () => {
-  assert.equal((landing.match(/class="section-kicker"/g) ?? []).length, 6);
+  assert.equal((landing.match(/class="section-kicker"/g) ?? []).length, 5);
   assert.doesNotMatch(landing, /class="(?:hero__kicker|section-heading__label)"/);
   assert.match(
     styles,
@@ -194,10 +201,6 @@ test("desktop sections use the approved compact density", () => {
   );
   assert.match(
     styles,
-    /\.first-route__step\s*\{[^}]*min-height: 220px;/,
-  );
-  assert.match(
-    styles,
     /\.integration-list li\s*\{[^}]*min-height: 80px;/,
   );
 });
@@ -231,27 +234,28 @@ test("hero uses the generated one-day archive while tasks keep screenshot eviden
   assert.match(tasks, /<img\b/);
 });
 
-test("first route contains the four approved steps", () => {
+test("getting started follows the hero as one connected route", () => {
   const route = section("first-route");
 
   assert.ok(route);
   assert.ok(
-    landing.indexOf('id="tasks"') < landing.indexOf('id="first-route"'),
-    "tasks must come before the first route",
+    landing.indexOf('id="top"') < landing.indexOf('id="first-route"'),
+    "getting started must follow the hero",
   );
   assert.ok(
-    landing.indexOf('id="first-route"') < landing.indexOf('id="integrations"'),
-    "first route must come before integrations",
+    landing.indexOf('id="first-route"') < landing.indexOf('id="tasks"'),
+    "getting started must come before the task directory",
   );
-  assert.match(route, /Начните с простого пути/);
+  assert.match(route, /С чего начать/);
+  assert.match(route, /Ваш первый портрет здоровья/);
   assert.equal((route.match(/class="first-route__step"/g) ?? []).length, 4);
   assert.equal((route.match(/class="first-route__num"/g) ?? []).length, 4);
   assert.doesNotMatch(route, /class="route-link"/);
   for (const heading of [
-    "Выберите задачу",
     "Добавьте то, что уже есть",
-    "Посмотрите общую картину",
-    "Продолжайте в удобном темпе",
+    "Получите первый портрет здоровья",
+    "Дополняйте по мере изменений",
+    "Наблюдайте, как меняется здоровье",
   ]) {
     assert.ok(route.includes(heading), heading);
   }
@@ -261,7 +265,11 @@ test("first route contains the four approved steps", () => {
   );
   assert.match(
     styles,
-    /@media \(min-width: 1081px\)[\s\S]*?\.first-route__grid\s*\{[^}]*grid-template-columns: repeat\(4,/,
+    /\.first-route__grid::before\s*\{[^}]*position: absolute;[^}]*height: 2px;[^}]*background: var\(--line\);/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 1080px\)[\s\S]*?\.first-route__grid::before\s*\{[^}]*width: 2px;[^}]*height: auto;/,
   );
 });
 

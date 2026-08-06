@@ -43,8 +43,8 @@
       </a>
 
       <nav class="site-nav" aria-label="Разделы страницы">
-        <a href="#tasks">С чего начать</a>
-        <a href="#first-route">Первый маршрут</a>
+        <a href="#first-route">С чего начать</a>
+        <a href="#tasks">Основные задачи</a>
         <a href="#integrations">Интеграции</a>
         <a href="#faq">Частые вопросы</a>
         <a href="#documentation">Документация</a>
@@ -54,24 +54,20 @@
     <main class="health-site-main" id="main">
       <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="hero__copy">
-          <p class="section-kicker">Приложение «Здоровье»</p>
-          <h1 id="hero-title">Всё о вашем здоровье — в одном месте</h1>
+          <h1 id="hero-title">Каждый день - возможность</h1>
           <p class="hero__lead">
-            Отмечайте самочувствие, смотрите данные о шагах, сне и пульсе,
-            заполняйте анкеты и храните результаты исследований. Приложение
-            собирает всё важное в одном месте и помогает понять, куда двигаться
-            дальше.
+            Чтобы предупредить болезнь, сначала нужно заметить изменения за
+            тысячей рутинных дел
           </p>
 
           <div class="hero__actions">
             <a
               class="button button--primary"
-              href="#tasks"
-              data-focus-target="tasks-title"
+              href="#first-route"
+              data-focus-target="first-route-title"
             >
               С чего начать
             </a>
-            <a class="button button--secondary" href="#faq">Частые вопросы</a>
           </div>
 
         </div>
@@ -90,6 +86,54 @@
             Наблюдения складываются в историю — от утра к вечеру.
           </figcaption>
         </figure>
+      </section>
+
+      <section
+        class="first-route"
+        id="first-route"
+        aria-labelledby="first-route-title"
+      >
+        <div class="section-heading">
+          <p class="section-kicker">С чего начать</p>
+          <h2 id="first-route-title" tabindex="-1">
+            Ваш первый портрет здоровья
+          </h2>
+        </div>
+
+        <ol class="first-route__grid">
+          <li class="first-route__step">
+            <span class="first-route__num" aria-hidden="true">1</span>
+            <h3>Добавьте то, что уже есть</h3>
+            <p>
+              Привычки, самочувствие, анализы и показатели организма — начните
+              с малого.
+            </p>
+          </li>
+          <li class="first-route__step">
+            <span class="first-route__num" aria-hidden="true">2</span>
+            <h3>Получите первый портрет здоровья</h3>
+            <p>
+              Приложение объединит информацию и покажет первое представление о
+              вашем состоянии.
+            </p>
+          </li>
+          <li class="first-route__step">
+            <span class="first-route__num" aria-hidden="true">3</span>
+            <h3>Дополняйте по мере изменений</h3>
+            <p>
+              Ведите дневник пищи и сна, отмечайте изменения состояния и
+              фиксируйте важные события.
+            </p>
+          </li>
+          <li class="first-route__step">
+            <span class="first-route__num" aria-hidden="true">4</span>
+            <h3>Наблюдайте, как меняется здоровье</h3>
+            <p>
+              Со временем портрет становится точнее и помогает замечать
+              изменения раньше.
+            </p>
+          </li>
+        </ol>
       </section>
 
       <section class="task-directory" id="tasks" aria-labelledby="tasks-title">
@@ -424,52 +468,6 @@
             </li>
           </ol>
         </div>
-      </section>
-
-      <section
-        class="first-route"
-        id="first-route"
-        aria-labelledby="first-route-title"
-      >
-        <div class="section-heading">
-          <p class="section-kicker">Первый маршрут</p>
-          <h2 id="first-route-title">Начните с простого пути</h2>
-        </div>
-
-        <ol class="first-route__grid">
-          <li class="first-route__step">
-            <span class="first-route__num" aria-hidden="true">1</span>
-            <h3>Выберите задачу</h3>
-            <p>
-              Например, отметить самочувствие, заполнить анкету, добавить
-              результаты исследований или посмотреть показатели.
-            </p>
-          </li>
-          <li class="first-route__step">
-            <span class="first-route__num" aria-hidden="true">2</span>
-            <h3>Добавьте то, что уже есть</h3>
-            <p>
-              Внесите показатели вручную, отсканируйте QR-код документа или
-              подключите устройство.
-            </p>
-          </li>
-          <li class="first-route__step">
-            <span class="first-route__num" aria-hidden="true">3</span>
-            <h3>Посмотрите общую картину</h3>
-            <p>
-              В паспорте здоровья собраны ваши анкеты, результаты исследований,
-              шаги, сон, пульс и зоны, которым стоит уделить внимание.
-            </p>
-          </li>
-          <li class="first-route__step">
-            <span class="first-route__num" aria-hidden="true">4</span>
-            <h3>Продолжайте в удобном темпе</h3>
-            <p>
-              Отмечайте привычки, выполняйте задания и дополняйте данные, когда
-              это удобно.
-            </p>
-          </li>
-        </ol>
       </section>
 
       <section

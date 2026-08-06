@@ -605,21 +605,34 @@ svg {
 }
 
 .first-route__grid {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 48px);
   margin: clamp(44px, 4vw, 56px) 0 0;
   padding: 0;
   list-style: none;
 }
 
+.first-route__grid::before {
+  position: absolute;
+  top: 21px;
+  right: 22px;
+  left: 22px;
+  height: 2px;
+  background: var(--line);
+  content: "";
+}
+
 .first-route__step {
+  position: relative;
+  z-index: 1;
   min-width: 0;
-  min-height: 220px;
-  padding: 24px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--white);
+  padding: 0 clamp(12px, 2vw, 24px) 0 0;
+}
+
+.first-route__step:last-child {
+  padding-right: 0;
 }
 
 .first-route__step p {
@@ -630,6 +643,8 @@ svg {
 }
 
 .first-route__num {
+  position: relative;
+  z-index: 1;
   display: grid;
   width: 44px;
   height: 44px;
@@ -874,10 +889,6 @@ svg {
   .route-panel__screens {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .first-route__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 @media (min-width: 1081px) {
@@ -889,10 +900,6 @@ svg {
     grid-template-columns: minmax(320px, 0.82fr) minmax(560px, 1.18fr);
     align-items: start;
     gap: clamp(52px, 8vw, 120px);
-  }
-
-  .first-route__grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -912,6 +919,47 @@ svg {
 
   .site-header {
     grid-template-columns: 1fr;
+  }
+
+  .first-route__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .first-route__grid::before {
+    top: 22px;
+    right: auto;
+    bottom: 22px;
+    left: 21px;
+    width: 2px;
+    height: auto;
+  }
+
+  .first-route__step {
+    display: grid;
+    padding: 0 0 40px;
+    grid-template-columns: 44px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 20px;
+  }
+
+  .first-route__step:last-child {
+    padding-bottom: 0;
+  }
+
+  .first-route__num {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .first-route__step h3 {
+    grid-column: 2;
+    margin-top: 5px;
+  }
+
+  .first-route__step h3 + p {
+    grid-column: 2;
+    margin-top: 12px;
   }
 
 }
@@ -1107,10 +1155,6 @@ svg {
   margin: 24px 0 0;
   color: var(--graphite-soft);
   font-size: clamp(1rem, 1.4vw, 1.18rem);
-}
-
-.first-route__step {
-  min-height: 220px;
 }
 
 .first-route__step h3 {
