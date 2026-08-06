@@ -10,32 +10,48 @@ const styles = readFileSync(
 const app = readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
 const design = readFileSync(new URL("../DESIGN.md", import.meta.url), "utf8");
 
-const taskHeadings = [
-  "Понять, как меняется самочувствие",
-  "Собрать свой паспорт здоровья",
-  "Пройти анкеты",
-  "Посмотреть статус здоровья",
-  "Хранить анализы и документы",
-  "Следить за питанием и весом",
-  "Наблюдать за привычками",
-  "Узнать биологический возраст",
-  "Следить за ежедневными показателями",
-  "Выполнять задания и получать награды",
-  "Задать вопрос чат-боту",
-];
+const product = readFileSync(new URL("../PRODUCT.md", import.meta.url), "utf8");
+const content = readFileSync(
+  new URL("../docs/landing-content.md", import.meta.url),
+  "utf8",
+);
+const surface = readFileSync(
+  new URL("../.impeccable/surfaces/landing.md", import.meta.url),
+  "utf8",
+);
 
-const taskLocations = [
-  "Самочувствие",
-  "Паспорт здоровья",
-  "Анкеты",
-  "Статус здоровья",
-  "Документы",
-  "Питание и вес",
-  "Привычки",
-  "Биологический возраст",
-  "Ежедневные показатели",
-  "Задания и награды",
-  "Практический чат-бот",
+const simplicityChapters = [
+  {
+    index: "01 / ПИТАНИЕ",
+    title: "Дневник ведёт сам себя",
+    lead: "Просто сфотографируйте еду",
+    body:
+      "ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически добавит запись в дневник.",
+    screenshot: "nutrition.jpg",
+  },
+  {
+    index: "02 / ПРИВЫЧКИ",
+    title: "Помнить всё не нужно",
+    lead: "Отмечайте привычки в касание",
+    body:
+      "Выберите нужные один раз и отмечайте их каждый день. История сохранится автоматически и покажет прогресс за месяц.",
+    screenshot: "habits.jpg",
+  },
+  {
+    index: "03 / ДОКУМЕНТЫ",
+    title: "Анализы вносятся сами",
+    lead: "Загрузите их любым удобным способом",
+    body: "QR-код, фотография или PDF — приложение съест всё.",
+    screenshot: "document-add.jpg",
+  },
+  {
+    index: "04 / СВЯЗЬ",
+    title: "Интеграции интегрируются",
+    lead: "Подключайте любимые устройства и сервисы",
+    body:
+      "Приложение автоматически получает показатели из популярных приложений и устройств.",
+    screenshot: "devices-and-hrv.jpg",
+  },
 ];
 
 const faqQuestions = [
@@ -87,22 +103,21 @@ test("client interaction script works when index.html is opened directly", () =>
   assert.doesNotMatch(landing, /<script[^>]+type="module"[^>]+src="\.\/src\/app\.js"/);
 });
 
-test("header links to getting started before the task directory", () => {
+test("header links to simplicity after getting started", () => {
   const header = landing.match(
     /<header\b[^>]*class="site-header"[^>]*>([\s\S]*?)<\/header>/,
   )?.[1];
 
   assert.ok(header);
   assert.match(header, /href="#first-route"[^>]*>С чего начать/);
-  assert.match(header, /href="#tasks"[^>]*>Основные задачи/);
+  assert.match(header, /href="#simplicity"[^>]*>Простота/);
   assert.ok(
-    header.indexOf('href="#first-route"') < header.indexOf('href="#tasks"'),
-    "getting started must come before the task directory",
+    header.indexOf('href="#first-route"') <
+      header.indexOf('href="#simplicity"'),
   );
   assert.match(header, /href="#faq"[^>]*>Частые вопросы/);
   assert.match(header, /href="#documentation"[^>]*>Документация/);
-  assert.doesNotMatch(header, /class="header-route"/);
-  assert.doesNotMatch(header, />\s*Выбрать задачу\s*</);
+  assert.doesNotMatch(header, /href="#tasks"|>Основные задачи/);
   assert.doesNotMatch(styles, /\.header-route/);
 });
 
@@ -112,10 +127,6 @@ test("section kickers use one shared visual format", () => {
   assert.match(
     styles,
     /\.section-kicker\s*\{[\s\S]*?color: var\(--tiffany-deep\);[\s\S]*?font-family: var\(--body\);[\s\S]*?font-size: 0\.78rem;[\s\S]*?font-weight: 800;[\s\S]*?line-height: 1\.6;[\s\S]*?letter-spacing: 0\.14em;[\s\S]*?text-transform: uppercase;/,
-  );
-  assert.match(
-    styles,
-    /\.task-directory \.section-heading > p:not\(\.section-kicker\)/,
   );
   assert.match(
     styles,
@@ -177,7 +188,7 @@ test("hero and section headlines keep a clear responsive hierarchy", () => {
   );
   assert.match(
     styles,
-    /@media \(max-width: 600px\)[\s\S]*?\.task-item h3\s*\{[^}]*font-size: clamp\(1\.55rem, 7vw, 1\.9rem\);/,
+    /@media \(max-width: 600px\)[\s\S]*?\.simplicity__copy h3\s*\{[^}]*font-size: clamp\(1\.75rem, 7\.5vw, 2\.1rem\);/,
   );
   assert.doesNotMatch(
     styles,
@@ -189,15 +200,11 @@ test("desktop sections use the approved compact density", () => {
   assert.match(styles, /--max-width:\s*1320px;/);
   assert.match(
     styles,
-    /\.task-directory\s*\{[^}]*padding: clamp\(88px, 7\.8vw, 112px\) var\(--page-pad\);/,
+    /\.simplicity\s*\{[^}]*padding: clamp\(88px, 7\.8vw, 112px\) var\(--page-pad\);/,
   );
   assert.match(
     styles,
-    /\.task-proof\s*\{[^}]*height: 660px;/,
-  );
-  assert.match(
-    styles,
-    /\.task-item\s*\{[^}]*padding: clamp\(30px, 3vw, 40px\) 0;/,
+    /\.simplicity__chapter\s*\{[^}]*padding: clamp\(40px, 4\.2vw, 56px\) 0;/,
   );
   assert.match(
     styles,
@@ -205,12 +212,12 @@ test("desktop sections use the approved compact density", () => {
   );
 });
 
-test("hero uses the generated one-day archive while tasks keep screenshot evidence", () => {
+test("hero keeps its illustration while simplicity uses four real screens", () => {
   const hero = section("top");
-  const tasks = section("tasks");
+  const simplicity = section("simplicity");
 
   assert.ok(hero);
-  assert.ok(tasks);
+  assert.ok(simplicity);
   assert.equal(
     existsSync(
       new URL(
@@ -230,8 +237,7 @@ test("hero uses the generated one-day archive while tasks keep screenshot eviden
     /alt="Слоистый архив дня с маршрутом между самочувствием, активностью, документами и подсказками"/,
   );
   assert.doesNotMatch(hero, /class="atlas"/);
-  assert.match(tasks, /class="task-proof"/);
-  assert.match(tasks, /<img\b/);
+  assert.equal((simplicity.match(/<img\b/g) ?? []).length, 4);
 });
 
 test("getting started follows the hero as one connected route", () => {
@@ -243,8 +249,8 @@ test("getting started follows the hero as one connected route", () => {
     "getting started must follow the hero",
   );
   assert.ok(
-    landing.indexOf('id="first-route"') < landing.indexOf('id="tasks"'),
-    "getting started must come before the task directory",
+    landing.indexOf('id="first-route"') < landing.indexOf('id="simplicity"'),
+    "getting started must come before simplicity",
   );
   assert.match(route, /С чего начать/);
   assert.match(route, /Ваш первый портрет здоровья/);
@@ -273,92 +279,123 @@ test("getting started follows the hero as one connected route", () => {
   );
 });
 
-test("task directory contains all eleven tasks and app locations", () => {
-  const tasks = section("tasks");
+test("simplicity replaces the task directory with four editorial chapters", () => {
+  const simplicity = section("simplicity");
 
-  assert.ok(tasks);
-  assert.match(
-    tasks,
-    /Выберите задачу — покажем соответствующие экраны\s+приложения\./,
-  );
+  assert.ok(simplicity);
+  const normalizedSimplicity = simplicity.replace(/\s+/g, " ");
+  assert.match(simplicity, /Простота использования/);
+  assert.match(simplicity, /Мы убрали всё, что обычно мешает начать/);
   assert.equal(
-    (tasks.match(/class="task-item(?:\s[^"]*)?"/g) ?? []).length,
-    11,
+    (simplicity.match(/class="simplicity__chapter"/g) ?? []).length,
+    4,
   );
-  assert.equal((tasks.match(/class="task-item__location"/g) ?? []).length, 11);
-  assert.equal((tasks.match(/class="task-item__state"/g) ?? []).length, 11);
-  assert.equal((tasks.match(/data-task-select=/g) ?? []).length, 11);
-  assert.equal((tasks.match(/aria-pressed="true"/g) ?? []).length, 1);
-  assert.equal((tasks.match(/aria-pressed="false"/g) ?? []).length, 10);
+  assert.equal((simplicity.match(/<img\b/g) ?? []).length, 4);
 
-  for (const value of [...taskHeadings, ...taskLocations]) {
-    assert.ok(tasks.includes(value), value);
-  }
-
-  assert.doesNotMatch(tasks, /class="task-item__location"[^>]*>\s*(?:Открыть|Выбрать|Добавить|Посмотреть|Рассчитать)/);
-  assert.match(tasks, /Это информационная оценка, а не диагноз\./);
-  assert.doesNotMatch(styles, /content: "(?:Смотреть|Показано)"/);
-  assert.match(
-    styles,
-    /\.task-item\.is-selected \.task-item__state::before\s*\{[^}]*border-width: 0 0 2px 2px/,
-  );
-  for (const screenshot of [
-    "practical-chatbot.jpg",
-    "questionnaires.jpg",
-    "nutrition.jpg",
-    "habits.jpg",
-    "rewards.jpg",
-    "daily-tasks.jpg",
-    "document-add.jpg",
-  ]) {
+  for (const chapter of simplicityChapters) {
+    assert.ok(normalizedSimplicity.includes(chapter.index), chapter.index);
+    assert.ok(normalizedSimplicity.includes(chapter.title), chapter.title);
+    assert.ok(normalizedSimplicity.includes(chapter.lead), chapter.lead);
+    assert.ok(normalizedSimplicity.includes(chapter.body), chapter.body);
+    assert.match(
+      simplicity,
+      new RegExp(`src="\\./public/screenshots/${chapter.screenshot}"`),
+    );
     assert.ok(
       existsSync(
-        new URL(`../public/screenshots/${screenshot}`, import.meta.url),
+        new URL(`../public/screenshots/${chapter.screenshot}`, import.meta.url),
       ),
-      screenshot,
+      chapter.screenshot,
     );
-    assert.ok(app.includes(`./public/screenshots/${screenshot}`), screenshot);
   }
 
-  assert.match(app, /function selectTask\(taskId\)/);
-  assert.match(app, /aria-pressed/);
-  assert.match(app, /document\.addEventListener\("click", \(event\) =>/);
-  assert.match(app, /target\.closest\("\[data-task-item\]"\)/);
-  assert.match(app, /target\.closest\("\[data-task-select\]"\)/);
-  assert.match(styles, /\.task-item\s*\{[^}]*cursor: pointer;/);
-  assert.match(styles, /\.task-item\.is-selected/);
-  assert.match(styles, /\.task-mobile-proof/);
+  assert.ok(
+    landing.indexOf('id="first-route"') <
+      landing.indexOf('id="simplicity"'),
+  );
+  assert.ok(
+    landing.indexOf('id="simplicity"') <
+      landing.indexOf('id="integrations"'),
+  );
+  assert.doesNotMatch(landing, /id="tasks"|class="task-directory"/);
 });
 
-test("task screen changes keep the proof visually stable", () => {
-  assert.doesNotMatch(app, /screen\.animate\(/);
-  assert.match(app, /task\.screens\.length === 1[\s\S]*?\[null, task\.screens\[0\], null\]/);
+test("simplicity is static while focus-target navigation remains available", () => {
+  const simplicity = section("simplicity");
+
+  assert.ok(simplicity);
   assert.doesNotMatch(
-    styles,
-    /\.task-proof\[data-screen-count="(?:1|2)"\]\s+\.task-proof__screen/,
+    simplicity,
+    /data-task|aria-pressed|<button\b|task-proof|task-mobile-proof/,
   );
   assert.doesNotMatch(
+    app,
+    /taskScreens|selectTask|healthSiteSelectTask|data-task-select|data-task-item/,
+  );
+  assert.match(app, /function installFocusTargetLinks\(\)/);
+  assert.match(app, /installFocusTargetLinks\(\);/);
+});
+
+test("simplicity uses an open editorial layout without screenshot panels", () => {
+  assert.match(
     styles,
-    /\.task-item\.is-selected\s*\{[^}]*background/,
+    /\.simplicity\s*\{[^}]*background: var\(--white\);/,
+  );
+  assert.match(
+    styles,
+    /\.simplicity__chapter\s*\{[^}]*display: grid;/,
+  );
+  assert.match(
+    styles,
+    /\.simplicity__chapter \+ \.simplicity__chapter\s*\{[^}]*border-top: 1px solid var\(--line\);/,
+  );
+  assert.doesNotMatch(
+    styles.match(/\.simplicity__chapters\s*\{([^}]*)\}/)?.[1] ?? "",
+    /\bborder(?:-top|-bottom)?\s*:/,
+  );
+  assert.doesNotMatch(
+    styles.match(/\.simplicity__chapter\s*\{([^}]*)\}/)?.[1] ?? "",
+    /\bborder(?:-top|-bottom)?\s*:/,
+  );
+  assert.match(
+    styles,
+    /\.simplicity__chapter:nth-child\(even\) \.simplicity__copy\s*\{[^}]*order: 2;/,
+  );
+
+  const visualRule = styles.match(/\.simplicity__visual\s*\{([^}]*)\}/)?.[1];
+  assert.ok(visualRule);
+  assert.doesNotMatch(visualRule, /\bbackground\s*:|\bborder\s*:/);
+
+  const glowRule = styles.match(
+    /\.simplicity__visual::before\s*\{([^}]*)\}/,
+  )?.[1];
+  assert.ok(glowRule);
+  assert.match(glowRule, /background: radial-gradient\(/);
+  assert.match(glowRule, /border-radius:/);
+  assert.match(glowRule, /content: "";/);
+  assert.match(
+    styles,
+    /\.simplicity__visual img\s*\{[^}]*object-fit: contain;[^}]*box-shadow: var\(--shadow-soft\);/,
+  );
+  assert.doesNotMatch(styles, /\.simplicity[^}]*cursor: zoom-in/);
+  assert.doesNotMatch(
+    styles,
+    /\.task-directory|\.task-proof|\.task-list|\.task-item|\.task-mobile-proof/,
   );
 });
 
-test("task screenshots come forward on precise-pointer hover", () => {
+test("simplicity keeps text before screenshots on narrow screens", () => {
   assert.match(
-    landing,
-    /class="task-proof__hint"[^>]*aria-hidden="true"[\s\S]*?Наведите, чтобы увеличить/,
+    styles,
+    /@media \(max-width: 820px\)[\s\S]*?\.simplicity__chapter,[\s\S]*?\.simplicity__chapter:nth-child\(even\)\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\);/,
   );
   assert.match(
     styles,
-    /@media \(hover: hover\) and \(pointer: fine\)[\s\S]*?\.task-proof__screen\s*\{[\s\S]*?cursor: zoom-in;[\s\S]*?\.task-proof__screen:hover\s*\{[\s\S]*?z-index: 10;[\s\S]*?transform: rotate\(0deg\) scale\(1\.12\);/,
+    /@media \(max-width: 820px\)[\s\S]*?\.simplicity__chapter:nth-child\(even\) \.simplicity__copy\s*\{[^}]*order: 0;/,
   );
   assert.match(
     styles,
-    /@media \(hover: hover\) and \(pointer: fine\)[\s\S]*?\.task-proof figcaption \.task-proof__hint\s*\{[\s\S]*?display: inline-flex;/,
-  );
-  assert.match(
-    styles,
-    /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.task-proof__screen:hover\s*\{[\s\S]*?transform: rotate\(var\(--screen-rotation\)\);/,
+    /@media \(max-width: 600px\)[\s\S]*?\.simplicity__chapter\s*\{[^}]*gap:/,
   );
 });
 
@@ -401,6 +438,21 @@ test("integrations and FAQ use the supplied product copy", () => {
   );
 });
 
+test("durable docs describe the approved simplicity section", () => {
+  for (const source of [content, design, surface]) {
+    assert.match(source, /Простота использования/);
+    assert.match(source, /Дневник ведёт сам себя/);
+    assert.match(source, /Помнить всё не нужно/);
+    assert.match(source, /Анализы вносятся сами/);
+    assert.match(source, /Интеграции интегрируются/);
+    assert.doesNotMatch(source, /task-directory|Task Directory/);
+  }
+
+  assert.match(product, /фотограф/i);
+  assert.match(product, /PDF/);
+  assert.doesNotMatch(product, /Выбрать задачу/);
+});
+
 test("documentation stays honest when external destinations are absent", () => {
   const documentation = section("documentation");
 
@@ -426,6 +478,6 @@ test("documentation stays honest when external destinations are absent", () => {
     assert.ok(ids.has(match[1]), `fragment #${match[1]} must resolve`);
   }
 
-  assert.match(styles, /\.task-directory__layout/);
+  assert.match(styles, /\.simplicity__chapter/);
   assert.match(styles, /@media \(max-width: 600px\)/);
 });

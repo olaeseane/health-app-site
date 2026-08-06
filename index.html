@@ -44,7 +44,7 @@
 
       <nav class="site-nav" aria-label="Разделы страницы">
         <a href="#first-route">С чего начать</a>
-        <a href="#tasks">Основные задачи</a>
+        <a href="#simplicity">Простота</a>
         <a href="#integrations">Интеграции</a>
         <a href="#faq">Частые вопросы</a>
         <a href="#documentation">Документация</a>
@@ -136,337 +136,109 @@
         </ol>
       </section>
 
-      <section class="task-directory" id="tasks" aria-labelledby="tasks-title">
-        <div class="section-heading">
-          <p class="section-kicker">Основные задачи</p>
-          <h2 id="tasks-title" tabindex="-1">Выберите, что хотите сделать</h2>
-          <p>
-            В приложении много возможностей, но искать их по разделам не
-            обязательно. Выберите задачу — покажем соответствующие экраны
-            приложения.
-          </p>
+      <section
+        class="simplicity"
+        id="simplicity"
+        aria-labelledby="simplicity-title"
+      >
+        <div class="section-heading simplicity__heading">
+          <p class="section-kicker">Простота использования</p>
+          <h2 id="simplicity-title" tabindex="-1">
+            Мы убрали всё, что обычно мешает начать
+          </h2>
         </div>
 
-        <div class="task-directory__layout">
-          <figure
-            class="task-proof"
-            id="task-proof"
-            data-task-proof
-            aria-label="Экраны для задачи «Понять, как меняется самочувствие»"
-          >
-            <img
-              class="task-proof__screen task-proof__screen--back"
-              data-task-screen
-              src="./public/screenshots/wellbeing-today.jpg"
-              width="576"
-              height="1280"
-              alt="Дневная отметка самочувствия"
-              loading="lazy"
-              decoding="async"
-            />
-            <img
-              class="task-proof__screen task-proof__screen--middle"
-              data-task-screen
-              src="./public/screenshots/wellbeing-and-questionnaires.jpg"
-              width="576"
-              height="1280"
-              alt="Самочувствие, анкеты и показатели в приложении"
-              loading="lazy"
-              decoding="async"
-            />
-            <img
-              class="task-proof__screen task-proof__screen--front"
-              data-task-screen
-              src="./public/screenshots/home-overview.jpg"
-              width="576"
-              height="1280"
-              alt="Главный экран с карточкой самочувствия"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption aria-live="polite" aria-atomic="true">
-              <strong data-task-proof-title>Самочувствие</strong>
-              <span>Реальные экраны. Числа — пример заполнения.</span>
-              <span class="task-proof__hint" aria-hidden="true">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="10.5" cy="10.5" r="5.5"></circle>
-                  <path d="m15 15 4 4"></path>
-                </svg>
-                Наведите, чтобы увеличить
-              </span>
-            </figcaption>
-          </figure>
+        <div class="simplicity__chapters">
+          <article class="simplicity__chapter">
+            <div class="simplicity__copy">
+              <p class="simplicity__index">01 / ПИТАНИЕ</p>
+              <h3>Дневник ведёт сам себя</h3>
+              <p class="simplicity__lead">Просто сфотографируйте еду</p>
+              <p class="simplicity__body">
+                ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически
+                добавит запись в дневник.
+              </p>
+            </div>
+            <figure class="simplicity__visual">
+              <img
+                src="./public/screenshots/nutrition.jpg"
+                width="576"
+                height="1280"
+                alt="Сводка дневника питания с калориями и КБЖУ"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          </article>
 
-          <ol class="task-list">
-            <li class="task-item is-selected" data-task-item="wellbeing">
-              <article>
-                <h3>
-                  <button
-                    class="task-item__select"
-                    type="button"
-                    data-task-select="wellbeing"
-                    aria-controls="task-proof"
-                    aria-pressed="true"
-                  >
-                    <span class="task-item__label">
-                      Понять, как меняется самочувствие
-                    </span>
-                    <span class="task-item__state" aria-hidden="true"></span>
-                  </button>
-                </h3>
-                <p>
-                  Каждый день отмечайте уровень сил, радость жизни, головную
-                  боль, тревогу, напряжение и перепады настроения. Так проще
-                  заметить изменения и вспомнить, как вы чувствовали себя в
-                  конкретный день.
-                </p>
-                <p class="task-item__location">Самочувствие</p>
-              </article>
-            </li>
-            <li class="task-item" data-task-item="passport">
-              <article>
-                <h3>
-                  <button
-                    class="task-item__select"
-                    type="button"
-                    data-task-select="passport"
-                    aria-controls="task-proof"
-                    aria-pressed="false"
-                  >
-                    <span class="task-item__label">
-                      Собрать свой паспорт здоровья
-                    </span>
-                    <span class="task-item__state" aria-hidden="true"></span>
-                  </button>
-                </h3>
-                <p>
-                  Паспорт здоровья объединяет основные данные: параметры тела,
-                  результаты анкет и исследований, шаги, сон, пульс и сведения о
-                  генетических исследованиях.
-                </p>
-                <p class="task-item__location">Паспорт здоровья</p>
-              </article>
-            </li>
-            <li class="task-item" data-task-item="questionnaires">
-              <article>
-                <h3>
-                  <button
-                    class="task-item__select"
-                    type="button"
-                    data-task-select="questionnaires"
-                    aria-controls="task-proof"
-                    aria-pressed="false"
-                  >
-                    <span class="task-item__label">Пройти анкеты</span>
-                    <span class="task-item__state" aria-hidden="true"></span>
-                  </button>
-                </h3>
-                <p>
-                  Заполняйте анкеты по общему состоянию, питанию,
-                  сердечно-сосудистому здоровью, диабету и онкологическим
-                  рискам. Ответы помогают увидеть, каким темам стоит уделить
-                  больше внимания.
-                </p>
-                <p class="task-item__location">Анкеты</p>
-              </article>
-            </li>
-            <li class="task-item" data-task-item="status">
-              <article>
-                <h3>
-                  <button
-                    class="task-item__select"
-                    type="button"
-                    data-task-select="status"
-                    aria-controls="task-proof"
-                    aria-pressed="false"
-                  >
-                    <span class="task-item__label">
-                      Посмотреть статус здоровья
-                    </span>
-                    <span class="task-item__state" aria-hidden="true"></span>
-                  </button>
-                </h3>
-                <p>
-                  На одном экране собраны зоны внимания по сердечно-сосудистому
-                  здоровью, обмену веществ, диабету и онкологическим рискам.
-                  Нажмите на нужный раздел, чтобы прочитать пояснения и
-                  рекомендации.
-                </p>
-                <p class="task-item__note">
-                  Это информационная оценка, а не диагноз.
-                </p>
-                <p class="task-item__location">Статус здоровья</p>
-              </article>
-            </li>
-            <li class="task-item" data-task-item="documents">
-              <article>
-                <h3>
-                  <button
-                    class="task-item__select"
-                    type="button"
-                    data-task-select="documents"
-                    aria-controls="task-proof"
-                    aria-pressed="false"
-                  >
-                    <span class="task-item__label">
-                      Хранить анализы и документы
-                    </span>
-                    <span class="task-item__state" aria-hidden="true"></span>
-                  </button>
-                </h3>
-                <p>
-                  Храните лабораторные и генетические исследования, другие
-                  результаты, запросы и сведения о приёмах. При добавлении
-                  документа можно выбрать его тип или отсканировать QR-код.
-                </p>
-                <p class="task-item__location">Документы</p>
-              </article>
-            </li>
-            <li class="task-item" data-task-item="nutrition">
-              <article>
-                <h3>
-                  <button
-                    class="task-item__select"
-                    type="button"
-                    data-task-select="nutrition"
-                    aria-controls="task-proof"
-                    aria-pressed="false"
-                  >
-                    <span class="task-item__label">
-                      Следить за питанием и весом
-                    </span>
-                    <span class="task-item__state" aria-hidden="true"></span>
-                  </button>
-                </h3>
-                <p>
-                  Ведите дневник питания и смотрите калории, белки, жиры и
-                  углеводы. Данные собраны в короткой сводке без необходимости
-                  считать всё самостоятельно.
-                </p>
-                <p class="task-item__location">Питание и вес</p>
-              </article>
-            </li>
-            <li class="task-item" data-task-item="habits">
-              <article>
-                <h3>
-                  <button
-                    class="task-item__select"
-                    type="button"
-                    data-task-select="habits"
-                    aria-controls="task-proof"
-                    aria-pressed="false"
-                  >
-                    <span class="task-item__label">
-                      Наблюдать за привычками
-                    </span>
-                    <span class="task-item__state" aria-hidden="true"></span>
-                  </button>
-                </h3>
-                <p>
-                  Отмечайте отказ от алкоголя и курения, контроль сна и стресса,
-                  а также посещения врачей. Прогресс можно посмотреть за день,
-                  неделю или 90 дней.
-                </p>
-                <p class="task-item__location">Привычки</p>
-              </article>
-            </li>
-            <li class="task-item" data-task-item="biological-age">
-              <article>
-                <h3>
-                  <button
-                    class="task-item__select"
-                    type="button"
-                    data-task-select="biological-age"
-                    aria-controls="task-proof"
-                    aria-pressed="false"
-                  >
-                    <span class="task-item__label">
-                      Узнать биологический возраст
-                    </span>
-                    <span class="task-item__state" aria-hidden="true"></span>
-                  </button>
-                </h3>
-                <p>
-                  Приложение рассчитывает биологический возраст по параметрам
-                  тела или результатам анализов крови и объясняет, какие данные
-                  использованы в расчёте.
-                </p>
-                <p class="task-item__location">Биологический возраст</p>
-              </article>
-            </li>
-            <li class="task-item" data-task-item="metrics">
-              <article>
-                <h3>
-                  <button
-                    class="task-item__select"
-                    type="button"
-                    data-task-select="metrics"
-                    aria-controls="task-proof"
-                    aria-pressed="false"
-                  >
-                    <span class="task-item__label">
-                      Следить за ежедневными показателями
-                    </span>
-                    <span class="task-item__state" aria-hidden="true"></span>
-                  </button>
-                </h3>
-                <p>
-                  Смотрите шаги, продолжительность сна и пульс на главном
-                  экране. Для каждого показателя доступна отдельная карточка с
-                  краткой историей.
-                </p>
-                <p class="task-item__location">Ежедневные показатели</p>
-              </article>
-            </li>
-            <li class="task-item" data-task-item="rewards">
-              <article>
-                <h3>
-                  <button
-                    class="task-item__select"
-                    type="button"
-                    data-task-select="rewards"
-                    aria-controls="task-proof"
-                    aria-pressed="false"
-                  >
-                    <span class="task-item__label">
-                      Выполнять задания и получать награды
-                    </span>
-                    <span class="task-item__state" aria-hidden="true"></span>
-                  </button>
-                </h3>
-                <p>
-                  Приложение предлагает задания на день, например пройти нужное
-                  количество шагов или подняться по лестнице. За действия
-                  начисляются монеты и открываются награды.
-                </p>
-                <p class="task-item__location">Задания и награды</p>
-              </article>
-            </li>
-            <li class="task-item" data-task-item="chatbot">
-              <article>
-                <h3>
-                  <button
-                    class="task-item__select"
-                    type="button"
-                    data-task-select="chatbot"
-                    aria-controls="task-proof"
-                    aria-pressed="false"
-                  >
-                    <span class="task-item__label">
-                      Задать вопрос чат-боту
-                    </span>
-                    <span class="task-item__state" aria-hidden="true"></span>
-                  </button>
-                </h3>
-                <p>
-                  В практическом чат-боте можно задать вопрос и прикрепить файл.
-                  Его ответы служат информационной подсказкой и не заменяют
-                  консультацию врача.
-                </p>
-                <p class="task-item__location">Практический чат-бот</p>
-              </article>
-            </li>
-          </ol>
+          <article class="simplicity__chapter">
+            <div class="simplicity__copy">
+              <p class="simplicity__index">02 / ПРИВЫЧКИ</p>
+              <h3>Помнить всё не нужно</h3>
+              <p class="simplicity__lead">Отмечайте привычки в касание</p>
+              <p class="simplicity__body">
+                Выберите нужные один раз и отмечайте их каждый день. История
+                сохранится автоматически и покажет прогресс за месяц.
+              </p>
+            </div>
+            <figure class="simplicity__visual">
+              <img
+                src="./public/screenshots/habits.jpg"
+                width="576"
+                height="1280"
+                alt="Недельный прогресс по выбранным привычкам"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          </article>
+
+          <article class="simplicity__chapter">
+            <div class="simplicity__copy">
+              <p class="simplicity__index">03 / ДОКУМЕНТЫ</p>
+              <h3>Анализы вносятся сами</h3>
+              <p class="simplicity__lead">
+                Загрузите их любым удобным способом
+              </p>
+              <p class="simplicity__body">
+                QR-код, фотография или PDF — приложение съест всё.
+              </p>
+            </div>
+            <figure class="simplicity__visual">
+              <img
+                src="./public/screenshots/document-add.jpg"
+                width="576"
+                height="1280"
+                alt="Добавление документа по типу или QR-коду"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          </article>
+
+          <article class="simplicity__chapter">
+            <div class="simplicity__copy">
+              <p class="simplicity__index">04 / СВЯЗЬ</p>
+              <h3>Интеграции интегрируются</h3>
+              <p class="simplicity__lead">
+                Подключайте любимые устройства и сервисы
+              </p>
+              <p class="simplicity__body">
+                Приложение автоматически получает показатели из популярных
+                приложений и устройств.
+              </p>
+            </div>
+            <figure class="simplicity__visual">
+              <img
+                src="./public/screenshots/devices-and-hrv.jpg"
+                width="576"
+                height="1280"
+                alt="Настройки подключённых устройств и Health Connect"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          </article>
         </div>
       </section>
 
