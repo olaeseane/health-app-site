@@ -25,16 +25,14 @@ const simplicityChapters = [
     index: "01 / ПИТАНИЕ",
     title: "Дневник ведёт сам себя",
     lead: "Просто сфотографируйте еду",
-    body:
-      "ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически добавит запись в дневник.",
+    body: "ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически добавит запись в дневник.",
     screenshot: "nutrition.jpg",
   },
   {
     index: "02 / ПРИВЫЧКИ",
     title: "Помнить всё не нужно",
     lead: "Отмечайте привычки в касание",
-    body:
-      "Выберите нужные один раз и отмечайте их каждый день. История сохранится автоматически и покажет прогресс за месяц.",
+    body: "Выберите нужные один раз и отмечайте их каждый день. История сохранится автоматически и покажет прогресс за месяц.",
     screenshot: "habits.jpg",
   },
   {
@@ -48,8 +46,7 @@ const simplicityChapters = [
     index: "04 / СВЯЗЬ",
     title: "Интеграции интегрируются",
     lead: "Подключайте любимые устройства и сервисы",
-    body:
-      "Приложение автоматически получает показатели из популярных приложений и устройств.",
+    body: "Приложение автоматически получает показатели из популярных приложений и устройств.",
     screenshot: "devices-and-hrv.jpg",
   },
 ];
@@ -59,15 +56,6 @@ const privacyPrinciples = [
   "Пользуйтесь анонимно",
   "Без идентификации",
   "Геолокация не нужна",
-];
-
-const faqQuestions = [
-  "С чего начать, если я впервые открыл приложение?",
-  "Какие данные можно вести вручную?",
-  "Как подключить Google Fit, Samsung Health, Apple Health или Health Connect?",
-  "Можно ли использовать приложение вместо врача?",
-  "Что означает «статус здоровья» и риски?",
-  "Где хранятся документы и анализы?",
 ];
 
 function section(id) {
@@ -91,26 +79,34 @@ test("hero presents one focused entry point", () => {
   assert.equal((hero.match(/class="button\b/g) ?? []).length, 1);
   assert.doesNotMatch(hero, /hero-topic-(?:line|index)/);
   assert.doesNotMatch(hero, /hero__disclaimer/);
-  assert.match(
-    hero,
-    /Наблюдения складываются в историю — от утра к вечеру\./,
-  );
+  assert.match(hero, /Наблюдения складываются в историю — от утра к вечеру/);
   assert.match(
     styles,
     /\.hero \.button--primary\s*\{[^}]*background: var\(--tiffany-dark\);/,
   );
   assert.match(
     styles,
-    /\.day-archive__caption\s*\{[^}]*white-space: nowrap;/,
+    /\.day-archive__caption\s*\{[^}]*width: 100%;[^}]*margin: -14px 0 0;[^}]*text-align: center;[^}]*white-space: nowrap;/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.day-archive\s*\{[^}]*width: min\(94%, 520px\);[^}]*margin: 30px auto 0;/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.day-archive__caption\s*\{[^}]*width: min\(100%, 36rem\);[^}]*margin: -6px auto 0;[^}]*white-space: normal;/,
   );
 });
 
 test("client interaction script works when index.html is opened directly", () => {
   assert.match(landing, /<script defer src="\.\/src\/app\.js"><\/script>/);
-  assert.doesNotMatch(landing, /<script[^>]+type="module"[^>]+src="\.\/src\/app\.js"/);
+  assert.doesNotMatch(
+    landing,
+    /<script[^>]+type="module"[^>]+src="\.\/src\/app\.js"/,
+  );
 });
 
-test("header links to simplicity after getting started", () => {
+test("header links to the five current landing sections", () => {
   const header = landing.match(
     /<header\b[^>]*class="site-header"[^>]*>([\s\S]*?)<\/header>/,
   )?.[1];
@@ -122,27 +118,25 @@ test("header links to simplicity after getting started", () => {
     header.indexOf('href="#first-route"') <
       header.indexOf('href="#simplicity"'),
   );
-  assert.match(header, /href="#faq"[^>]*>Частые вопросы/);
-  assert.match(header, /href="#documentation"[^>]*>Документация/);
+  assert.match(header, /href="#integrations"[^>]*>Интеграции/);
+  assert.match(header, /href="#privacy"[^>]*>Анонимность/);
+  assert.match(header, /href="#download"[^>]*>Скачать/);
+  assert.doesNotMatch(header, /href="#faq"|href="#documentation"/);
   assert.doesNotMatch(header, /href="#tasks"|>Основные задачи/);
   assert.doesNotMatch(styles, /\.header-route/);
 });
 
 test("section kickers use one shared visual format", () => {
-  assert.equal((landing.match(/class="section-kicker"/g) ?? []).length, 6);
-  assert.doesNotMatch(landing, /class="(?:hero__kicker|section-heading__label)"/);
+  assert.equal((landing.match(/class="section-kicker"/g) ?? []).length, 5);
+  assert.doesNotMatch(
+    landing,
+    /class="(?:hero__kicker|section-heading__label)"/,
+  );
   assert.match(
     styles,
     /\.section-kicker\s*\{[\s\S]*?color: var\(--tiffany-deep\);[\s\S]*?font-family: var\(--body\);[\s\S]*?font-size: 0\.78rem;[\s\S]*?font-weight: 800;[\s\S]*?line-height: 1\.6;[\s\S]*?letter-spacing: 0\.14em;[\s\S]*?text-transform: uppercase;/,
   );
-  assert.match(
-    styles,
-    /\.faq-preview \.section-heading > p:not\(\.section-kicker\)/,
-  );
-  assert.match(
-    styles,
-    /\.integrations__copy > p:not\(\.section-kicker\)/,
-  );
+  assert.match(styles, /\.integrations__copy > p:not\(\.section-kicker\)/);
 });
 
 test("typography uses the local Manrope variable font", () => {
@@ -171,9 +165,12 @@ test("typography uses the local Manrope variable font", () => {
   assert.match(styles, /--body: "Manrope", "Segoe UI", Arial, sans-serif;/);
   assert.match(
     styles,
-    /\.hero h1,[\s\S]*?\.support h2\s*\{[^}]*font-weight: 700;[^}]*letter-spacing: -0\.04em;/,
+    /\.hero h1,[\s\S]*?\.download-section h2\s*\{[^}]*font-weight: 700;[^}]*letter-spacing: -0\.04em;/,
   );
-  assert.match(design, /fontFamily: '"Manrope", "Segoe UI", Arial, sans-serif'/);
+  assert.match(
+    design,
+    /fontFamily: '"Manrope", "Segoe UI", Arial, sans-serif'/,
+  );
 });
 
 test("hero and section headlines keep a clear responsive hierarchy", () => {
@@ -183,7 +180,7 @@ test("hero and section headlines keep a clear responsive hierarchy", () => {
   );
   assert.match(
     styles,
-    /\.section-heading h2,[\s\S]*?\.support h2\s*\{[^}]*font-size: clamp\(2\.2rem, 4\.45vw, 4rem\);/,
+    /\.section-heading h2,[\s\S]*?\.safety h2\s*\{[^}]*font-size: clamp\(2\.2rem, 4\.45vw, 4rem\);/,
   );
   assert.match(
     styles,
@@ -191,7 +188,7 @@ test("hero and section headlines keep a clear responsive hierarchy", () => {
   );
   assert.match(
     styles,
-    /@media \(max-width: 600px\)[\s\S]*?\.section-heading h2,[\s\S]*?\.support h2\s*\{[^}]*font-size: clamp\(2\.2rem, 9vw, 2\.4rem\);/,
+    /@media \(max-width: 600px\)[\s\S]*?\.section-heading h2,[\s\S]*?\.safety h2\s*\{[^}]*font-size: clamp\(2\.2rem, 9vw, 2\.4rem\);/,
   );
   assert.match(
     styles,
@@ -207,16 +204,13 @@ test("desktop sections use the approved compact density", () => {
   assert.match(styles, /--max-width:\s*1320px;/);
   assert.match(
     styles,
-    /\.simplicity\s*\{[^}]*padding: clamp\(88px, 7\.8vw, 112px\) var\(--page-pad\);/,
+    /\.simplicity\s*\{[^}]*padding: clamp\(72px, 6vw, 96px\) var\(--page-pad\);/,
   );
   assert.match(
     styles,
-    /\.simplicity__chapter\s*\{[^}]*padding: clamp\(40px, 4\.2vw, 56px\) 0;/,
+    /\.simplicity__chapter\s*\{[^}]*padding: clamp\(28px, 3\.2vw, 44px\) 0;/,
   );
-  assert.match(
-    styles,
-    /\.integration-list li\s*\{[^}]*min-height: 104px;/,
-  );
+  assert.match(styles, /\.integration-list li\s*\{[^}]*min-height: 104px;/);
 });
 
 test("hero keeps its illustration while simplicity uses four real screens", () => {
@@ -272,10 +266,7 @@ test("getting started follows the hero as one connected route", () => {
   ]) {
     assert.ok(route.includes(heading), heading);
   }
-  assert.match(
-    styles,
-    /\.first-route\s*\{[\s\S]*?background: linear-gradient\(180deg, var\(--tiffany-fog\) 0%, var\(--white\) 100%\);/,
-  );
+  assert.match(styles, /\.first-route\s*\{[\s\S]*?background: var\(--white\);/);
   assert.match(
     styles,
     /\.first-route__grid::before\s*\{[^}]*position: absolute;[^}]*height: 2px;[^}]*background: var\(--line\);/,
@@ -317,12 +308,10 @@ test("simplicity replaces the task directory with four editorial chapters", () =
   }
 
   assert.ok(
-    landing.indexOf('id="first-route"') <
-      landing.indexOf('id="simplicity"'),
+    landing.indexOf('id="first-route"') < landing.indexOf('id="simplicity"'),
   );
   assert.ok(
-    landing.indexOf('id="simplicity"') <
-      landing.indexOf('id="integrations"'),
+    landing.indexOf('id="simplicity"') < landing.indexOf('id="integrations"'),
   );
   assert.doesNotMatch(landing, /id="tasks"|class="task-directory"/);
 });
@@ -346,11 +335,12 @@ test("simplicity is static while focus-target navigation remains available", () 
 test("simplicity uses an open editorial layout without screenshot panels", () => {
   assert.match(
     styles,
-    /\.simplicity\s*\{[^}]*background: var\(--white\);/,
+    /\.simplicity\s*\{[^}]*background: var\(--section-fog\);/,
   );
+  assert.match(styles, /\.simplicity__chapter\s*\{[^}]*display: grid;/);
   assert.match(
     styles,
-    /\.simplicity__chapter\s*\{[^}]*display: grid;/,
+    /\.simplicity__chapters\s*\{[^}]*margin-top: clamp\(40px, 3\.5vw, 52px\);/,
   );
   assert.match(
     styles,
@@ -406,12 +396,10 @@ test("simplicity keeps text before screenshots on narrow screens", () => {
   );
 });
 
-test("integrations and FAQ use the supplied product copy", () => {
+test("integrations use the supplied product copy", () => {
   const integrations = section("integrations");
-  const faq = section("faq");
 
   assert.ok(integrations);
-  assert.ok(faq);
 
   for (const name of [
     "Health Connect",
@@ -429,7 +417,10 @@ test("integrations and FAQ use the supplied product copy", () => {
     integrations,
     /Если вы уже пользуетесь приложениями для здоровья или носимыми\s+устройствами, просто подключите их к приложению в настройках\./,
   );
-  assert.equal((integrations.match(/class="integration-mark /g) ?? []).length, 6);
+  assert.equal(
+    (integrations.match(/class="integration-mark /g) ?? []).length,
+    6,
+  );
   for (const logo of [
     "neyrox-logo.svg",
     "google-fit-logo.png",
@@ -458,16 +449,11 @@ test("integrations and FAQ use the supplied product copy", () => {
   assert.doesNotMatch(integrations, /Подключение выполняется/);
   assert.match(
     styles,
-    /\.integrations\s*\{[\s\S]*?background: linear-gradient\(180deg, var\(--white\) 0%, var\(--tiffany-fog\) 100%\);/,
+    /\.integrations\s*\{[\s\S]*?background: var\(--white\);/,
   );
-
-  assert.equal((faq.match(/<details>/g) ?? []).length, 6);
-  for (const question of faqQuestions) {
-    assert.ok(faq.includes(question), question);
-  }
-  assert.match(
-    faq,
-    /<button\b[^>]*disabled[^>]*>\s*Читать все вопросы\s*<\/button>/,
+  assert.doesNotMatch(
+    styles.match(/\.integrations\s*\{([^}]*)\}/)?.[1] ?? "",
+    /\bborder(?:-top|-bottom)?\s*:/,
   );
 });
 
@@ -494,7 +480,7 @@ test("privacy manifesto follows integrations as an open four-principle grid", ()
   assert.ok(
     landing.indexOf('id="integrations"') < landing.indexOf('id="privacy"'),
   );
-  assert.ok(landing.indexOf('id="privacy"') < landing.indexOf('id="faq"'));
+  assert.ok(landing.indexOf('id="privacy"') < landing.indexOf('id="download"'));
   assert.match(
     styles,
     /\.privacy-manifesto__principles\s*\{[^}]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);/,
@@ -505,7 +491,61 @@ test("privacy manifesto follows integrations as an open four-principle grid", ()
   );
   assert.match(
     styles,
+    /\.privacy-manifesto\s*\{[^}]*background: var\(--section-fog\);/,
+  );
+  assert.match(
+    styles,
+    /\.privacy-manifesto\s*\{[^}]*padding: clamp\(72px, 6vw, 96px\)/,
+  );
+  assert.match(
+    styles,
+    /\.privacy-manifesto__principles\s*\{[^}]*row-gap: clamp\(36px, 4vw, 52px\);[^}]*margin-top: clamp\(48px, 5vw, 64px\);/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 820px\)[\s\S]*?\.privacy-manifesto\s*\{[^}]*padding-top: 68px;[^}]*padding-bottom: 68px;/,
+  );
+  assert.match(
+    styles,
     /@media \(max-width: 600px\)[\s\S]*?\.privacy-manifesto__principles\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\);/,
+  );
+});
+
+test("download route follows privacy with two honest QR placeholders", () => {
+  const download = section("download");
+
+  assert.ok(download);
+  assert.match(download, /Скачать приложение/);
+  assert.match(download, /Это ваш первый шаг/);
+  assert.match(download, /<strong>iOS<\/strong>/);
+  assert.match(download, /<strong>Android<\/strong>/);
+  assert.equal((download.match(/class="download-option"/g) ?? []).length, 2);
+  assert.equal((download.match(/Ссылка появится позже/g) ?? []).length, 2);
+  assert.doesNotMatch(download, /<a\b|href=|<button\b/);
+  assert.ok(landing.indexOf('id="privacy"') < landing.indexOf('id="download"'));
+  assert.match(
+    styles,
+    /\.download-section\s*\{[^}]*display: grid;[^}]*background: var\(--white\);/,
+  );
+  assert.match(
+    styles,
+    /\.download-section\s*\{[^}]*padding: clamp\(64px, 5\.5vw, 88px\) var\(--page-pad\);/,
+  );
+  assert.match(
+    styles,
+    /\.download-section__visual\s*\{[^}]*min-height: 360px;/,
+  );
+  assert.doesNotMatch(
+    styles.match(/\.download-section\s*\{([^}]*)\}/)?.[1] ?? "",
+    /\bborder(?:-top|-bottom)?\s*:/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 820px\)[\s\S]*?\.download-section,[\s\S]*?grid-template-columns: minmax\(0, 1fr\);/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 820px\)[\s\S]*?\.download-section\s*\{[^}]*padding-top: 68px;[^}]*padding-bottom: 68px;/,
   );
 });
 
@@ -537,19 +577,23 @@ test("durable docs describe the approved privacy manifesto", () => {
   assert.match(design, /открыт[^\n]*сетк[^\n]*2 × 2/);
 });
 
-test("documentation stays honest when external destinations are absent", () => {
-  const documentation = section("documentation");
+test("durable docs describe unavailable iOS and Android download routes", () => {
+  for (const source of [content, design, product, surface]) {
+    assert.match(source, /Скачать приложение/);
+    assert.match(source, /iOS/);
+    assert.match(source, /Android/);
+  }
 
-  assert.ok(documentation);
-  assert.match(
-    documentation,
-    /<button\b[^>]*class="button button--secondary support__action"[^>]*disabled[^>]*>\s*Открыть документацию\s*<\/button>/,
-  );
-  assert.doesNotMatch(documentation, /href="#faq"[^>]*>Частые вопросы/);
-  assert.ok(
-    documentation.indexOf("Открыть документацию") <
-      documentation.indexOf('class="support__content"'),
-  );
+  assert.match(content, /Ссылка появится позже/);
+  assert.match(design, /Download Route/);
+  assert.match(product, /подтверждённых (?:адресов|ссылок)/);
+});
+
+test("removed FAQ and documentation sections leave no stale routes", () => {
+  assert.equal(section("faq"), undefined);
+  assert.equal(section("documentation"), undefined);
+  assert.doesNotMatch(landing, /faq-preview|faq-list|support__content/);
+  assert.doesNotMatch(styles, /\.faq-preview|\.faq-list|\.support__content/);
   assert.match(
     landing,
     /Приложение не ставит диагноз, не назначает лечение и не заменяет\s+консультацию врача\./,
