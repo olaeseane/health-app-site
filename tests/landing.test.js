@@ -54,6 +54,13 @@ const simplicityChapters = [
   },
 ];
 
+const privacyPrinciples = [
+  "Вы управляете данными",
+  "Пользуйтесь анонимно",
+  "Без идентификации",
+  "Геолокация не нужна",
+];
+
 const faqQuestions = [
   "С чего начать, если я впервые открыл приложение?",
   "Какие данные можно вести вручную?",
@@ -122,7 +129,7 @@ test("header links to simplicity after getting started", () => {
 });
 
 test("section kickers use one shared visual format", () => {
-  assert.equal((landing.match(/class="section-kicker"/g) ?? []).length, 5);
+  assert.equal((landing.match(/class="section-kicker"/g) ?? []).length, 6);
   assert.doesNotMatch(landing, /class="(?:hero__kicker|section-heading__label)"/);
   assert.match(
     styles,
@@ -208,7 +215,7 @@ test("desktop sections use the approved compact density", () => {
   );
   assert.match(
     styles,
-    /\.integration-list li\s*\{[^}]*min-height: 80px;/,
+    /\.integration-list li\s*\{[^}]*min-height: 104px;/,
   );
 });
 
@@ -417,12 +424,38 @@ test("integrations and FAQ use the supplied product copy", () => {
     assert.ok(integrations.includes(name), name);
   }
 
-  assert.doesNotMatch(integrations, /По данным продукта/);
-  assert.doesNotMatch(integrations, /Подключить устройство/);
+  assert.match(integrations, /Начинайте не с нуля/);
   assert.match(
     integrations,
-    /Подключение выполняется в разделе «Настройки»\./,
+    /Если вы уже пользуетесь приложениями для здоровья или носимыми\s+устройствами, просто подключите их к приложению в настройках\./,
   );
+  assert.equal((integrations.match(/class="integration-mark /g) ?? []).length, 6);
+  for (const logo of [
+    "neyrox-logo.svg",
+    "google-fit-logo.png",
+    "samsung-health-logo.png",
+    "cardiokarta-logo.png",
+  ]) {
+    assert.match(
+      integrations,
+      new RegExp(`src="\\./public/integrations/${logo.replace(".", "\\.")}"`),
+    );
+    assert.ok(
+      existsSync(new URL(`../public/integrations/${logo}`, import.meta.url)),
+      logo,
+    );
+  }
+  assert.doesNotMatch(
+    styles.match(/\.integration-list\s*\{([^}]*)\}/)?.[1] ?? "",
+    /\bborder(?:-top|-bottom)?\s*:/,
+  );
+  assert.doesNotMatch(
+    styles.match(/\.integration-list li\s*\{([^}]*)\}/)?.[1] ?? "",
+    /\bborder(?:-top|-bottom)?\s*:/,
+  );
+  assert.doesNotMatch(integrations, /По данным продукта/);
+  assert.doesNotMatch(integrations, /Подключить устройство/);
+  assert.doesNotMatch(integrations, /Подключение выполняется/);
   assert.match(
     styles,
     /\.integrations\s*\{[\s\S]*?background: linear-gradient\(180deg, var\(--white\) 0%, var\(--tiffany-fog\) 100%\);/,
@@ -435,6 +468,44 @@ test("integrations and FAQ use the supplied product copy", () => {
   assert.match(
     faq,
     /<button\b[^>]*disabled[^>]*>\s*Читать все вопросы\s*<\/button>/,
+  );
+});
+
+test("privacy manifesto follows integrations as an open four-principle grid", () => {
+  const privacy = section("privacy");
+
+  assert.ok(privacy);
+  assert.match(privacy, /Анонимность/);
+  assert.match(privacy, /Ваше здоровье — ваше дело/);
+  assert.match(
+    privacy,
+    /Мы сделали всё от нас зависящее, чтобы обеспечить безопасность\s+данных и не отвлекать вас от заботы о здоровье\./,
+  );
+  for (const principle of privacyPrinciples) {
+    assert.ok(privacy.includes(principle), principle);
+  }
+  assert.equal((privacy.match(/class="privacy-principle"/g) ?? []).length, 4);
+  assert.equal(
+    (privacy.match(/class="privacy-principle__icon"/g) ?? []).length,
+    4,
+  );
+  assert.doesNotMatch(privacy, />\s*0[1-4]\s*</);
+  assert.doesNotMatch(privacy, /<button\b|class="[^\"]*card/);
+  assert.ok(
+    landing.indexOf('id="integrations"') < landing.indexOf('id="privacy"'),
+  );
+  assert.ok(landing.indexOf('id="privacy"') < landing.indexOf('id="faq"'));
+  assert.match(
+    styles,
+    /\.privacy-manifesto__principles\s*\{[^}]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);/,
+  );
+  assert.match(
+    styles,
+    /\.privacy-principle__icon\s*\{[^}]*width: 44px;[^}]*border-radius: 50%;[^}]*background: var\(--tiffany-mist\);/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.privacy-manifesto__principles\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\);/,
   );
 });
 
@@ -451,6 +522,19 @@ test("durable docs describe the approved simplicity section", () => {
   assert.match(product, /фотограф/i);
   assert.match(product, /PDF/);
   assert.doesNotMatch(product, /Выбрать задачу/);
+});
+
+test("durable docs describe the approved privacy manifesto", () => {
+  for (const source of [content, design, product]) {
+    assert.match(source, /Анонимность/);
+    assert.match(source, /Ваше здоровье — ваше дело|контрол[ья] пользователя/);
+  }
+
+  for (const principle of privacyPrinciples) {
+    assert.ok(content.includes(principle), principle);
+  }
+  assert.match(design, /Privacy Manifesto/);
+  assert.match(design, /открыт[^\n]*сетк[^\n]*2 × 2/);
 });
 
 test("documentation stays honest when external destinations are absent", () => {

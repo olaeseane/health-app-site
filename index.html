@@ -249,43 +249,163 @@
       >
         <div class="integrations__copy">
           <p class="section-kicker">Интеграции</p>
-          <h2 id="integrations-title">Подключите данные из приложений</h2>
+          <h2 id="integrations-title">Начинайте не с нуля</h2>
           <p>
-            Подключите Health Connect, чтобы передавать в «Здоровье» доступные
-            данные из совместимых приложений. В приложении также можно добавить
-            Кардиокарту и часы NEYROX PRO.
-          </p>
-          <p class="link-status" id="integration-status">
-            Подключение выполняется в разделе «Настройки».
+            Если вы уже пользуетесь приложениями для здоровья или носимыми
+            устройствами, просто подключите их к приложению в настройках.
           </p>
         </div>
 
         <ul class="integration-list" aria-label="Поддерживаемые подключения">
+          <!-- Временные маркеры прототипа заменяются официальными ассетами без изменения разметки. -->
           <li>
-            <span>Health Connect</span>
-            <small>Совместимые приложения</small>
+            <span class="integration-mark integration-mark--connect" aria-hidden="true">HC</span>
+            <span class="integration-list__copy">
+              <strong>Health Connect</strong>
+              <small>Платформа</small>
+            </span>
           </li>
           <li>
-            <span>Кардиокарта</span>
-            <small>Устройство</small>
+            <span class="integration-mark integration-mark--cardio" aria-hidden="true">
+              <img
+                src="./public/integrations/cardiokarta-logo.png"
+                width="34"
+                height="34"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="integration-list__copy">
+              <strong>Кардиокарта</strong>
+              <small>Устройство</small>
+            </span>
           </li>
           <li>
-            <span>NEYROX PRO</span>
-            <small>Часы</small>
+            <span class="integration-mark integration-mark--neyrox" aria-hidden="true">
+              <img
+                src="./public/integrations/neyrox-logo.svg"
+                width="30"
+                height="22"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="integration-list__copy">
+              <strong>NEYROX PRO</strong>
+              <small>Часы</small>
+            </span>
           </li>
           <li>
-            <span>Apple Health</span>
-            <small>Зависит от устройства</small>
+            <span class="integration-mark integration-mark--apple" aria-hidden="true">♥</span>
+            <span class="integration-list__copy">
+              <strong>Apple Health</strong>
+              <small>Платформа</small>
+            </span>
           </li>
           <li>
-            <span>Google Fit</span>
-            <small>Зависит от устройства</small>
+            <span class="integration-mark integration-mark--google" aria-hidden="true">
+              <img
+                src="./public/integrations/google-fit-logo.png"
+                width="44"
+                height="31"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="integration-list__copy">
+              <strong>Google Fit</strong>
+              <small>Платформа</small>
+            </span>
           </li>
           <li>
-            <span>Samsung Health</span>
-            <small>Зависит от устройства</small>
+            <span class="integration-mark integration-mark--samsung" aria-hidden="true">
+              <img
+                src="./public/integrations/samsung-health-logo.png"
+                width="34"
+                height="34"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="integration-list__copy">
+              <strong>Samsung Health</strong>
+              <small>Платформа</small>
+            </span>
           </li>
         </ul>
+      </section>
+
+      <section
+        class="privacy-manifesto"
+        id="privacy"
+        aria-labelledby="privacy-title"
+      >
+        <div class="privacy-manifesto__intro">
+          <div>
+            <p class="section-kicker">Анонимность</p>
+            <h2 id="privacy-title">Ваше здоровье — ваше дело</h2>
+          </div>
+          <p class="privacy-manifesto__lead">
+            Мы сделали всё от нас зависящее, чтобы обеспечить безопасность
+            данных и не отвлекать вас от заботы о здоровье.
+          </p>
+        </div>
+
+        <div class="privacy-manifesto__principles">
+          <article class="privacy-principle">
+            <span class="privacy-principle__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 6h6M14 6h6M10 4v4M4 12h10M18 12h2M16 10v4M4 18h3M11 18h9M9 16v4" />
+              </svg>
+            </span>
+            <div>
+              <h3>Вы управляете данными</h3>
+              <p>Решайте, какие данные хранить, передавать и использовать.</p>
+            </div>
+          </article>
+
+          <article class="privacy-principle">
+            <span class="privacy-principle__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9" />
+                <circle cx="12" cy="9" r="3" />
+                <path d="M7.5 18c.9-2.6 2.4-4 4.5-4s3.6 1.4 4.5 4" />
+              </svg>
+            </span>
+            <div>
+              <h3>Пользуйтесь анонимно</h3>
+              <p>Для работы приложения необязательно раскрывать личность.</p>
+            </div>
+          </article>
+
+          <article class="privacy-principle">
+            <span class="privacy-principle__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M6.5 12.5V11a5.5 5.5 0 0 1 11 0v2.5M9 12v-1a3 3 0 0 1 6 0v4.5M12 10.5V14c0 2.8-.7 4.8-2 6M15 17c-.3 1.3-.8 2.4-1.5 3.5M5 16.5c.7-1.8 1-3.5 1-5.5" />
+              </svg>
+            </span>
+            <div>
+              <h3>Без идентификации</h3>
+              <p>Приложение работает с обезличенными показателями здоровья.</p>
+            </div>
+          </article>
+
+          <article class="privacy-principle">
+            <span class="privacy-principle__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 5l14 14M9.2 4.7A7 7 0 0 1 19 11c0 2.1-1.3 4.5-3.8 7.2M12 21S5 15 5 11a7 7 0 0 1 .8-3.2M10.8 9.1A2.5 2.5 0 0 1 14.9 13" />
+              </svg>
+            </span>
+            <div>
+              <h3>Геолокация не нужна</h3>
+              <p>От доступа к местоположению можно отказаться.</p>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section class="faq-preview" id="faq" aria-labelledby="faq-title">
