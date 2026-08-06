@@ -314,7 +314,9 @@ test("task directory contains all eleven tasks and app locations", () => {
 
   assert.match(app, /function selectTask\(taskId\)/);
   assert.match(app, /aria-pressed/);
-  assert.match(app, /item\.addEventListener\("click", \(event\) =>/);
+  assert.match(app, /document\.addEventListener\("click", \(event\) =>/);
+  assert.match(app, /target\.closest\("\[data-task-item\]"\)/);
+  assert.match(app, /target\.closest\("\[data-task-select\]"\)/);
   assert.match(styles, /\.task-item\s*\{[^}]*cursor: pointer;/);
   assert.match(styles, /\.task-item\.is-selected/);
   assert.match(styles, /\.task-mobile-proof/);

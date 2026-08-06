@@ -1,0 +1,210 @@
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { extname, posix, resolve } from "node:path";
+
+const projectRoot = new URL("../", import.meta.url);
+const distDirectory = new URL("../dist/", import.meta.url);
+const outputFile = new URL("../dist/portal-inline.html", import.meta.url);
+const asciiOutputFile = new URL("../dist/portal-inline-ascii.html", import.meta.url);
+
+const mimeTypes = new Map([
+  [".css", "text/css"],
+  [".js", "text/javascript"],
+  [".html", "text/html"],
+  [".png", "image/png"],
+  [".jpg", "image/jpeg"],
+  [".jpeg", "image/jpeg"],
+  [".webp", "image/webp"],
+  [".svg", "image/svg+xml"],
+  [".woff", "font/woff"],
+  [".woff2", "font/woff2"],
+]);
+
+function mimeFor(pathname) {
+  return mimeTypes.get(extname(pathname).toLowerCase()) ?? "application/octet-stream";
+}
+
+async function dataUrlFromDist(relativePath) {
+  const normalizedPath = relativePath.replace(/^\.\//, "");
+  const fileUrl = new URL(normalizedPath, distDirectory);
+  const buffer = await readFile(fileUrl);
+
+  return `data:${mimeFor(normalizedPath)};base64,${buffer.toString("base64")}`;
+}
+
+function escapeScript(text) {
+  return text.replaceAll("</script", "<\\/script");
+}
+
+function escapeNonAsciiForHtml(text) {
+  return text.replace(/[\u0080-\uFFFF]/g, (character) => {
+    return `&#${character.codePointAt(0)};`;
+  });
+}
+
+function escapeNonAsciiForJavaScript(text) {
+  return text.replace(/[\u0080-\uFFFF]/g, (character) => {
+    const codePoint = character.codePointAt(0);
+
+    if (codePoint <= 0xffff) {
+      return `\\u${codePoint.toString(16).padStart(4, "0")}`;
+    }
+
+    return `\\u{${codePoint.toString(16)}}`;
+  });
+}
+
+function escapeNonAsciiForCss(text) {
+  return text.replace(/[\u0080-\uFFFF]/g, (character) => {
+    return `\\${character.codePointAt(0).toString(16)} `;
+  });
+}
+
+function makeAsciiSafeHtml(html) {
+  const blocks = [];
+
+  let protectedHtml = html.replace(
+    /<style data-portal-inline="styles">([\s\S]*?)<\/style>/,
+    (_, styleBody) => {
+      const token = `__PORTAL_INLINE_BLOCK_${blocks.length}__`;
+      blocks.push(
+        `<style data-portal-inline="styles">${escapeNonAsciiForCss(styleBody)}</style>`,
+      );
+
+      return token;
+    },
+  );
+
+  protectedHtml = protectedHtml.replace(
+    /<script data-portal-inline="app">([\s\S]*?)<\/script>/,
+    (_, scriptBody) => {
+      const token = `__PORTAL_INLINE_BLOCK_${blocks.length}__`;
+      blocks.push(
+        `<script data-portal-inline="app">${escapeNonAsciiForJavaScript(scriptBody)}</script>`,
+      );
+
+      return token;
+    },
+  );
+
+  protectedHtml = escapeNonAsciiForHtml(protectedHtml);
+
+  blocks.forEach((block, index) => {
+    protectedHtml = protectedHtml.replace(`__PORTAL_INLINE_BLOCK_${index}__`, block);
+  });
+
+  return protectedHtml;
+}
+
+async function inlineCssUrls(css) {
+  const matches = [...css.matchAll(/url\(([^)]+)\)/g)];
+  let inlinedCss = css;
+
+  for (const match of matches) {
+    const rawUrl = match[1].trim().replace(/^['"]|['"]$/g, "");
+
+    if (/^(?:data:|https?:|#)/.test(rawUrl)) {
+      continue;
+    }
+
+    const resolvedFromCss = resolve(
+      new URL("../dist/src/", import.meta.url).pathname,
+      rawUrl,
+    );
+    const relativeToDist = posix.relative(
+      new URL("../dist/", import.meta.url).pathname,
+      resolvedFromCss,
+    );
+    const dataUrl = await dataUrlFromDist(relativeToDist);
+
+    inlinedCss = inlinedCss.replace(match[0], `url("${dataUrl}")`);
+  }
+
+  return inlinedCss;
+}
+
+async function inlineAppAssetUrls(js) {
+  const matches = [...js.matchAll(/src: "(\.\/public\/[^"]+)"/g)];
+  let inlinedJs = js;
+
+  for (const match of matches) {
+    const dataUrl = await dataUrlFromDist(match[1]);
+    inlinedJs = inlinedJs.replace(match[0], `src: "${dataUrl}"`);
+  }
+
+  return inlinedJs;
+}
+
+async function inlineHtmlAssetUrls(html) {
+  const matches = [...html.matchAll(/(src|href)=(['"])(\.\/public\/[^'"]+)\2/g)];
+  let inlinedHtml = html;
+
+  for (const match of matches) {
+    const [fullMatch, attribute, quote, assetPath] = match;
+    const dataUrl = await dataUrlFromDist(assetPath);
+    inlinedHtml = inlinedHtml.replace(fullMatch, `${attribute}=${quote}${dataUrl}${quote}`);
+  }
+
+  return inlinedHtml;
+}
+
+function removePortalDuplicateChrome(html) {
+  return html
+    .replace(/\n\s*<a class="skip-link"[\s\S]*?<\/a>\n/, "\n")
+    .replace(/\n\s*<header class="site-header"[\s\S]*?<\/header>\n/, "\n");
+}
+
+function addPortalInlineTaskHandlers(html) {
+  return html
+    .replace(/(<li class="task-item[^"]*" data-task-item="([^"]+)")/g, (_, prefix, taskId) => {
+      return `${prefix} onclick="return window.healthSiteSelectTask ? window.healthSiteSelectTask('${taskId}') : true"`;
+    })
+    .replace(/(<button class="task-item__select" type="button" data-task-select="([^"]+)")/g, (_, prefix, taskId) => {
+      return `${prefix} onclick="return window.healthSiteSelectTask ? window.healthSiteSelectTask('${taskId}') : true"`;
+    });
+}
+
+async function buildPortalInline() {
+  await mkdir(distDirectory, { recursive: true });
+
+  let html = await readFile(new URL("index.html", projectRoot), "utf8");
+  const css = await inlineCssUrls(
+    await readFile(new URL("src/styles.css", projectRoot), "utf8"),
+  );
+  const js = await inlineAppAssetUrls(
+    await readFile(new URL("src/app.js", projectRoot), "utf8"),
+  );
+
+  html = removePortalDuplicateChrome(html);
+  html = addPortalInlineTaskHandlers(html);
+  html = await inlineHtmlAssetUrls(html);
+  html = html.replaceAll(
+    /\n\s*<link\s+rel="preload"[\s\S]*?\/>/g,
+    "",
+  );
+  html = html.replace(
+    /\s*<link rel="stylesheet" href="\.\/src\/styles\.css" \/>/,
+    `\n    <style data-portal-inline="styles">\n${css}\n    </style>`,
+  );
+  html = html.replace(
+    /\s*<script defer src="\.\/src\/app\.js"><\/script>/,
+    "",
+  );
+  html = html.replace(
+    "</body>",
+    `    <script data-portal-inline="app">\n${escapeScript(js)}\n    </script>\n  </body>`,
+  );
+  html = html.replace(
+    "<body>",
+    '<body data-portal-build="inline" data-portal-note="Preliminary Liferay HTML widget build with inlined CSS, JS, fonts, and images.">',
+  );
+
+  await writeFile(outputFile, html, "utf8");
+  await writeFile(asciiOutputFile, makeAsciiSafeHtml(html), "utf8");
+
+  console.log(`Built preliminary portal inline file: ${outputFile.pathname}`);
+  console.log(
+    `Built ASCII-safe portal inline file: ${asciiOutputFile.pathname}`,
+  );
+}
+
+await buildPortalInline();
