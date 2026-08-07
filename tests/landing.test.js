@@ -69,7 +69,9 @@ test("hero presents one focused entry point", () => {
 
   assert.ok(hero);
   assert.doesNotMatch(hero, /Приложение «Здоровье»/);
-  assert.match(hero, /Каждый день - возможность/);
+  assert.match(hero, /Каждый день&nbsp;—/);
+  assert.match(hero, /возможность/);
+  assert.match(styles, /\.hero-title__line:first-child\s*\{[^}]*white-space: nowrap;/);
   assert.match(
     hero,
     /Чтобы предупредить болезнь, сначала нужно заметить изменения за\s+тысячей рутинных дел/,

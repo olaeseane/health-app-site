@@ -254,6 +254,14 @@ svg {
   font-size: clamp(3rem, 6.7vw, 6rem);
 }
 
+.hero-title__line {
+  display: block;
+}
+
+.hero-title__line:first-child {
+  white-space: nowrap;
+}
+
 .hero__lead {
   max-width: 570px;
   margin: 34px 0 0;
