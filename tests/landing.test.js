@@ -131,6 +131,25 @@ test("header links to the five current landing sections", () => {
   assert.doesNotMatch(styles, /\.header-route/);
 });
 
+test("footer links to the documentation PDF mockup", () => {
+  const footer = landing.match(
+    /<footer\b[^>]*class="site-footer"[^>]*>([\s\S]*?)<\/footer>/,
+  )?.[1];
+
+  assert.ok(footer);
+  assert.match(footer, /class="site-footer__links"[^>]*aria-label="Ссылки в подвале"/);
+  assert.match(footer, /href="#top"[^>]*>В начало/);
+  assert.match(footer, /<span aria-hidden="true">·<\/span>/);
+  assert.match(
+    footer,
+    /href="\.\/public\/health-app-documentation-mock\.pdf"[^>]*>Документация/,
+  );
+  assert.ok(
+    existsSync(new URL("../public/health-app-documentation-mock.pdf", import.meta.url)),
+  );
+  assert.match(styles, /\.site-footer__links\s*\{[\s\S]*?justify-self: end;/);
+});
+
 test("section kickers use one shared visual format", () => {
   assert.equal((landing.match(/class="section-kicker"/g) ?? []).length, 5);
   assert.doesNotMatch(
