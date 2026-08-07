@@ -115,6 +115,8 @@ test("header links to the five current landing sections", () => {
   )?.[1];
 
   assert.ok(header);
+  assert.doesNotMatch(header, /<a class="brand"[^>]*href="#top"/);
+  assert.match(header, /<div class="brand" aria-label="Здоровье">/);
   assert.match(header, /href="#first-route"[^>]*>С чего начать/);
   assert.match(header, /href="#simplicity"[^>]*>Простота/);
   assert.ok(
