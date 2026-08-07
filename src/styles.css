@@ -268,8 +268,20 @@ svg {
   display: block;
 }
 
-.hero-title__line:first-child {
+.hero-title__line--accent {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.16em;
   white-space: nowrap;
+}
+
+.hero-title__dash {
+  display: inline-block;
+  width: 0.62em;
+  height: 0.07em;
+  border-radius: 999px;
+  background: var(--tiffany-dark);
+  transform: translateY(-0.16em);
 }
 
 .hero__lead {

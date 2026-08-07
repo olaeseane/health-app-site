@@ -69,9 +69,11 @@ test("hero presents one focused entry point", () => {
 
   assert.ok(hero);
   assert.doesNotMatch(hero, /Приложение «Здоровье»/);
-  assert.match(hero, /Каждый день&nbsp;—/);
+  assert.match(hero, /Каждый день/);
+  assert.match(hero, /class="hero-title__dash" aria-hidden="true"/);
   assert.match(hero, /возможность/);
-  assert.match(styles, /\.hero-title__line:first-child\s*\{[^}]*white-space: nowrap;/);
+  assert.match(styles, /\.hero-title__line--accent\s*\{[^}]*white-space: nowrap;/);
+  assert.match(styles, /\.hero-title__dash\s*\{[^}]*background: var\(--tiffany-dark\);/);
   assert.match(styles, /\.section-heading h2,[\s\S]*?margin-left: -0\.055em;/);
   assert.match(
     hero,
