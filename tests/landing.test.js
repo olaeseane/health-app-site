@@ -72,6 +72,7 @@ test("hero presents one focused entry point", () => {
   assert.match(hero, /Каждый день&nbsp;—/);
   assert.match(hero, /возможность/);
   assert.match(styles, /\.hero-title__line:first-child\s*\{[^}]*white-space: nowrap;/);
+  assert.match(styles, /\.section-heading h2,[\s\S]*?margin-left: -0\.055em;/);
   assert.match(
     hero,
     /Чтобы предупредить болезнь, сначала нужно заметить изменения за\s+тысячей рутинных дел/,

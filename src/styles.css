@@ -254,6 +254,16 @@ svg {
   font-size: clamp(3rem, 6.7vw, 6rem);
 }
 
+.hero h1,
+.section-heading h2,
+.integrations h2,
+.privacy-manifesto h2,
+.download-section h2,
+.safety h2,
+.simplicity__copy h3 {
+  margin-left: -0.055em;
+}
+
 .hero-title__line {
   display: block;
 }
@@ -1362,7 +1372,7 @@ svg {
 }
 
 .simplicity__copy h3 {
-  margin: 0;
+  margin: 0 0 0 -0.055em;
   font-family: var(--display);
   font-size: clamp(2rem, 3.3vw, 3.1rem);
   font-weight: 700;
