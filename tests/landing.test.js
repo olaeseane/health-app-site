@@ -69,9 +69,9 @@ test("hero presents one focused entry point", () => {
 
   assert.ok(hero);
   assert.doesNotMatch(hero, /Приложение «Здоровье»/);
-  assert.match(hero, /Каждый день&nbsp;—/);
+  assert.match(hero, /Каждый день даёт/);
   assert.match(hero, /возможность/);
-  assert.match(styles, /\.hero-title__line:first-child\s*\{[^}]*white-space: nowrap;/);
+  assert.doesNotMatch(hero, /hero-title__dash/);
   assert.match(styles, /\.section-heading h2,[\s\S]*?margin-left: -0\.055em;/);
   assert.match(
     hero,
@@ -129,6 +129,25 @@ test("header links to the five current landing sections", () => {
   assert.doesNotMatch(header, /href="#faq"|href="#documentation"/);
   assert.doesNotMatch(header, /href="#tasks"|>Основные задачи/);
   assert.doesNotMatch(styles, /\.header-route/);
+});
+
+test("footer links to the documentation PDF mockup", () => {
+  const footer = landing.match(
+    /<footer\b[^>]*class="site-footer"[^>]*>([\s\S]*?)<\/footer>/,
+  )?.[1];
+
+  assert.ok(footer);
+  assert.match(footer, /class="site-footer__links"[^>]*aria-label="Ссылки в подвале"/);
+  assert.match(footer, /href="#top"[^>]*>В начало/);
+  assert.match(footer, /<span aria-hidden="true">·<\/span>/);
+  assert.match(
+    footer,
+    /href="\.\/public\/health-app-documentation-mock\.pdf"[^>]*>Документация/,
+  );
+  assert.ok(
+    existsSync(new URL("../public/health-app-documentation-mock.pdf", import.meta.url)),
+  );
+  assert.match(styles, /\.site-footer__links\s*\{[\s\S]*?justify-self: end;/);
 });
 
 test("section kickers use one shared visual format", () => {

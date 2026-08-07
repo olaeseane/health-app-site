@@ -268,10 +268,6 @@ svg {
   display: block;
 }
 
-.hero-title__line:first-child {
-  white-space: nowrap;
-}
-
 .hero__lead {
   max-width: 570px;
   margin: 34px 0 0;
@@ -1010,11 +1006,16 @@ svg {
   max-width: 680px;
 }
 
-.site-footer > a:last-child {
+.site-footer__links {
   display: inline-flex;
   min-height: 44px;
   align-items: center;
+  gap: 12px;
   justify-self: end;
+}
+
+.site-footer__links span {
+  color: var(--graphite-soft);
 }
 
 @media (min-width: 601px) {
