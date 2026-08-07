@@ -1018,6 +1018,10 @@ svg {
   color: var(--graphite-soft);
 }
 
+.site-footer__links a {
+  white-space: nowrap;
+}
+
 @media (min-width: 601px) {
   .capability-grid,
   .route-panel__screens {
@@ -1267,6 +1271,7 @@ svg {
   }
 
   .download-section__route {
+    display: none;
     width: 108%;
     stroke-width: 3.5;
   }
@@ -1276,12 +1281,17 @@ svg {
   }
 
   .site-footer {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 28px;
   }
 
   .site-footer > div {
-    grid-column: 1 / -1;
-    grid-row: 2;
+    grid-row: 3;
+  }
+
+  .site-footer__links {
+    justify-self: start;
   }
 }
 
