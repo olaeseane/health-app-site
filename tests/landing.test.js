@@ -69,7 +69,10 @@ test("hero presents one focused entry point", () => {
 
   assert.ok(hero);
   assert.doesNotMatch(hero, /Приложение «Здоровье»/);
-  assert.match(hero, /Каждый день - возможность/);
+  assert.match(hero, /Каждый день&nbsp;—/);
+  assert.match(hero, /возможность/);
+  assert.match(styles, /\.hero-title__line:first-child\s*\{[^}]*white-space: nowrap;/);
+  assert.match(styles, /\.section-heading h2,[\s\S]*?margin-left: -0\.055em;/);
   assert.match(
     hero,
     /Чтобы предупредить болезнь, сначала нужно заметить изменения за\s+тысячей рутинных дел/,
@@ -112,6 +115,8 @@ test("header links to the five current landing sections", () => {
   )?.[1];
 
   assert.ok(header);
+  assert.doesNotMatch(header, /<a class="brand"[^>]*href="#top"/);
+  assert.match(header, /<div class="brand" aria-label="Здоровье">/);
   assert.match(header, /href="#first-route"[^>]*>С чего начать/);
   assert.match(header, /href="#simplicity"[^>]*>Простота/);
   assert.ok(
