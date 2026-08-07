@@ -571,6 +571,25 @@ test("download route follows privacy with two honest QR placeholders", () => {
     styles,
     /@media \(max-width: 820px\)[\s\S]*?\.download-section\s*\{[^}]*padding-top: 68px;[^}]*padding-bottom: 68px;/,
   );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.download-section__route\s*\{[^}]*display: none;/,
+  );
+});
+
+test("mobile footer keeps its links readable", () => {
+  assert.match(
+    styles,
+    /\.site-footer__links a\s*\{[^}]*white-space: nowrap;/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.site-footer\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\);/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.site-footer__links\s*\{[^}]*justify-self: start;/,
+  );
 });
 
 test("durable docs describe the approved simplicity section", () => {
