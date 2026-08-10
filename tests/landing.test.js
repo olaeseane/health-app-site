@@ -309,6 +309,10 @@ test("getting started follows the hero as one connected route", () => {
     styles,
     /@media \(max-width: 1080px\)[\s\S]*?\.first-route__grid::before\s*\{[^}]*width: 2px;[^}]*height: auto;/,
   );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.first-route__step h3\s*\{[^}]*min-height: 44px;[^}]*display: flex;[^}]*align-items: center;[^}]*margin-top: 0;/,
+  );
 });
 
 test("simplicity replaces the task directory with four editorial chapters", () => {
