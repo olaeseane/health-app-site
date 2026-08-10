@@ -25,28 +25,28 @@ const simplicityChapters = [
     index: "01 / ПИТАНИЕ",
     title: "Дневник ведёт сам себя",
     lead: "Просто сфотографируйте еду",
-    body: "ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически добавит запись в дневник.",
+    body: "ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически добавит запись",
     screenshot: "nutrition.jpg",
   },
   {
     index: "02 / ПРИВЫЧКИ",
-    title: "Помнить всё не нужно",
-    lead: "Отмечайте привычки в касание",
-    body: "Выберите нужные один раз и отмечайте их каждый день. История сохранится автоматически и покажет прогресс за месяц.",
+    title: "Отмечайте привычки в касание",
+    lead: "Помнить всё не нужно",
+    body: "Выберите нужные один раз и отмечайте их каждый день — история сохранится автоматически и покажет прогресс за месяц",
     screenshot: "habits.jpg",
   },
   {
     index: "03 / ДОКУМЕНТЫ",
-    title: "Анализы вносятся сами",
-    lead: "Загрузите их любым удобным способом",
-    body: "QR-код, фотография или PDF — приложение съест всё.",
+    title: "Просто загрузите анализы",
+    lead: "Любым удобным способом",
+    body: "QR-код, фотография или PDF — приложение съест всё",
     screenshot: "document-add.jpg",
   },
   {
     index: "04 / СВЯЗЬ",
-    title: "Интеграции интегрируются",
+    title: "Интеграции работают на вас",
     lead: "Подключайте любимые устройства и сервисы",
-    body: "Приложение автоматически получает показатели из популярных приложений и устройств.",
+    body: "Приложение автоматически получает показатели из популярных приложений и устройств",
     screenshot: "devices-and-hrv.jpg",
   },
 ];
@@ -69,13 +69,13 @@ test("hero presents one focused entry point", () => {
 
   assert.ok(hero);
   assert.doesNotMatch(hero, /Приложение «Здоровье»/);
-  assert.match(hero, /Каждый день даёт/);
+  assert.match(hero, /Каждый день — это/);
   assert.match(hero, /возможность/);
   assert.doesNotMatch(hero, /hero-title__dash/);
   assert.match(styles, /\.section-heading h2,[\s\S]*?margin-left: -0\.055em;/);
   assert.match(
     hero,
-    /Чтобы предупредить болезнь, сначала нужно заметить изменения за\s+тысячей рутинных дел/,
+    /Чтобы предупредить болезнь и заметить изменения за\s+тысячей\s+рутинных дел/,
   );
   assert.match(hero, /href="#first-route"[^>]*>\s*С чего начать/);
   assert.doesNotMatch(hero, /href="#faq"/);
@@ -99,6 +99,16 @@ test("hero presents one focused entry point", () => {
     styles,
     /@media \(max-width: 600px\)[\s\S]*?\.day-archive__caption\s*\{[^}]*width: min\(100%, 36rem\);[^}]*margin: -6px auto 0;[^}]*white-space: normal;/,
   );
+});
+
+test("main copy avoids sentence-final periods", () => {
+  const main = landing.match(/<main\b[^>]*>([\s\S]*?)<\/main>/)?.[1];
+
+  assert.ok(main);
+  const visibleText = main
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<[^>]*>/g, "\n");
+  assert.doesNotMatch(visibleText, /[А-Яа-яЁё][^\n]*\./);
 });
 
 test("client interaction script works when index.html is opened directly", () => {
@@ -282,13 +292,13 @@ test("getting started follows the hero as one connected route", () => {
   assert.equal((route.match(/class="first-route__step"/g) ?? []).length, 4);
   assert.equal((route.match(/class="first-route__num"/g) ?? []).length, 4);
   assert.doesNotMatch(route, /class="route-link"/);
-  for (const heading of [
+  for (const step of [
     "Добавьте то, что уже есть",
-    "Получите первый портрет здоровья",
-    "Дополняйте по мере изменений",
-    "Наблюдайте, как меняется здоровье",
+    "Получите первый результат",
+    "Дополняйте портрет",
+    "Наблюдайте за изменениями",
   ]) {
-    assert.ok(route.includes(heading), heading);
+    assert.ok(route.includes(step), step);
   }
   assert.match(styles, /\.first-route\s*\{[\s\S]*?background: var\(--white\);/);
   assert.match(
@@ -299,6 +309,10 @@ test("getting started follows the hero as one connected route", () => {
     styles,
     /@media \(max-width: 1080px\)[\s\S]*?\.first-route__grid::before\s*\{[^}]*width: 2px;[^}]*height: auto;/,
   );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.first-route__step h3\s*\{[^}]*min-height: 44px;[^}]*display: flex;[^}]*align-items: center;[^}]*margin-top: 0;/,
+  );
 });
 
 test("simplicity replaces the task directory with four editorial chapters", () => {
@@ -307,7 +321,7 @@ test("simplicity replaces the task directory with four editorial chapters", () =
   assert.ok(simplicity);
   const normalizedSimplicity = simplicity.replace(/\s+/g, " ");
   assert.match(simplicity, /Простота использования/);
-  assert.match(simplicity, /Мы убрали всё, что обычно мешает начать/);
+  assert.match(simplicity, /Убрали всё, что мешает начать/);
   assert.equal(
     (simplicity.match(/class="simplicity__chapter"/g) ?? []).length,
     4,
@@ -436,10 +450,10 @@ test("integrations use the supplied product copy", () => {
     assert.ok(integrations.includes(name), name);
   }
 
-  assert.match(integrations, /Начинайте не с нуля/);
+  assert.match(integrations, /Лёгкий старт/);
   assert.match(
     integrations,
-    /Если вы уже пользуетесь приложениями для здоровья или носимыми\s+устройствами, просто подключите их к приложению в настройках\./,
+    /Если вы уже пользуетесь приложениями для здоровья или носимыми\s+устройствами, просто подключите их к приложению в настройках/,
   );
   assert.equal(
     (integrations.match(/class="integration-mark /g) ?? []).length,
@@ -489,7 +503,7 @@ test("privacy manifesto follows integrations as an open four-principle grid", ()
   assert.match(privacy, /Ваше здоровье — ваше дело/);
   assert.match(
     privacy,
-    /Мы сделали всё от нас зависящее, чтобы обеспечить безопасность\s+данных и не отвлекать вас от заботы о здоровье\./,
+    /Мы сделали всё от нас зависящее, чтобы обеспечить безопасность\s+данных и не отвлекать вас от заботы о здоровье/,
   );
   for (const principle of privacyPrinciples) {
     assert.ok(privacy.includes(principle), principle);
@@ -596,9 +610,9 @@ test("durable docs describe the approved simplicity section", () => {
   for (const source of [content, design, surface]) {
     assert.match(source, /Простота использования/);
     assert.match(source, /Дневник ведёт сам себя/);
-    assert.match(source, /Помнить всё не нужно/);
-    assert.match(source, /Анализы вносятся сами/);
-    assert.match(source, /Интеграции интегрируются/);
+    assert.match(source, /Отмечайте привычки в касание/);
+    assert.match(source, /Просто загрузите анализы/);
+    assert.match(source, /Интеграции работают на вас/);
     assert.doesNotMatch(source, /task-directory|Task Directory/);
   }
 

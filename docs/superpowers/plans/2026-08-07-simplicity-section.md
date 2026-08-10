@@ -41,27 +41,27 @@ const simplicityChapters = [
     title: "Дневник ведёт сам себя",
     lead: "Просто сфотографируйте еду",
     body:
-      "ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически добавит запись в дневник.",
+      "ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически добавит запись.",
     screenshot: "nutrition.jpg",
   },
   {
     index: "02 / ПРИВЫЧКИ",
-    title: "Помнить всё не нужно",
-    lead: "Отмечайте привычки в касание",
+    title: "Отмечайте привычки в касание",
+    lead: "Помнить всё не нужно",
     body:
       "Выберите нужные один раз и отмечайте их каждый день. История сохранится автоматически и покажет прогресс за месяц.",
     screenshot: "habits.jpg",
   },
   {
     index: "03 / ДОКУМЕНТЫ",
-    title: "Анализы вносятся сами",
-    lead: "Загрузите их любым удобным способом",
+    title: "Просто загрузите анализы",
+    lead: "Любым удобным способом",
     body: "QR-код, фотография или PDF — приложение съест всё.",
     screenshot: "document-add.jpg",
   },
   {
     index: "04 / СВЯЗЬ",
-    title: "Интеграции интегрируются",
+    title: "Интеграции работают на вас",
     lead: "Подключайте любимые устройства и сервисы",
     body:
       "Приложение автоматически получает показатели из популярных приложений и устройств.",
@@ -96,7 +96,7 @@ test("simplicity replaces the task directory with four editorial chapters", () =
   assert.ok(simplicity);
   const normalizedSimplicity = simplicity.replace(/\s+/g, " ");
   assert.match(simplicity, /Простота использования/);
-  assert.match(simplicity, /Мы убрали всё, что обычно мешает начать/);
+  assert.match(simplicity, /Убрали всё, что мешает начать/);
   assert.equal(
     (simplicity.match(/class="simplicity__chapter"/g) ?? []).length,
     4,
@@ -180,7 +180,7 @@ Expected: failure because `#simplicity` and its four chapters do not exist, whil
   <div class="section-heading simplicity__heading">
     <p class="section-kicker">Простота использования</p>
     <h2 id="simplicity-title" tabindex="-1">
-      Мы убрали всё, что обычно мешает начать
+      Убрали всё, что мешает начать
     </h2>
   </div>
 
@@ -192,7 +192,7 @@ Expected: failure because `#simplicity` and its four chapters do not exist, whil
         <p class="simplicity__lead">Просто сфотографируйте еду</p>
         <p class="simplicity__body">
           ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически добавит
-          запись в дневник.
+          запись.
         </p>
       </div>
       <figure class="simplicity__visual">
@@ -210,8 +210,8 @@ Expected: failure because `#simplicity` and its four chapters do not exist, whil
     <article class="simplicity__chapter">
       <div class="simplicity__copy">
         <p class="simplicity__index">02 / ПРИВЫЧКИ</p>
-        <h3>Помнить всё не нужно</h3>
-        <p class="simplicity__lead">Отмечайте привычки в касание</p>
+        <h3>Отмечайте привычки в касание</h3>
+        <p class="simplicity__lead">Помнить всё не нужно</p>
         <p class="simplicity__body">
           Выберите нужные один раз и отмечайте их каждый день. История
           сохранится автоматически и покажет прогресс за месяц.
@@ -232,9 +232,9 @@ Expected: failure because `#simplicity` and its four chapters do not exist, whil
     <article class="simplicity__chapter">
       <div class="simplicity__copy">
         <p class="simplicity__index">03 / ДОКУМЕНТЫ</p>
-        <h3>Анализы вносятся сами</h3>
+        <h3>Просто загрузите анализы</h3>
         <p class="simplicity__lead">
-          Загрузите их любым удобным способом
+          Любым удобным способом
         </p>
         <p class="simplicity__body">
           QR-код, фотография или PDF — приложение съест всё.
@@ -255,7 +255,7 @@ Expected: failure because `#simplicity` and its four chapters do not exist, whil
     <article class="simplicity__chapter">
       <div class="simplicity__copy">
         <p class="simplicity__index">04 / СВЯЗЬ</p>
-        <h3>Интеграции интегрируются</h3>
+        <h3>Интеграции работают на вас</h3>
         <p class="simplicity__lead">
           Подключайте любимые устройства и сервисы
         </p>
@@ -623,9 +623,9 @@ test("durable docs describe the approved simplicity section", () => {
   for (const source of [content, design, surface]) {
     assert.match(source, /Простота использования/);
     assert.match(source, /Дневник ведёт сам себя/);
-    assert.match(source, /Помнить всё не нужно/);
-    assert.match(source, /Анализы вносятся сами/);
-    assert.match(source, /Интеграции интегрируются/);
+    assert.match(source, /Отмечайте привычки в касание/);
+    assert.match(source, /Просто загрузите анализы/);
+    assert.match(source, /Интеграции работают на вас/);
     assert.doesNotMatch(source, /task-directory|Task Directory/);
   }
 

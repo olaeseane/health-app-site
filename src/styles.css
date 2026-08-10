@@ -1471,6 +1471,13 @@ svg {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .first-route__step h3 {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+  }
+
   .simplicity {
     padding-top: 68px;
     padding-bottom: 68px;
