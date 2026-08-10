@@ -25,28 +25,28 @@ const simplicityChapters = [
     index: "01 / ПИТАНИЕ",
     title: "Дневник ведёт сам себя",
     lead: "Просто сфотографируйте еду",
-    body: "ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически добавит запись.",
+    body: "ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически добавит запись",
     screenshot: "nutrition.jpg",
   },
   {
     index: "02 / ПРИВЫЧКИ",
     title: "Отмечайте привычки в касание",
     lead: "Помнить всё не нужно",
-    body: "Выберите нужные один раз и отмечайте их каждый день. История сохранится автоматически и покажет прогресс за месяц.",
+    body: "Выберите нужные один раз и отмечайте их каждый день — история сохранится автоматически и покажет прогресс за месяц",
     screenshot: "habits.jpg",
   },
   {
     index: "03 / ДОКУМЕНТЫ",
     title: "Просто загрузите анализы",
     lead: "Любым удобным способом",
-    body: "QR-код, фотография или PDF — приложение съест всё.",
+    body: "QR-код, фотография или PDF — приложение съест всё",
     screenshot: "document-add.jpg",
   },
   {
     index: "04 / СВЯЗЬ",
     title: "Интеграции работают на вас",
     lead: "Подключайте любимые устройства и сервисы",
-    body: "Приложение автоматически получает показатели из популярных приложений и устройств.",
+    body: "Приложение автоматически получает показатели из популярных приложений и устройств",
     screenshot: "devices-and-hrv.jpg",
   },
 ];
@@ -75,7 +75,7 @@ test("hero presents one focused entry point", () => {
   assert.match(styles, /\.section-heading h2,[\s\S]*?margin-left: -0\.055em;/);
   assert.match(
     hero,
-    /Чтобы предупредить болезнь и заметить изменения среди\s+тысячи\s+рутинных дел\./,
+    /Чтобы предупредить болезнь и заметить изменения среди\s+тысячи\s+рутинных дел/,
   );
   assert.match(hero, /href="#first-route"[^>]*>\s*С чего начать/);
   assert.doesNotMatch(hero, /href="#faq"/);
@@ -99,6 +99,16 @@ test("hero presents one focused entry point", () => {
     styles,
     /@media \(max-width: 600px\)[\s\S]*?\.day-archive__caption\s*\{[^}]*width: min\(100%, 36rem\);[^}]*margin: -6px auto 0;[^}]*white-space: normal;/,
   );
+});
+
+test("main copy avoids sentence-final periods", () => {
+  const main = landing.match(/<main\b[^>]*>([\s\S]*?)<\/main>/)?.[1];
+
+  assert.ok(main);
+  const visibleText = main
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<[^>]*>/g, "\n");
+  assert.doesNotMatch(visibleText, /[А-Яа-яЁё][^\n]*\./);
 });
 
 test("client interaction script works when index.html is opened directly", () => {
@@ -439,7 +449,7 @@ test("integrations use the supplied product copy", () => {
   assert.match(integrations, /Лёгкий старт/);
   assert.match(
     integrations,
-    /Если вы уже пользуетесь приложениями для здоровья или носимыми\s+устройствами, просто подключите их к приложению в настройках\./,
+    /Если вы уже пользуетесь приложениями для здоровья или носимыми\s+устройствами, просто подключите их к приложению в настройках/,
   );
   assert.equal(
     (integrations.match(/class="integration-mark /g) ?? []).length,
@@ -489,7 +499,7 @@ test("privacy manifesto follows integrations as an open four-principle grid", ()
   assert.match(privacy, /Ваше здоровье — ваше дело/);
   assert.match(
     privacy,
-    /Мы сделали всё от нас зависящее, чтобы обеспечить безопасность\s+данных и не отвлекать вас от заботы о здоровье\./,
+    /Мы сделали всё от нас зависящее, чтобы обеспечить безопасность\s+данных и не отвлекать вас от заботы о здоровье/,
   );
   for (const principle of privacyPrinciples) {
     assert.ok(privacy.includes(principle), principle);
