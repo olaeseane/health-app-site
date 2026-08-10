@@ -158,6 +158,7 @@ test("footer links to the documentation PDF mockup", () => {
     existsSync(new URL("../public/health-app-documentation-mock.pdf", import.meta.url)),
   );
   assert.match(styles, /\.site-footer__links\s*\{[\s\S]*?justify-self: end;/);
+  assert.match(styles, /\.site-footer p\s*\{[^}]*font-size: 0\.74rem;/);
 });
 
 test("section kickers use one shared visual format", () => {

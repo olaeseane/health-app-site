@@ -995,7 +995,7 @@ svg {
 .site-footer p {
   margin: 0;
   color: var(--graphite-soft);
-  font-size: 0.8rem;
+  font-size: 0.74rem;
 }
 
 .site-footer p + p {
