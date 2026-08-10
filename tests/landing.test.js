@@ -75,7 +75,7 @@ test("hero presents one focused entry point", () => {
   assert.match(styles, /\.section-heading h2,[\s\S]*?margin-left: -0\.055em;/);
   assert.match(
     hero,
-    /Чтобы предупредить болезнь и заметить изменения среди\s+тысячи\s+рутинных дел/,
+    /Чтобы предупредить болезнь и заметить изменения за\s+тысячей\s+рутинных дел/,
   );
   assert.match(hero, /href="#first-route"[^>]*>\s*С чего начать/);
   assert.doesNotMatch(hero, /href="#faq"/);
