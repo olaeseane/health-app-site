@@ -25,26 +25,26 @@ const simplicityChapters = [
     index: "01 / ПИТАНИЕ",
     title: "Дневник ведёт сам себя",
     lead: "Просто сфотографируйте еду",
-    body: "ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически добавит запись в дневник.",
+    body: "ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически добавит запись.",
     screenshot: "nutrition.jpg",
   },
   {
     index: "02 / ПРИВЫЧКИ",
-    title: "Помнить всё не нужно",
-    lead: "Отмечайте привычки в касание",
+    title: "Отмечайте привычки в касание",
+    lead: "Помнить всё не нужно",
     body: "Выберите нужные один раз и отмечайте их каждый день. История сохранится автоматически и покажет прогресс за месяц.",
     screenshot: "habits.jpg",
   },
   {
     index: "03 / ДОКУМЕНТЫ",
-    title: "Анализы вносятся сами",
-    lead: "Загрузите их любым удобным способом",
+    title: "Просто загрузите анализы",
+    lead: "Любым удобным способом",
     body: "QR-код, фотография или PDF — приложение съест всё.",
     screenshot: "document-add.jpg",
   },
   {
     index: "04 / СВЯЗЬ",
-    title: "Интеграции интегрируются",
+    title: "Интеграции работают на вас",
     lead: "Подключайте любимые устройства и сервисы",
     body: "Приложение автоматически получает показатели из популярных приложений и устройств.",
     screenshot: "devices-and-hrv.jpg",
@@ -436,7 +436,7 @@ test("integrations use the supplied product copy", () => {
     assert.ok(integrations.includes(name), name);
   }
 
-  assert.match(integrations, /Начинайте не с нуля/);
+  assert.match(integrations, /Лёгкий старт/);
   assert.match(
     integrations,
     /Если вы уже пользуетесь приложениями для здоровья или носимыми\s+устройствами, просто подключите их к приложению в настройках\./,
@@ -596,9 +596,9 @@ test("durable docs describe the approved simplicity section", () => {
   for (const source of [content, design, surface]) {
     assert.match(source, /Простота использования/);
     assert.match(source, /Дневник ведёт сам себя/);
-    assert.match(source, /Помнить всё не нужно/);
-    assert.match(source, /Анализы вносятся сами/);
-    assert.match(source, /Интеграции интегрируются/);
+    assert.match(source, /Отмечайте привычки в касание/);
+    assert.match(source, /Просто загрузите анализы/);
+    assert.match(source, /Интеграции работают на вас/);
     assert.doesNotMatch(source, /task-directory|Task Directory/);
   }
 
