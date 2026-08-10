@@ -96,7 +96,7 @@ test("simplicity replaces the task directory with four editorial chapters", () =
   assert.ok(simplicity);
   const normalizedSimplicity = simplicity.replace(/\s+/g, " ");
   assert.match(simplicity, /Простота использования/);
-  assert.match(simplicity, /Мы убрали всё, что обычно мешает начать/);
+  assert.match(simplicity, /Убрали всё, что мешает начать/);
   assert.equal(
     (simplicity.match(/class="simplicity__chapter"/g) ?? []).length,
     4,
@@ -180,7 +180,7 @@ Expected: failure because `#simplicity` and its four chapters do not exist, whil
   <div class="section-heading simplicity__heading">
     <p class="section-kicker">Простота использования</p>
     <h2 id="simplicity-title" tabindex="-1">
-      Мы убрали всё, что обычно мешает начать
+      Убрали всё, что мешает начать
     </h2>
   </div>
 

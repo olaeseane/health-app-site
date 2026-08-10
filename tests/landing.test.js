@@ -69,13 +69,13 @@ test("hero presents one focused entry point", () => {
 
   assert.ok(hero);
   assert.doesNotMatch(hero, /Приложение «Здоровье»/);
-  assert.match(hero, /Каждый день даёт/);
+  assert.match(hero, /Каждый день — это/);
   assert.match(hero, /возможность/);
   assert.doesNotMatch(hero, /hero-title__dash/);
   assert.match(styles, /\.section-heading h2,[\s\S]*?margin-left: -0\.055em;/);
   assert.match(
     hero,
-    /Чтобы предупредить болезнь, сначала нужно заметить изменения за\s+тысячей рутинных дел/,
+    /Чтобы предупредить болезнь и заметить изменения среди\s+тысячи\s+рутинных дел\./,
   );
   assert.match(hero, /href="#first-route"[^>]*>\s*С чего начать/);
   assert.doesNotMatch(hero, /href="#faq"/);
@@ -282,13 +282,13 @@ test("getting started follows the hero as one connected route", () => {
   assert.equal((route.match(/class="first-route__step"/g) ?? []).length, 4);
   assert.equal((route.match(/class="first-route__num"/g) ?? []).length, 4);
   assert.doesNotMatch(route, /class="route-link"/);
-  for (const heading of [
+  for (const step of [
     "Добавьте то, что уже есть",
-    "Получите первый портрет здоровья",
-    "Дополняйте по мере изменений",
-    "Наблюдайте, как меняется здоровье",
+    "Получите первый результат",
+    "Дополняйте портрет",
+    "Наблюдайте за изменениями",
   ]) {
-    assert.ok(route.includes(heading), heading);
+    assert.ok(route.includes(step), step);
   }
   assert.match(styles, /\.first-route\s*\{[\s\S]*?background: var\(--white\);/);
   assert.match(
@@ -307,7 +307,7 @@ test("simplicity replaces the task directory with four editorial chapters", () =
   assert.ok(simplicity);
   const normalizedSimplicity = simplicity.replace(/\s+/g, " ");
   assert.match(simplicity, /Простота использования/);
-  assert.match(simplicity, /Мы убрали всё, что обычно мешает начать/);
+  assert.match(simplicity, /Убрали всё, что мешает начать/);
   assert.equal(
     (simplicity.match(/class="simplicity__chapter"/g) ?? []).length,
     4,
