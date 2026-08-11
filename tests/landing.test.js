@@ -432,7 +432,7 @@ test("simplicity uses an open editorial layout without screenshot panels", () =>
   assert.match(glowRule, /content: "";/);
   assert.match(
     styles,
-    /\.simplicity__visual img\s*\{[^}]*object-fit: contain;[^}]*border-radius: 0;[^}]*box-shadow: var\(--shadow-soft\);/,
+    /\.simplicity__visual img\s*\{[^}]*object-fit: contain;[^}]*border-radius: 8px;[^}]*box-shadow: var\(--shadow-soft\);/,
   );
   assert.doesNotMatch(styles, /\.simplicity[^}]*cursor: zoom-in/);
   assert.doesNotMatch(
