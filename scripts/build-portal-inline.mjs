@@ -1,10 +1,23 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { execFile } from "node:child_process";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { extname, posix, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import { promisify } from "node:util";
 
 const projectRoot = new URL("../", import.meta.url);
 const distDirectory = new URL("../dist/", import.meta.url);
 const outputFile = new URL("../dist/portal-inline.html", import.meta.url);
 const asciiOutputFile = new URL("../dist/portal-inline-ascii.html", import.meta.url);
+const run = promisify(execFile);
+
+const portalScreenshotPaths = new Set([
+  "public/screenshots/food1.png",
+  "public/screenshots/food2.png",
+  "public/screenshots/habits1.png",
+  "public/screenshots/doc1.png",
+  "public/screenshots/doc2.png",
+  "public/screenshots/integration1.png",
+]);
 
 const mimeTypes = new Map([
   [".css", "text/css"],
@@ -23,12 +36,61 @@ function mimeFor(pathname) {
   return mimeTypes.get(extname(pathname).toLowerCase()) ?? "application/octet-stream";
 }
 
+function normalizedDistPath(relativePath) {
+  return relativePath.replace(/^\.\//, "");
+}
+
 async function dataUrlFromDist(relativePath) {
-  const normalizedPath = relativePath.replace(/^\.\//, "");
+  const normalizedPath = normalizedDistPath(relativePath);
   const fileUrl = new URL(normalizedPath, distDirectory);
   const buffer = await readFile(fileUrl);
 
   return `data:${mimeFor(normalizedPath)};base64,${buffer.toString("base64")}`;
+}
+
+function portalOptimizedScreenshotPath(relativePath) {
+  const normalizedPath = normalizedDistPath(relativePath);
+
+  if (!portalScreenshotPaths.has(normalizedPath)) {
+    return null;
+  }
+
+  return normalizedPath.replace(/\.png$/, ".portal.jpg");
+}
+
+async function optimizePortalScreenshot(relativePath) {
+  const normalizedPath = normalizedDistPath(relativePath);
+  const optimizedPath = portalOptimizedScreenshotPath(normalizedPath);
+
+  if (!optimizedPath) {
+    return normalizedPath;
+  }
+
+  const sourceUrl = new URL(normalizedPath, distDirectory);
+  const optimizedUrl = new URL(optimizedPath, distDirectory);
+  const resizedUrl = new URL(`${optimizedPath}.tmp.png`, distDirectory);
+
+  await run("sips", [
+    "--resampleHeight",
+    "900",
+    fileURLToPath(sourceUrl),
+    "--out",
+    fileURLToPath(resizedUrl),
+  ]);
+  await run("sips", [
+    "-s",
+    "format",
+    "jpeg",
+    "-s",
+    "formatOptions",
+    "80",
+    fileURLToPath(resizedUrl),
+    "--out",
+    fileURLToPath(optimizedUrl),
+  ]);
+  await rm(resizedUrl, { force: true });
+
+  return optimizedPath;
 }
 
 function escapeScript(text) {
@@ -140,7 +202,8 @@ async function inlineHtmlAssetUrls(html) {
 
   for (const match of matches) {
     const [fullMatch, attribute, quote, assetPath] = match;
-    const dataUrl = await dataUrlFromDist(assetPath);
+    const optimizedAssetPath = await optimizePortalScreenshot(assetPath);
+    const dataUrl = await dataUrlFromDist(optimizedAssetPath);
     inlinedHtml = inlinedHtml.replace(fullMatch, `${attribute}=${quote}${dataUrl}${quote}`);
   }
 
