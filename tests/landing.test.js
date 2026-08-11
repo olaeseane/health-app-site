@@ -135,6 +135,7 @@ test("header links to the five current landing sections", () => {
   assert.ok(header);
   assert.doesNotMatch(header, /<a class="brand"[^>]*href="#top"/);
   assert.match(header, /<div class="brand" aria-label="Здоровье">/);
+  assert.match(header, /<!-- <span class="brand__name">Здоровье<\/span> -->/);
   assert.match(header, /href="#first-route"[^>]*>С чего начать/);
   assert.match(header, /href="#simplicity"[^>]*>Простота/);
   assert.ok(
@@ -155,6 +156,7 @@ test("footer links to the documentation PDF mockup", () => {
   )?.[1];
 
   assert.ok(footer);
+  assert.match(footer, /<!-- <span class="brand__name">Здоровье<\/span> -->/);
   assert.match(footer, /class="site-footer__links"[^>]*aria-label="Ссылки в подвале"/);
   assert.match(footer, /href="#top"[^>]*>В начало/);
   assert.match(footer, /<span aria-hidden="true">·<\/span>/);
@@ -482,7 +484,7 @@ test("integrations use the supplied product copy", () => {
     6,
   );
   for (const logo of [
-    "neyrox-logo.svg",
+    "neyrox-logo.png",
     "google-fit-logo.png",
     "samsung-health-logo.png",
     "cardiokarta-logo.png",
@@ -496,6 +498,7 @@ test("integrations use the supplied product copy", () => {
       logo,
     );
   }
+  assert.doesNotMatch(integrations, /\.svg/);
   assert.doesNotMatch(
     styles.match(/\.integration-list\s*\{([^}]*)\}/)?.[1] ?? "",
     /\bborder(?:-top|-bottom)?\s*:/,
