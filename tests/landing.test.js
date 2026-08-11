@@ -135,7 +135,12 @@ test("header links to the five current landing sections", () => {
   assert.ok(header);
   assert.doesNotMatch(header, /<a class="brand"[^>]*href="#top"/);
   assert.match(header, /<div class="brand" aria-label="Здоровье">/);
-  assert.match(header, /<!-- <span class="brand__name">Здоровье<\/span> -->/);
+  assert.match(header, /class="brand__wordmark"/);
+  assert.match(header, /class="brand__prefix">Предикс<\/span>/);
+  assert.match(header, /class="brand__name">Здоровье<\/span>/);
+  assert.doesNotMatch(header, /<!-- <span class="brand__name">Здоровье<\/span> -->/);
+  assert.match(styles, /\.brand__prefix\s*\{[^}]*color: var\(--graphite\);/);
+  assert.match(styles, /\.brand__name\s*\{[^}]*color: var\(--tiffany-dark\);/);
   assert.match(styles, /\.brand__mark\s*\{[^}]*width: 52px;[^}]*height: 52px;/);
   assert.match(styles, /\.brand--footer \.brand__mark\s*\{[^}]*width: 44px;[^}]*height: 44px;/);
   assert.match(styles, /@media \(max-width: 820px\)[\s\S]*?\.brand__mark\s*\{[^}]*width: 46px;[^}]*height: 46px;/);
@@ -159,7 +164,9 @@ test("footer links to the documentation PDF mockup", () => {
   )?.[1];
 
   assert.ok(footer);
-  assert.match(footer, /<!-- <span class="brand__name">Здоровье<\/span> -->/);
+  assert.match(footer, /class="brand__prefix">Предикс<\/span>/);
+  assert.match(footer, /class="brand__name">Здоровье<\/span>/);
+  assert.doesNotMatch(footer, /<!-- <span class="brand__name">Здоровье<\/span> -->/);
   assert.match(footer, /class="site-footer__links"[^>]*aria-label="Ссылки в подвале"/);
   assert.match(footer, /href="#top"[^>]*>В начало/);
   assert.match(footer, /<span aria-hidden="true">·<\/span>/);
