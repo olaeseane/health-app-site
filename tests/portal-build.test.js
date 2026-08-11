@@ -40,7 +40,7 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   );
   assert.deepEqual(
     pngDimensions(new URL("../dist/public/logo-mark.png", import.meta.url)),
-    { width: 192, height: 184 },
+    { width: 192, height: 192 },
   );
   assert.ok(
     statSync(new URL("../dist/public/logo-mark.png", import.meta.url)).size < 35_000,
