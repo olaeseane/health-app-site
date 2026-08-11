@@ -26,28 +26,28 @@ const simplicityChapters = [
     title: "Дневник ведёт сам себя",
     lead: "Просто сфотографируйте еду",
     body: "ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически добавит запись",
-    screenshot: "nutrition.jpg",
+    screenshots: ["food1.svg", "food2.svg"],
   },
   {
     index: "02 / ПРИВЫЧКИ",
     title: "Отмечайте привычки в касание",
     lead: "Помнить всё не нужно",
     body: "Выберите нужные один раз и отмечайте их каждый день — история сохранится автоматически и покажет прогресс за месяц",
-    screenshot: "habits.jpg",
+    screenshots: ["habits1.svg"],
   },
   {
     index: "03 / ДОКУМЕНТЫ",
     title: "Загружайте анализы",
     lead: "Чтобы видеть всю картину",
     body: "QR-код, фотография или PDF — ИИ сам считает результаты и дополнит ваш портрет и рекомендации",
-    screenshot: "document-add.jpg",
+    screenshots: ["doc1.svg", "doc2.svg"],
   },
   {
     index: "04 / СВЯЗЬ",
     title: "Интеграции работают на вас",
     lead: "Подключайте любимые устройства и сервисы",
     body: "Приложение автоматически получает показатели из популярных приложений и устройств",
-    screenshot: "devices-and-hrv.jpg",
+    screenshots: ["integration1.svg"],
   },
 ];
 
@@ -273,7 +273,7 @@ test("hero keeps its illustration while simplicity uses four real screens", () =
     /alt="Слоистый архив дня с маршрутом между самочувствием, активностью, документами и подсказками"/,
   );
   assert.doesNotMatch(hero, /class="atlas"/);
-  assert.equal((simplicity.match(/<img\b/g) ?? []).length, 4);
+  assert.equal((simplicity.match(/<img\b/g) ?? []).length, 6);
 });
 
 test("getting started follows the hero as one connected route", () => {
@@ -327,24 +327,27 @@ test("simplicity replaces the task directory with four editorial chapters", () =
     (simplicity.match(/class="simplicity__chapter"/g) ?? []).length,
     4,
   );
-  assert.equal((simplicity.match(/<img\b/g) ?? []).length, 4);
+  assert.equal((simplicity.match(/<img\b/g) ?? []).length, 6);
 
   for (const chapter of simplicityChapters) {
     assert.ok(normalizedSimplicity.includes(chapter.index), chapter.index);
     assert.ok(normalizedSimplicity.includes(chapter.title), chapter.title);
     assert.ok(normalizedSimplicity.includes(chapter.lead), chapter.lead);
     assert.ok(normalizedSimplicity.includes(chapter.body), chapter.body);
-    assert.match(
-      simplicity,
-      new RegExp(`src="\\./public/screenshots/${chapter.screenshot}"`),
-    );
-    assert.ok(
-      existsSync(
-        new URL(`../public/screenshots/${chapter.screenshot}`, import.meta.url),
-      ),
-      chapter.screenshot,
-    );
+
+    for (const screenshot of chapter.screenshots) {
+      assert.match(
+        simplicity,
+        new RegExp(`src="\\./public/screenshots/${screenshot}"`),
+      );
+      assert.ok(
+        existsSync(new URL(`../public/screenshots/${screenshot}`, import.meta.url)),
+        screenshot,
+      );
+    }
   }
+
+  assert.equal((simplicity.match(/class="simplicity__visual simplicity__visual--pair"/g) ?? []).length, 2);
 
   assert.ok(
     landing.indexOf('id="first-route"') < landing.indexOf('id="simplicity"'),

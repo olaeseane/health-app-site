@@ -1416,6 +1416,11 @@ svg {
   margin: 0;
 }
 
+.simplicity__visual--pair {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 20px);
+}
+
 .simplicity__visual::before {
   position: absolute;
   z-index: -1;
@@ -1441,6 +1446,10 @@ svg {
   box-shadow: var(--shadow-soft);
 }
 
+.simplicity__visual--pair img {
+  max-width: min(100%, 210px);
+}
+
 
 .integrations__copy > p:not(.section-kicker) {
   max-width: 680px;
@@ -1462,6 +1471,10 @@ svg {
 
   .simplicity__visual {
     min-height: 400px;
+  }
+
+  .simplicity__visual--pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -1503,6 +1516,10 @@ svg {
   .simplicity__visual img {
     max-width: min(68vw, 220px);
     max-height: 460px;
+  }
+
+  .simplicity__visual--pair img {
+    max-width: min(42vw, 170px);
   }
 
   .integration-list {
