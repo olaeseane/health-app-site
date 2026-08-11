@@ -8,6 +8,15 @@ const pngSize = (path) => {
   return buffer.size;
 };
 
+const pngDimensions = (path) => {
+  const buffer = readFileSync(path);
+
+  return {
+    width: buffer.readUInt32BE(16),
+    height: buffer.readUInt32BE(20),
+  };
+};
+
 test("portal inline build optimizes screenshot assets before inlining", async () => {
   const build = spawnSync("npm", ["run", "build:portal-inline"], {
     cwd: new URL("../", import.meta.url),
@@ -24,6 +33,19 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
     "ASCII portal inline build should stay under 1 MB",
   );
   assert.doesNotMatch(asciiPortalHtml, /data:image\/svg\+xml|\.svg/);
+  assert.ok(existsSync(new URL("../docs/assets/brand/logo.svg", import.meta.url)));
+  assert.match(
+    readFileSync(new URL("../docs/assets/brand/logo.svg", import.meta.url), "utf8"),
+    /<svg\b/,
+  );
+  assert.deepEqual(
+    pngDimensions(new URL("../dist/public/logo-mark.png", import.meta.url)),
+    { width: 192, height: 184 },
+  );
+  assert.ok(
+    statSync(new URL("../dist/public/logo-mark.png", import.meta.url)).size < 35_000,
+    "dist logo mark should be optimized PNG",
+  );
   assert.equal((asciiPortalHtml.match(/data:image\/jpeg;base64,/g) ?? []).length, 6);
 
   for (const screenshot of [

@@ -1,6 +1,42 @@
-import { cp, mkdir, rm } from "node:fs/promises";
+import { execFile } from "node:child_process";
+import { cp, mkdir, readdir, rm } from "node:fs/promises";
+import { extname } from "node:path";
+import { fileURLToPath } from "node:url";
+import { promisify } from "node:util";
 
 const outputDirectory = new URL("../dist/", import.meta.url);
+const run = promisify(execFile);
+
+async function removeSvgAssets(directoryUrl) {
+  const entries = await readdir(directoryUrl, { withFileTypes: true });
+
+  await Promise.all(
+    entries.map(async (entry) => {
+      const entryUrl = new URL(entry.name, directoryUrl);
+
+      if (entry.isDirectory()) {
+        await removeSvgAssets(new URL(`${entry.name}/`, directoryUrl));
+        return;
+      }
+
+      if (extname(entry.name).toLowerCase() === ".svg") {
+        await rm(entryUrl, { force: true });
+      }
+    }),
+  );
+}
+
+async function optimizeBrandMark() {
+  const logoMarkUrl = new URL("public/logo-mark.png", outputDirectory);
+
+  await run("magick", [
+    fileURLToPath(logoMarkUrl),
+    "-strip",
+    "-define",
+    "png:compression-level=9",
+    fileURLToPath(logoMarkUrl),
+  ]);
+}
 
 await rm(outputDirectory, { force: true, recursive: true });
 await mkdir(outputDirectory, { recursive: true });
@@ -11,5 +47,7 @@ await cp(new URL("../src/", import.meta.url), new URL("src/", outputDirectory), 
 await cp(new URL("../public/", import.meta.url), new URL("public/", outputDirectory), {
   recursive: true,
 });
+await optimizeBrandMark();
+await removeSvgAssets(new URL("public/", outputDirectory));
 
 console.log("Built static landing page in dist/");
