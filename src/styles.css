@@ -1443,7 +1443,7 @@ svg {
   max-height: 500px;
   object-fit: contain;
   object-position: center;
-  border-radius: 24px;
+  border-radius: 0;
   box-shadow: var(--shadow-soft);
 }
 
