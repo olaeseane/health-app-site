@@ -361,7 +361,7 @@ test("simplicity replaces the task directory with four editorial chapters", () =
     for (const screenshot of screenshots) {
       assert.deepEqual(
         pngSize(new URL(`../public/screenshots/${screenshot}`, import.meta.url)),
-        { width: 720, height: 1508 },
+        { width: 720, height: 1500 },
         screenshot,
       );
     }
