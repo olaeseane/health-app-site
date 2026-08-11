@@ -23,6 +23,7 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
     statSync(asciiPortal).size < 1_000_000,
     "ASCII portal inline build should stay under 1 MB",
   );
+  assert.doesNotMatch(asciiPortalHtml, /data:image\/svg\+xml|\.svg/);
   assert.equal((asciiPortalHtml.match(/data:image\/jpeg;base64,/g) ?? []).length, 6);
 
   for (const screenshot of [
