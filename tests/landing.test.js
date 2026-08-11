@@ -136,6 +136,9 @@ test("header links to the five current landing sections", () => {
   assert.doesNotMatch(header, /<a class="brand"[^>]*href="#top"/);
   assert.match(header, /<div class="brand" aria-label="Здоровье">/);
   assert.match(header, /<!-- <span class="brand__name">Здоровье<\/span> -->/);
+  assert.match(styles, /\.brand__mark\s*\{[^}]*width: 52px;[^}]*height: 52px;/);
+  assert.match(styles, /\.brand--footer \.brand__mark\s*\{[^}]*width: 44px;[^}]*height: 44px;/);
+  assert.match(styles, /@media \(max-width: 820px\)[\s\S]*?\.brand__mark\s*\{[^}]*width: 46px;[^}]*height: 46px;/);
   assert.match(header, /href="#first-route"[^>]*>С чего начать/);
   assert.match(header, /href="#simplicity"[^>]*>Простота/);
   assert.ok(
