@@ -20,6 +20,14 @@ const surface = readFileSync(
   "utf8",
 );
 
+const pngSize = (path) => {
+  const buffer = readFileSync(path);
+  return {
+    width: buffer.readUInt32BE(16),
+    height: buffer.readUInt32BE(20),
+  };
+};
+
 const simplicityChapters = [
   {
     index: "01 / ПИТАНИЕ",
@@ -348,6 +356,16 @@ test("simplicity replaces the task directory with four editorial chapters", () =
   }
 
   assert.equal((simplicity.match(/class="simplicity__visual simplicity__visual--pair"/g) ?? []).length, 2);
+
+  for (const { screenshots } of simplicityChapters) {
+    for (const screenshot of screenshots) {
+      assert.deepEqual(
+        pngSize(new URL(`../public/screenshots/${screenshot}`, import.meta.url)),
+        { width: 720, height: 1556 },
+        screenshot,
+      );
+    }
+  }
 
   assert.ok(
     landing.indexOf('id="first-route"') < landing.indexOf('id="simplicity"'),
