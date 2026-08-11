@@ -42,8 +42,10 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
     pngDimensions(new URL("../dist/public/logo-mark.png", import.meta.url)),
     { width: 192, height: 192 },
   );
+  const distLogoSize = statSync(new URL("../dist/public/logo-mark.png", import.meta.url)).size;
+  assert.ok(distLogoSize > 10_000, "dist logo mark should not be empty");
   assert.ok(
-    statSync(new URL("../dist/public/logo-mark.png", import.meta.url)).size < 35_000,
+    distLogoSize < 35_000,
     "dist logo mark should be optimized PNG",
   );
   assert.equal((asciiPortalHtml.match(/data:image\/jpeg;base64,/g) ?? []).length, 6);

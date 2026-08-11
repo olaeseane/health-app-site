@@ -1,5 +1,5 @@
 import { execFile } from "node:child_process";
-import { cp, mkdir, readdir, rm } from "node:fs/promises";
+import { cp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { extname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
@@ -27,15 +27,26 @@ async function removeSvgAssets(directoryUrl) {
 }
 
 async function optimizeBrandMark() {
+  const sourceLogoUrl = new URL("../docs/assets/brand/logo.svg", import.meta.url);
   const logoMarkUrl = new URL("public/logo-mark.png", outputDirectory);
+  const extractedLogoUrl = new URL("public/logo-mark.source.png", outputDirectory);
+  const sourceLogo = await readFile(sourceLogoUrl, "utf8");
+  const embeddedPng = sourceLogo.match(/xlink:href="data:image\/png;base64,([^"]+)"/);
+
+  if (embeddedPng) {
+    await writeFile(extractedLogoUrl, Buffer.from(embeddedPng[1], "base64"));
+  }
 
   await run("magick", [
-    fileURLToPath(logoMarkUrl),
+    fileURLToPath(embeddedPng ? extractedLogoUrl : logoMarkUrl),
+    "-resize",
+    "192x192",
     "-strip",
     "-define",
     "png:compression-level=9",
     fileURLToPath(logoMarkUrl),
   ]);
+  await rm(extractedLogoUrl, { force: true });
 }
 
 await rm(outputDirectory, { force: true, recursive: true });
