@@ -142,17 +142,35 @@ svg {
 }
 
 .brand__mark {
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   object-fit: contain;
 }
 
-.brand__name {
+.brand__wordmark {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 1px;
   font-family: var(--display);
-  font-size: 1.05rem;
   font-weight: 800;
   letter-spacing: -0.02em;
+  line-height: 0.98;
   text-transform: uppercase;
+}
+
+.brand__prefix,
+.brand__name {
+  display: block;
+}
+
+.brand__prefix {
+  color: var(--graphite);
+  font-size: 0.82rem;
+}
+
+.brand__name {
+  color: var(--tiffany-dark);
+  font-size: 1.05rem;
 }
 
 .site-nav {
@@ -988,8 +1006,8 @@ svg {
 }
 
 .brand--footer .brand__mark {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
 }
 
 .site-footer p {
@@ -1108,8 +1126,8 @@ svg {
   }
 
   .brand__mark {
-    width: 42px;
-    height: 42px;
+    width: 46px;
+    height: 46px;
   }
 
   .hero {
