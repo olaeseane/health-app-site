@@ -995,7 +995,7 @@ svg {
 .site-footer p {
   margin: 0;
   color: var(--graphite-soft);
-  font-size: 0.8rem;
+  font-size: 0.74rem;
 }
 
 .site-footer p + p {
@@ -1416,6 +1416,11 @@ svg {
   margin: 0;
 }
 
+.simplicity__visual--pair {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 20px);
+}
+
 .simplicity__visual::before {
   position: absolute;
   z-index: -1;
@@ -1437,8 +1442,13 @@ svg {
   height: auto;
   max-height: 500px;
   object-fit: contain;
-  border-radius: 24px;
+  object-position: center;
+  border-radius: 0;
   box-shadow: var(--shadow-soft);
+}
+
+.simplicity__visual--pair img {
+  max-width: min(100%, 210px);
 }
 
 
@@ -1462,6 +1472,10 @@ svg {
 
   .simplicity__visual {
     min-height: 400px;
+  }
+
+  .simplicity__visual--pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -1503,6 +1517,10 @@ svg {
   .simplicity__visual img {
     max-width: min(68vw, 220px);
     max-height: 460px;
+  }
+
+  .simplicity__visual--pair img {
+    max-width: min(42vw, 170px);
   }
 
   .integration-list {

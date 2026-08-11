@@ -20,34 +20,42 @@ const surface = readFileSync(
   "utf8",
 );
 
+const pngSize = (path) => {
+  const buffer = readFileSync(path);
+  return {
+    width: buffer.readUInt32BE(16),
+    height: buffer.readUInt32BE(20),
+  };
+};
+
 const simplicityChapters = [
   {
     index: "01 / ПИТАНИЕ",
     title: "Дневник ведёт сам себя",
     lead: "Просто сфотографируйте еду",
     body: "ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически добавит запись",
-    screenshot: "nutrition.jpg",
+    screenshots: ["food1.png", "food2.png"],
   },
   {
     index: "02 / ПРИВЫЧКИ",
     title: "Отмечайте привычки в касание",
     lead: "Помнить всё не нужно",
     body: "Выберите нужные один раз и отмечайте их каждый день — история сохранится автоматически и покажет прогресс за месяц",
-    screenshot: "habits.jpg",
+    screenshots: ["habits1.png"],
   },
   {
     index: "03 / ДОКУМЕНТЫ",
-    title: "Просто загрузите анализы",
-    lead: "Любым удобным способом",
-    body: "QR-код, фотография или PDF — приложение съест всё",
-    screenshot: "document-add.jpg",
+    title: "Загружайте анализы",
+    lead: "Чтобы видеть всю картину",
+    body: "QR-код, фотография или PDF — ИИ сам считает результаты и дополнит ваш портрет и рекомендации",
+    screenshots: ["doc1.png", "doc2.png"],
   },
   {
     index: "04 / СВЯЗЬ",
     title: "Интеграции работают на вас",
     lead: "Подключайте любимые устройства и сервисы",
     body: "Приложение автоматически получает показатели из популярных приложений и устройств",
-    screenshot: "devices-and-hrv.jpg",
+    screenshots: ["integration1.png"],
   },
 ];
 
@@ -158,6 +166,7 @@ test("footer links to the documentation PDF mockup", () => {
     existsSync(new URL("../public/health-app-documentation-mock.pdf", import.meta.url)),
   );
   assert.match(styles, /\.site-footer__links\s*\{[\s\S]*?justify-self: end;/);
+  assert.match(styles, /\.site-footer p\s*\{[^}]*font-size: 0\.74rem;/);
 });
 
 test("section kickers use one shared visual format", () => {
@@ -272,7 +281,7 @@ test("hero keeps its illustration while simplicity uses four real screens", () =
     /alt="Слоистый архив дня с маршрутом между самочувствием, активностью, документами и подсказками"/,
   );
   assert.doesNotMatch(hero, /class="atlas"/);
-  assert.equal((simplicity.match(/<img\b/g) ?? []).length, 4);
+  assert.equal((simplicity.match(/<img\b/g) ?? []).length, 6);
 });
 
 test("getting started follows the hero as one connected route", () => {
@@ -326,23 +335,36 @@ test("simplicity replaces the task directory with four editorial chapters", () =
     (simplicity.match(/class="simplicity__chapter"/g) ?? []).length,
     4,
   );
-  assert.equal((simplicity.match(/<img\b/g) ?? []).length, 4);
+  assert.equal((simplicity.match(/<img\b/g) ?? []).length, 6);
 
   for (const chapter of simplicityChapters) {
     assert.ok(normalizedSimplicity.includes(chapter.index), chapter.index);
     assert.ok(normalizedSimplicity.includes(chapter.title), chapter.title);
     assert.ok(normalizedSimplicity.includes(chapter.lead), chapter.lead);
     assert.ok(normalizedSimplicity.includes(chapter.body), chapter.body);
-    assert.match(
-      simplicity,
-      new RegExp(`src="\\./public/screenshots/${chapter.screenshot}"`),
-    );
-    assert.ok(
-      existsSync(
-        new URL(`../public/screenshots/${chapter.screenshot}`, import.meta.url),
-      ),
-      chapter.screenshot,
-    );
+
+    for (const screenshot of chapter.screenshots) {
+      assert.match(
+        simplicity,
+        new RegExp(`src="\\./public/screenshots/${screenshot}"`),
+      );
+      assert.ok(
+        existsSync(new URL(`../public/screenshots/${screenshot}`, import.meta.url)),
+        screenshot,
+      );
+    }
+  }
+
+  assert.equal((simplicity.match(/class="simplicity__visual simplicity__visual--pair"/g) ?? []).length, 2);
+
+  for (const { screenshots } of simplicityChapters) {
+    for (const screenshot of screenshots) {
+      assert.deepEqual(
+        pngSize(new URL(`../public/screenshots/${screenshot}`, import.meta.url)),
+        { width: 720, height: 1500 },
+        screenshot,
+      );
+    }
   }
 
   assert.ok(
@@ -410,7 +432,7 @@ test("simplicity uses an open editorial layout without screenshot panels", () =>
   assert.match(glowRule, /content: "";/);
   assert.match(
     styles,
-    /\.simplicity__visual img\s*\{[^}]*object-fit: contain;[^}]*box-shadow: var\(--shadow-soft\);/,
+    /\.simplicity__visual img\s*\{[^}]*object-fit: contain;[^}]*border-radius: 0;[^}]*box-shadow: var\(--shadow-soft\);/,
   );
   assert.doesNotMatch(styles, /\.simplicity[^}]*cursor: zoom-in/);
   assert.doesNotMatch(
