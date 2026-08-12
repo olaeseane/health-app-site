@@ -202,6 +202,12 @@ async function inlineHtmlAssetUrls(html) {
 
   for (const match of matches) {
     const [fullMatch, attribute, quote, assetPath] = match;
+
+    if (attribute === "href" && extname(assetPath).toLowerCase() === ".pdf") {
+      inlinedHtml = inlinedHtml.replace(fullMatch, `${attribute}=${quote}doc.pdf${quote}`);
+      continue;
+    }
+
     const optimizedAssetPath = await optimizePortalScreenshot(assetPath);
     const dataUrl = await dataUrlFromDist(optimizedAssetPath);
     inlinedHtml = inlinedHtml.replace(fullMatch, `${attribute}=${quote}${dataUrl}${quote}`);

@@ -158,7 +158,7 @@ test("header links to the five current landing sections", () => {
   assert.doesNotMatch(styles, /\.header-route/);
 });
 
-test("footer links to the documentation PDF mockup", () => {
+test("footer links to the documentation placeholder", () => {
   const footer = landing.match(
     /<footer\b[^>]*class="site-footer"[^>]*>([\s\S]*?)<\/footer>/,
   )?.[1];
@@ -172,10 +172,7 @@ test("footer links to the documentation PDF mockup", () => {
   assert.match(footer, /<span aria-hidden="true">·<\/span>/);
   assert.match(
     footer,
-    /href="\.\/public\/health-app-documentation-mock\.pdf"[^>]*>Документация/,
-  );
-  assert.ok(
-    existsSync(new URL("../public/health-app-documentation-mock.pdf", import.meta.url)),
+    /href="doc\.pdf"[^>]*>Документация/,
   );
   assert.match(styles, /\.site-footer__links\s*\{[\s\S]*?justify-self: end;/);
   assert.match(styles, /\.site-footer p\s*\{[^}]*font-size: 0\.74rem;/);

@@ -38,6 +38,8 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.match(asciiPortalHtml, /&#1047;&#1076;&#1086;&#1088;&#1086;&#1074;&#1100;&#1077;/);
   assert.match(asciiPortalHtml, /class="site-nav"/);
   assert.match(asciiPortalHtml, /href="#first-route"/);
+  assert.match(asciiPortalHtml, /href="doc\.pdf"/);
+  assert.doesNotMatch(asciiPortalHtml, /data:application\/(?:octet-stream|pdf);base64/);
   assert.doesNotMatch(asciiPortalHtml, /data:image\/svg\+xml|\.svg/);
   assert.ok(existsSync(new URL("../docs/assets/brand/logo.svg", import.meta.url)));
   assert.match(
