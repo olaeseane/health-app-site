@@ -158,7 +158,7 @@ test("header links to the five current landing sections", () => {
   assert.doesNotMatch(styles, /\.header-route/);
 });
 
-test("footer links to the documentation PDF mockup", () => {
+test("footer links to the documentation placeholder", () => {
   const footer = landing.match(
     /<footer\b[^>]*class="site-footer"[^>]*>([\s\S]*?)<\/footer>/,
   )?.[1];
@@ -172,10 +172,7 @@ test("footer links to the documentation PDF mockup", () => {
   assert.match(footer, /<span aria-hidden="true">·<\/span>/);
   assert.match(
     footer,
-    /href="\.\/public\/health-app-documentation-mock\.pdf"[^>]*>Документация/,
-  );
-  assert.ok(
-    existsSync(new URL("../public/health-app-documentation-mock.pdf", import.meta.url)),
+    /href="doc\.pdf"[^>]*>Документация/,
   );
   assert.match(styles, /\.site-footer__links\s*\{[\s\S]*?justify-self: end;/);
   assert.match(styles, /\.site-footer p\s*\{[^}]*font-size: 0\.74rem;/);
@@ -584,7 +581,7 @@ test("privacy manifesto follows integrations as an open four-principle grid", ()
   );
 });
 
-test("download route follows privacy with two honest QR placeholders", () => {
+test("download route follows privacy with two real QR links", () => {
   const download = section("download");
 
   assert.ok(download);
@@ -593,8 +590,13 @@ test("download route follows privacy with two honest QR placeholders", () => {
   assert.match(download, /<strong>iOS<\/strong>/);
   assert.match(download, /<strong>Android<\/strong>/);
   assert.equal((download.match(/class="download-option"/g) ?? []).length, 2);
-  assert.equal((download.match(/Ссылка появится позже/g) ?? []).length, 2);
-  assert.doesNotMatch(download, /<a\b|href=|<button\b/);
+  assert.doesNotMatch(download, /Ссылка появится позже/);
+  assert.match(download, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);
+  assert.match(download, /src="\.\/public\/download\/ios-testflight-qr\.png"/);
+  assert.match(download, /href="https:\/\/hubthe\.team\/entity-files\/1e46406f-78da-4cec-afa1-9a8451951e93\/72d19454-eae1-46df-9a76-8187ba9531dc_predix-health-app-1\.16\.apk"/);
+  assert.match(download, /src="\.\/public\/download\/android-apk-qr\.png"/);
+  assert.ok(existsSync(new URL("../public/download/ios-testflight-qr.png", import.meta.url)));
+  assert.ok(existsSync(new URL("../public/download/android-apk-qr.png", import.meta.url)));
   assert.ok(landing.indexOf('id="privacy"') < landing.indexOf('id="download"'));
   assert.match(
     styles,

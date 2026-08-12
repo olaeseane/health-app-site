@@ -32,6 +32,20 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
     statSync(asciiPortal).size < 1_000_000,
     "ASCII portal inline build should stay under 1 MB",
   );
+  assert.match(asciiPortalHtml, /<header class="site-header"/);
+  assert.match(asciiPortalHtml, /class="brand__wordmark"/);
+  assert.match(asciiPortalHtml, /&#1055;&#1088;&#1077;&#1076;&#1080;&#1082;&#1089;/);
+  assert.match(asciiPortalHtml, /&#1047;&#1076;&#1086;&#1088;&#1086;&#1074;&#1100;&#1077;/);
+  assert.match(asciiPortalHtml, /class="site-nav"/);
+  assert.match(asciiPortalHtml, /href="#first-route"/);
+  assert.match(asciiPortalHtml, /href="doc\.pdf"/);
+  assert.doesNotMatch(asciiPortalHtml, /data:application\/(?:octet-stream|pdf);base64/);
+  assert.match(asciiPortalHtml, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);
+  assert.match(asciiPortalHtml, /href="https:\/\/hubthe\.team\/entity-files\/1e46406f-78da-4cec-afa1-9a8451951e93\/72d19454-eae1-46df-9a76-8187ba9531dc_predix-health-app-1\.16\.apk"/);
+  assert.ok(
+    (asciiPortalHtml.match(/data:image\/png;base64,/g) ?? []).length >= 4,
+    "portal should inline logo and QR PNG assets",
+  );
   assert.doesNotMatch(asciiPortalHtml, /data:image\/svg\+xml|\.svg/);
   assert.ok(existsSync(new URL("../docs/assets/brand/logo.svg", import.meta.url)));
   assert.match(

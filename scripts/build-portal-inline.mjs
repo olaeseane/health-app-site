@@ -202,6 +202,12 @@ async function inlineHtmlAssetUrls(html) {
 
   for (const match of matches) {
     const [fullMatch, attribute, quote, assetPath] = match;
+
+    if (attribute === "href" && extname(assetPath).toLowerCase() === ".pdf") {
+      inlinedHtml = inlinedHtml.replace(fullMatch, `${attribute}=${quote}doc.pdf${quote}`);
+      continue;
+    }
+
     const optimizedAssetPath = await optimizePortalScreenshot(assetPath);
     const dataUrl = await dataUrlFromDist(optimizedAssetPath);
     inlinedHtml = inlinedHtml.replace(fullMatch, `${attribute}=${quote}${dataUrl}${quote}`);
@@ -210,10 +216,8 @@ async function inlineHtmlAssetUrls(html) {
   return inlinedHtml;
 }
 
-function removePortalDuplicateChrome(html) {
-  return html
-    .replace(/\n\s*<a class="skip-link"[\s\S]*?<\/a>\n/, "\n")
-    .replace(/\n\s*<header class="site-header"[\s\S]*?<\/header>\n/, "\n");
+function removePortalSkipLink(html) {
+  return html.replace(/\n\s*<a class="skip-link"[\s\S]*?<\/a>\n/, "\n");
 }
 
 function addPortalInlineTaskHandlers(html) {
@@ -237,7 +241,7 @@ async function buildPortalInline() {
     await readFile(new URL("src/app.js", projectRoot), "utf8"),
   );
 
-  html = removePortalDuplicateChrome(html);
+  html = removePortalSkipLink(html);
   html = addPortalInlineTaskHandlers(html);
   html = await inlineHtmlAssetUrls(html);
   html = html.replaceAll(
