@@ -946,6 +946,8 @@ svg {
 .download-option__code img {
   width: 100%;
   height: 100%;
+  max-width: 100%;
+  display: block;
   object-fit: contain;
 }
 
