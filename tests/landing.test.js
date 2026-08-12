@@ -81,10 +81,8 @@ test("hero presents one focused entry point", () => {
   assert.match(hero, /возможность/);
   assert.doesNotMatch(hero, /hero-title__dash/);
   assert.match(styles, /\.section-heading h2,[\s\S]*?margin-left: -0\.055em;/);
-  assert.match(
-    hero,
-    /Чтобы предупредить болезнь и заметить изменения за\s+тысячей\s+рутинных дел/,
-  );
+  assert.match(hero, /Сделать следующий шаг для своего здоровья/);
+  assert.doesNotMatch(hero, /Чтобы предупредить болезнь/);
   assert.match(hero, /href="#first-route"[^>]*>\s*С чего начать/);
   assert.doesNotMatch(hero, /href="#faq"/);
   assert.equal((hero.match(/class="button\b/g) ?? []).length, 1);
@@ -589,6 +587,8 @@ test("download route follows privacy with two real QR links", () => {
   assert.match(download, /Это ваш первый шаг/);
   assert.match(download, /<strong>iOS<\/strong>/);
   assert.match(download, /<strong>Android<\/strong>/);
+  assert.match(download, /<span>APK<\/span>/);
+  assert.doesNotMatch(download, /APK 1\.16/);
   assert.equal((download.match(/class="download-option"/g) ?? []).length, 2);
   assert.doesNotMatch(download, /Ссылка появится позже/);
   assert.match(download, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);
