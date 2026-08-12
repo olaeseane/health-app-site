@@ -81,7 +81,8 @@ test("hero presents one focused entry point", () => {
   assert.match(hero, /возможность/);
   assert.doesNotMatch(hero, /hero-title__dash/);
   assert.match(styles, /\.section-heading h2,[\s\S]*?margin-left: -0\.055em;/);
-  assert.match(hero, /Сделать следующий шаг для своего здоровья/);
+  assert.match(hero, /Понять свой следующий шаг/);
+  assert.doesNotMatch(hero, /Сделать следующий шаг/);
   assert.doesNotMatch(hero, /Чтобы предупредить болезнь/);
   assert.match(hero, /href="#first-route"[^>]*>\s*С чего начать/);
   assert.doesNotMatch(hero, /href="#faq"/);
