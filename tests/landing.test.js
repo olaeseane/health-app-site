@@ -152,6 +152,10 @@ test("header links to the five current landing sections", () => {
   assert.match(header, /href="#integrations"[^>]*>Интеграции/);
   assert.match(header, /href="#privacy"[^>]*>Анонимность/);
   assert.match(header, /href="#download"[^>]*>Скачать/);
+  assert.match(
+    styles,
+    /\.site-nav a:is\(:link, :visited, :hover, :focus-visible, :active\)\s*\{[^}]*color: var\(--graphite\) !important;[^}]*text-decoration-color: currentColor;/,
+  );
   assert.doesNotMatch(header, /href="#faq"|href="#documentation"/);
   assert.doesNotMatch(header, /href="#tasks"|>Основные задачи/);
   assert.doesNotMatch(styles, /\.header-route/);

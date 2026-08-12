@@ -38,6 +38,10 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.match(asciiPortalHtml, /&#1047;&#1076;&#1086;&#1088;&#1086;&#1074;&#1100;&#1077;/);
   assert.match(asciiPortalHtml, /class="site-nav"/);
   assert.match(asciiPortalHtml, /href="#first-route"/);
+  assert.match(
+    asciiPortalHtml,
+    /\.site-nav a:is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*color: var\(--graphite\) !important;\s*text-decoration-color: currentColor;/,
+  );
   assert.match(asciiPortalHtml, /href="doc\.pdf"/);
   assert.doesNotMatch(asciiPortalHtml, /data:application\/(?:octet-stream|pdf);base64/);
   assert.match(asciiPortalHtml, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);
