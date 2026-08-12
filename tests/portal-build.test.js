@@ -40,6 +40,12 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.match(asciiPortalHtml, /href="#first-route"/);
   assert.match(asciiPortalHtml, /href="doc\.pdf"/);
   assert.doesNotMatch(asciiPortalHtml, /data:application\/(?:octet-stream|pdf);base64/);
+  assert.match(asciiPortalHtml, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);
+  assert.match(asciiPortalHtml, /href="https:\/\/hubthe\.team\/entity-files\/1e46406f-78da-4cec-afa1-9a8451951e93\/72d19454-eae1-46df-9a76-8187ba9531dc_predix-health-app-1\.16\.apk"/);
+  assert.ok(
+    (asciiPortalHtml.match(/data:image\/png;base64,/g) ?? []).length >= 4,
+    "portal should inline logo and QR PNG assets",
+  );
   assert.doesNotMatch(asciiPortalHtml, /data:image\/svg\+xml|\.svg/);
   assert.ok(existsSync(new URL("../docs/assets/brand/logo.svg", import.meta.url)));
   assert.match(
