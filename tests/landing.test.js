@@ -593,8 +593,10 @@ test("download route follows privacy with two real QR links", () => {
   assert.doesNotMatch(download, /Ссылка появится позже/);
   assert.match(download, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);
   assert.match(download, /src="\.\/public\/download\/ios-testflight-qr\.png"/);
+  assert.match(download, /src="\.\/public\/download\/ios-testflight-qr\.png"[\s\S]*?width="160"[\s\S]*?height="160"/);
   assert.match(download, /href="https:\/\/hubthe\.team\/entity-files\/1e46406f-78da-4cec-afa1-9a8451951e93\/72d19454-eae1-46df-9a76-8187ba9531dc_predix-health-app-1\.16\.apk"/);
   assert.match(download, /src="\.\/public\/download\/android-apk-qr\.png"/);
+  assert.match(download, /src="\.\/public\/download\/android-apk-qr\.png"[\s\S]*?width="160"[\s\S]*?height="160"/);
   assert.ok(existsSync(new URL("../public/download/ios-testflight-qr.png", import.meta.url)));
   assert.ok(existsSync(new URL("../public/download/android-apk-qr.png", import.meta.url)));
   assert.ok(landing.indexOf('id="privacy"') < landing.indexOf('id="download"'));
