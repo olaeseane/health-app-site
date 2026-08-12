@@ -490,6 +490,7 @@ test("integrations use the supplied product copy", () => {
     6,
   );
   for (const logo of [
+    "health-connect-logo.png",
     "neyrox-logo.png",
     "google-fit-logo.png",
     "samsung-health-logo.png",
@@ -504,6 +505,7 @@ test("integrations use the supplied product copy", () => {
       logo,
     );
   }
+  assert.doesNotMatch(integrations, />HC<\/span>/);
   assert.doesNotMatch(integrations, /\.svg/);
   assert.doesNotMatch(
     styles.match(/\.integration-list\s*\{([^}]*)\}/)?.[1] ?? "",
