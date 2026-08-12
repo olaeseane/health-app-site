@@ -589,6 +589,8 @@ test("download route follows privacy with two real QR links", () => {
   assert.match(download, /Это ваш первый шаг/);
   assert.match(download, /<strong>iOS<\/strong>/);
   assert.match(download, /<strong>Android<\/strong>/);
+  assert.match(download, /<span>APK<\/span>/);
+  assert.doesNotMatch(download, /APK 1\.16/);
   assert.equal((download.match(/class="download-option"/g) ?? []).length, 2);
   assert.doesNotMatch(download, /Ссылка появится позже/);
   assert.match(download, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);
