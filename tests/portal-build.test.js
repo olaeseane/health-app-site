@@ -32,6 +32,12 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
     statSync(asciiPortal).size < 1_000_000,
     "ASCII portal inline build should stay under 1 MB",
   );
+  assert.match(asciiPortalHtml, /<header class="site-header"/);
+  assert.match(asciiPortalHtml, /class="brand__wordmark"/);
+  assert.match(asciiPortalHtml, /&#1055;&#1088;&#1077;&#1076;&#1080;&#1082;&#1089;/);
+  assert.match(asciiPortalHtml, /&#1047;&#1076;&#1086;&#1088;&#1086;&#1074;&#1100;&#1077;/);
+  assert.match(asciiPortalHtml, /class="site-nav"/);
+  assert.match(asciiPortalHtml, /href="#first-route"/);
   assert.doesNotMatch(asciiPortalHtml, /data:image\/svg\+xml|\.svg/);
   assert.ok(existsSync(new URL("../docs/assets/brand/logo.svg", import.meta.url)));
   assert.match(
