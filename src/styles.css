@@ -727,8 +727,7 @@ svg {
 }
 
 .integration-mark--connect {
-  background: #eef5ff;
-  color: #2f67c6;
+  background: var(--white);
 }
 
 .integration-mark--cardio {
