@@ -50,6 +50,10 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.match(asciiPortalHtml, /\.site-footer__links a \{[^}]*font-size: 0\.9rem;/);
   assert.match(asciiPortalHtml, /href="doc\.pdf"/);
   assert.match(asciiPortalHtml, /href="#top"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"/);
+  assert.match(
+    asciiPortalHtml,
+    /<a class="brand brand--footer" href="#top" style="color: #35333f !important; text-decoration: none !important; text-decoration-color: currentColor !important;">/,
+  );
   assert.match(asciiPortalHtml, /href="doc\.pdf"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"/);
   assert.doesNotMatch(asciiPortalHtml, /data:application\/(?:octet-stream|pdf);base64/);
   assert.match(asciiPortalHtml, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);

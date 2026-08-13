@@ -169,6 +169,10 @@ test("footer links to the documentation placeholder", () => {
   assert.ok(footer);
   assert.match(footer, /class="brand__prefix">Предикс<\/span>/);
   assert.match(footer, /class="brand__name">Здоровье<\/span>/);
+  assert.match(
+    footer,
+    /<a class="brand brand--footer" href="#top" style="color: #35333f !important; text-decoration: none !important; text-decoration-color: currentColor !important;">/,
+  );
   assert.doesNotMatch(footer, /<!-- <span class="brand__name">Здоровье<\/span> -->/);
   assert.match(footer, /class="site-footer__links"[^>]*aria-label="Ссылки в подвале"/);
   assert.match(footer, /href="#top"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"[^>]*>В начало/);
