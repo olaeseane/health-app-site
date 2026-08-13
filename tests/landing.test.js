@@ -179,7 +179,7 @@ test("footer links to the documentation placeholder", () => {
   assert.match(footer, /<span aria-hidden="true">·<\/span>/);
   assert.match(
     footer,
-    /href="doc\.pdf"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"[^>]*>Документация/,
+    /href="doc\.pdf"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"[^>]*>Документация/,
   );
   assert.match(styles, /\.site-nav a\s*\{[^}]*font-size: 0\.9rem;/);
   assert.match(styles, /\.site-footer__links a\s*\{[^}]*font-size: 0\.9rem;/);
