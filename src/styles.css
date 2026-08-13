@@ -199,6 +199,11 @@ svg {
   text-decoration: underline;
 }
 
+.site-nav a:is(:link, :visited, :hover, :focus-visible, :active) {
+  color: var(--graphite) !important;
+  text-decoration-color: currentColor;
+}
+
 .hero {
   position: relative;
   display: grid;
