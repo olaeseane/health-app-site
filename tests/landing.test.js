@@ -177,6 +177,12 @@ test("footer links to the documentation placeholder", () => {
     footer,
     /href="doc\.pdf"[^>]*>Документация/,
   );
+  assert.match(styles, /\.site-nav a\s*\{[^}]*font-size: 0\.9rem;/);
+  assert.match(styles, /\.site-footer__links a\s*\{[^}]*font-size: 0\.9rem;/);
+  assert.match(
+    styles,
+    /\.site-footer__links a:is\(:link, :visited, :hover, :focus-visible, :active\)\s*\{[^}]*color: var\(--graphite\) !important;[^}]*text-decoration-color: currentColor;/,
+  );
   assert.match(styles, /\.site-footer__links\s*\{[\s\S]*?justify-self: end;/);
   assert.match(styles, /\.site-footer p\s*\{[^}]*font-size: 0\.74rem;/);
 });
