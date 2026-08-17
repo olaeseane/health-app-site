@@ -131,6 +131,18 @@ svg {
   background: transparent;
   backdrop-filter: none;
   border-bottom: 0;
+  transition:
+    padding 180ms ease,
+    background-color 180ms ease,
+    backdrop-filter 180ms ease,
+    border-color 180ms ease;
+}
+
+.site-header--scrolled {
+  padding-block: 12px;
+  background: rgba(244, 251, 250, 0.78);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(184, 223, 220, 0.32);
 }
 
 .brand {
@@ -147,6 +159,14 @@ svg {
   width: 52px;
   height: 52px;
   object-fit: contain;
+  transition:
+    width 180ms ease,
+    height 180ms ease;
+}
+
+.site-header--scrolled .brand__mark {
+  width: 44px;
+  height: 44px;
 }
 
 .brand__wordmark {
@@ -197,6 +217,11 @@ svg {
   color: var(--tiffany-deep);
   font-size: 0.9rem;
   text-decoration: none;
+  transition: min-height 180ms ease;
+}
+
+.site-header--scrolled .site-nav a {
+  min-height: 38px;
 }
 
 .site-nav a:hover {
@@ -218,6 +243,10 @@ svg {
   box-shadow: 0 12px 28px rgba(18, 104, 107, 0.2);
   font-weight: 800;
   text-decoration: none !important;
+}
+
+.site-header--scrolled .site-nav__cta {
+  min-height: 36px;
 }
 
 .site-nav__cta:is(:link, :visited, :hover, :focus-visible, :active) {

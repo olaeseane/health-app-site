@@ -141,6 +141,10 @@ test("client interaction script works when index.html is opened directly", () =>
     landing,
     /<script[^>]+type="module"[^>]+src="\.\/src\/app\.js"/,
   );
+  assert.match(app, /const HEADER_SCROLL_THRESHOLD = 24;/);
+  assert.match(app, /document\.querySelector\("\.site-header"\)/);
+  assert.match(app, /classList\.toggle\("site-header--scrolled", window\.scrollY > HEADER_SCROLL_THRESHOLD\)/);
+  assert.match(app, /window\.addEventListener\("scroll", syncHeaderSurface, \{ passive: true \}\)/);
 });
 
 test("header links to the five current landing sections", () => {
@@ -186,6 +190,13 @@ test("header links to the five current landing sections", () => {
     styles,
     /\.site-header\s*\{[^}]*background: transparent;[^}]*backdrop-filter: none;[^}]*border-bottom: 0;/,
   );
+  assert.match(
+    styles,
+    /\.site-header--scrolled\s*\{[^}]*padding-block: 12px;[^}]*background: rgba\(244, 251, 250, 0\.78\);[^}]*backdrop-filter: blur\(14px\);[^}]*border-bottom: 1px solid rgba\(184, 223, 220, 0\.32\);/,
+  );
+  assert.match(styles, /\.site-header--scrolled \.brand__mark\s*\{[^}]*width: 44px;[^}]*height: 44px;/);
+  assert.match(styles, /\.site-header--scrolled \.site-nav a\s*\{[^}]*min-height: 38px;/);
+  assert.match(styles, /\.site-header--scrolled \.site-nav__cta\s*\{[^}]*min-height: 36px;/);
   assert.match(
     styles,
     /\.site-nav__cta\s*\{[^}]*background: var\(--tiffany-deep\);[^}]*color: var\(--white\) !important;[^}]*border-radius: 999px;/,
