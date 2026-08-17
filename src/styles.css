@@ -1460,8 +1460,13 @@ svg {
   font-size: clamp(1rem, 1.35vw, 1.16rem);
 }
 
+.simplicity__download {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(44px, 6vw, 72px);
+}
+
 .simplicity__download-link {
-  margin-top: 28px;
   background: var(--tiffany-deep);
 }
 
