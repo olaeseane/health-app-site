@@ -38,11 +38,23 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.match(asciiPortalHtml, /&#1047;&#1076;&#1086;&#1088;&#1086;&#1074;&#1100;&#1077;/);
   assert.match(asciiPortalHtml, /class="site-nav"/);
   assert.match(asciiPortalHtml, /href="#first-route"/);
+  assert.match(asciiPortalHtml, /href="#first-route"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"/);
   assert.match(
     asciiPortalHtml,
     /\.site-nav a:is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*color: var\(--graphite\) !important;\s*text-decoration-color: currentColor;/,
   );
+  assert.match(
+    asciiPortalHtml,
+    /\.site-footer__links a:is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*color: var\(--graphite\) !important;\s*text-decoration-color: currentColor;/,
+  );
+  assert.match(asciiPortalHtml, /\.site-footer__links a \{[^}]*font-size: 0\.9rem;/);
   assert.match(asciiPortalHtml, /href="doc\.pdf"/);
+  assert.match(asciiPortalHtml, /href="#top"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"/);
+  assert.match(
+    asciiPortalHtml,
+    /<a class="brand brand--footer" href="#top" style="color: #35333f !important; text-decoration: none !important; text-decoration-color: currentColor !important;">/,
+  );
+  assert.match(asciiPortalHtml, /href="doc\.pdf"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"/);
   assert.doesNotMatch(asciiPortalHtml, /data:application\/(?:octet-stream|pdf);base64/);
   assert.match(asciiPortalHtml, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);
   assert.match(asciiPortalHtml, /href="https:\/\/hubthe\.team\/entity-files\/1e46406f-78da-4cec-afa1-9a8451951e93\/72d19454-eae1-46df-9a76-8187ba9531dc_predix-health-app-1\.16\.apk"/);

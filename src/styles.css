@@ -1047,7 +1047,14 @@ svg {
 }
 
 .site-footer__links a {
+  color: var(--graphite);
+  font-size: 0.9rem;
   white-space: nowrap;
+}
+
+.site-footer__links a:is(:link, :visited, :hover, :focus-visible, :active) {
+  color: var(--graphite) !important;
+  text-decoration-color: currentColor;
 }
 
 @media (min-width: 601px) {
