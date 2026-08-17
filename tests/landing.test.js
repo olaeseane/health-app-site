@@ -192,7 +192,15 @@ test("header links to the five current landing sections", () => {
   );
   assert.match(
     styles,
-    /\.site-header--scrolled\s*\{[^}]*padding-block: 12px;[^}]*background: rgba\(244, 251, 250, 0\.78\);[^}]*backdrop-filter: blur\(14px\);[^}]*border-bottom: 1px solid rgba\(184, 223, 220, 0\.32\);/,
+    /\.site-header::before\s*\{[^}]*left: 50%;[^}]*width: 100vw;[^}]*transform: translateX\(-50%\);[^}]*background: transparent;[^}]*border-bottom: 0;/,
+  );
+  assert.match(
+    styles,
+    /\.site-header--scrolled\s*\{[^}]*padding-block: 12px;/,
+  );
+  assert.match(
+    styles,
+    /\.site-header--scrolled::before\s*\{[^}]*background: rgba\(244, 251, 250, 0\.78\);[^}]*backdrop-filter: blur\(14px\);[^}]*border-bottom: 1px solid rgba\(184, 223, 220, 0\.32\);/,
   );
   assert.match(styles, /\.site-header--scrolled \.brand__mark\s*\{[^}]*width: 44px;[^}]*height: 44px;/);
   assert.match(styles, /\.site-header--scrolled \.site-nav a\s*\{[^}]*min-height: 38px;/);
