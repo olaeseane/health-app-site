@@ -52,8 +52,8 @@ const simplicityChapters = [
   },
   {
     index: "04 / СВЯЗЬ",
-    title: "Интеграции работают на вас",
-    lead: "Подключайте любимые устройства и сервисы",
+    title: "Подключайте любимые устройства и сервисы",
+    lead: "Интеграции работают на вас",
     body: "Приложение автоматически получает показатели из популярных приложений и устройств",
     screenshots: ["integration1.png"],
   },
@@ -86,11 +86,11 @@ test("hero presents one focused entry point", () => {
 
   assert.ok(hero);
   assert.doesNotMatch(hero, /Приложение «Здоровье»/);
-  assert.match(hero, /Каждый день — это/);
-  assert.match(hero, /возможность/);
+  assert.match(hero, /О здоровье можно знать много/);
+  assert.match(hero, /И всё ещё не знать, что делать/);
   assert.doesNotMatch(hero, /hero-title__dash/);
   assert.match(styles, /\.section-heading h2,[\s\S]*?margin-left: -0\.055em;/);
-  assert.match(hero, /Понять свой следующий шаг/);
+  assert.doesNotMatch(hero, /Понять свой следующий шаг/);
   assert.doesNotMatch(hero, /Сделать следующий шаг/);
   assert.doesNotMatch(hero, /Чтобы предупредить болезнь/);
   assert.match(hero, /href="#first-route"[^>]*>\s*С чего начать/);
@@ -123,7 +123,8 @@ test("main copy avoids sentence-final periods", () => {
   assert.ok(main);
   const visibleText = main
     .replace(/<!--[\s\S]*?-->/g, "")
-    .replace(/<[^>]*>/g, "\n");
+    .replace(/<[^>]*>/g, "\n")
+    .replace(/Предикс\.Здоровье/g, "ПредиксЗдоровье");
   assert.doesNotMatch(visibleText, /[А-Яа-яЁё][^\n]*\./);
 });
 
@@ -152,18 +153,30 @@ test("header links to the five current landing sections", () => {
   assert.match(styles, /\.brand__mark\s*\{[^}]*width: 52px;[^}]*height: 52px;/);
   assert.match(styles, /\.brand--footer \.brand__mark\s*\{[^}]*width: 44px;[^}]*height: 44px;/);
   assert.match(styles, /@media \(max-width: 820px\)[\s\S]*?\.brand__mark\s*\{[^}]*width: 46px;[^}]*height: 46px;/);
-  assert.match(header, /href="#first-route"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"[^>]*>С чего начать/);
-  assert.match(header, /href="#simplicity"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"[^>]*>Простота/);
+  assert.match(header, /href="#first-route"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"[^>]*>С чего начать/);
+  assert.match(header, /href="#simplicity"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"[^>]*>Простота/);
   assert.ok(
     header.indexOf('href="#first-route"') <
       header.indexOf('href="#simplicity"'),
   );
   assert.match(header, /href="#integrations"[^>]*>Интеграции/);
   assert.match(header, /href="#privacy"[^>]*>Анонимность/);
-  assert.match(header, /href="#download"[^>]*>Скачать/);
+  assert.match(header, /class="site-nav__cta"[^>]*href="#download"[^>]*style="color: #ffffff !important; text-decoration: none !important;"[^>]*>Скачать/);
   assert.match(
     styles,
-    /\.site-nav a:is\(:link, :visited, :hover, :focus-visible, :active\)\s*\{[^}]*color: var\(--graphite\) !important;[^}]*text-decoration-color: currentColor;/,
+    /\.site-header\s*\{[^}]*position: sticky;[^}]*top: 0;/,
+  );
+  assert.match(
+    styles,
+    /\.site-header\s*\{[^}]*background: rgba\(255, 255, 255, 0\.88\);[^}]*backdrop-filter: blur\(18px\);/,
+  );
+  assert.match(
+    styles,
+    /\.site-nav__cta\s*\{[^}]*background: var\(--tiffany-deep\);[^}]*color: var\(--white\) !important;[^}]*border-radius: 999px;/,
+  );
+  assert.match(
+    styles,
+    /\.site-nav a:not\(\.site-nav__cta\):is\(:link, :visited, :hover, :focus-visible, :active\)\s*\{[^}]*color: var\(--tiffany-deep\) !important;[^}]*text-decoration-color: currentColor;/,
   );
   assert.doesNotMatch(header, /href="#faq"|href="#documentation"/);
   assert.doesNotMatch(header, /href="#tasks"|>Основные задачи/);
@@ -210,6 +223,7 @@ test("section kickers use one shared visual format", () => {
     styles,
     /\.section-kicker\s*\{[\s\S]*?color: var\(--tiffany-deep\);[\s\S]*?font-family: var\(--body\);[\s\S]*?font-size: 0\.78rem;[\s\S]*?font-weight: 800;[\s\S]*?line-height: 1\.6;[\s\S]*?letter-spacing: 0\.14em;[\s\S]*?text-transform: uppercase;/,
   );
+  assert.match(styles, /\.section-kicker\s*\{[^}]*color: var\(--tiffany-deep\);/);
   assert.match(styles, /\.integrations__copy > p:not\(\.section-kicker\)/);
 });
 
@@ -333,13 +347,20 @@ test("getting started follows the hero as one connected route", () => {
   assert.equal((route.match(/class="first-route__num"/g) ?? []).length, 4);
   assert.doesNotMatch(route, /class="route-link"/);
   for (const step of [
-    "Добавьте то, что уже есть",
+    "Добавьте то, что уже знаете",
     "Получите первый результат",
     "Дополняйте портрет",
-    "Наблюдайте за изменениями",
+    "Поднимайте себя лучше",
   ]) {
     assert.ok(route.includes(step), step);
   }
+  assert.match(route, /Ведите дневник питания и сна/);
+  assert.match(
+    route,
+    /Со временем портрет становится точнее и помогает совершать\s+осознанные шаги к здоровью/,
+  );
+  assert.doesNotMatch(route, /дневник пищи/);
+  assert.doesNotMatch(route, /Наблюдайте за изменениями/);
   assert.match(styles, /\.first-route\s*\{[\s\S]*?background: var\(--white\);/);
   assert.match(
     styles,
@@ -361,7 +382,13 @@ test("simplicity replaces the task directory with four editorial chapters", () =
   assert.ok(simplicity);
   const normalizedSimplicity = simplicity.replace(/\s+/g, " ");
   assert.match(simplicity, /Простота использования/);
-  assert.match(simplicity, /Убрали всё, что мешает начать/);
+  assert.match(simplicity, /Здоровье требует много внимания/);
+  assert.match(simplicity, /Предикс\.Здоровье — по минимуму/);
+  assert.doesNotMatch(simplicity, /Убрали всё, что мешает начать/);
+  assert.match(
+    simplicity,
+    /<p class="simplicity__index">04 \/ СВЯЗЬ<\/p>[\s\S]*?<a\s+class="button button--primary simplicity__download-link"\s+href="#download"\s+data-focus-target="download-title"\s*>\s*Скачать\s*<\/a>/,
+  );
   assert.equal(
     (simplicity.match(/class="simplicity__chapter"/g) ?? []).length,
     4,
@@ -610,10 +637,12 @@ test("download route follows privacy with two real QR links", () => {
 
   assert.ok(download);
   assert.match(download, /Скачать приложение/);
-  assert.match(download, /Это ваш первый шаг/);
+  assert.match(download, /Ваш первый осознанный шаг/);
   assert.match(download, /<strong>iOS<\/strong>/);
   assert.match(download, /<strong>Android<\/strong>/);
-  assert.match(download, /<span>APK<\/span>/);
+  assert.doesNotMatch(download, /<span>TestFlight<\/span>/);
+  assert.doesNotMatch(download, /<span>APK<\/span>/);
+  assert.doesNotMatch(download.replace(/href="[^"]*"/g, ""), /TestFlight|APK/);
   assert.doesNotMatch(download, /APK 1\.16/);
   assert.equal((download.match(/class="download-option"/g) ?? []).length, 2);
   assert.doesNotMatch(download, /Ссылка появится позже/);

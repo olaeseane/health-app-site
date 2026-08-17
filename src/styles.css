@@ -118,7 +118,7 @@ svg {
 }
 
 .site-header {
-  position: absolute;
+  position: sticky;
   z-index: 20;
   top: 0;
   left: 50%;
@@ -128,6 +128,9 @@ svg {
   align-items: center;
   gap: 32px;
   padding: 24px var(--page-pad);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 12px 32px rgba(30, 94, 95, 0.08);
   transform: translateX(-50%);
 }
 
@@ -189,19 +192,36 @@ svg {
   display: inline-flex;
   min-height: 44px;
   align-items: center;
-  color: var(--graphite-soft);
+  color: var(--tiffany-deep);
   font-size: 0.9rem;
   text-decoration: none;
 }
 
 .site-nav a:hover {
-  color: var(--graphite);
+  color: var(--tiffany-dark);
   text-decoration: underline;
 }
 
-.site-nav a:is(:link, :visited, :hover, :focus-visible, :active) {
-  color: var(--graphite) !important;
+.site-nav a:not(.site-nav__cta):is(:link, :visited, :hover, :focus-visible, :active) {
+  color: var(--tiffany-deep) !important;
   text-decoration-color: currentColor;
+}
+
+.site-nav__cta {
+  min-height: 40px;
+  padding: 0 20px;
+  background: var(--tiffany-deep);
+  color: var(--white) !important;
+  border-radius: 999px;
+  box-shadow: 0 12px 28px rgba(18, 104, 107, 0.2);
+  font-weight: 800;
+  text-decoration: none !important;
+}
+
+.site-nav__cta:is(:link, :visited, :hover, :focus-visible, :active) {
+  background: var(--tiffany-deep);
+  color: var(--white) !important;
+  text-decoration: none !important;
 }
 
 .hero {
@@ -1439,6 +1459,16 @@ svg {
   margin: 14px 0 0;
   color: var(--graphite-soft);
   font-size: clamp(1rem, 1.35vw, 1.16rem);
+}
+
+.simplicity__download-link {
+  margin-top: 28px;
+  background: var(--tiffany-deep);
+}
+
+.simplicity__download-link:hover,
+.simplicity__download-link:active {
+  background: var(--tiffany-dark);
 }
 
 .simplicity__visual {
