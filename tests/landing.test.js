@@ -86,8 +86,15 @@ test("hero presents one focused entry point", () => {
 
   assert.ok(hero);
   assert.doesNotMatch(hero, /Приложение «Здоровье»/);
-  assert.match(hero, /О здоровье можно знать много/);
-  assert.match(hero, /И всё ещё не знать, что делать/);
+  assert.match(
+    hero,
+    /<h1 id="hero-title">\s*<span class="hero-title__line">О здоровье можно знать много<\/span>\s*<\/h1>/,
+  );
+  assert.match(
+    hero,
+    /<p class="hero__lead">\s*И всё ещё не знать, что делать\s*<\/p>/,
+  );
+  assert.doesNotMatch(hero, /<span class="hero-title__line">И всё ещё не знать, что делать<\/span>/);
   assert.doesNotMatch(hero, /hero-title__dash/);
   assert.match(styles, /\.section-heading h2,[\s\S]*?margin-left: -0\.055em;/);
   assert.doesNotMatch(hero, /Понять свой следующий шаг/);
@@ -166,6 +173,9 @@ test("header links to the five current landing sections", () => {
     styles,
     /\.site-header\s*\{[^}]*position: sticky;[^}]*top: 0;/,
   );
+  assert.doesNotMatch(styles, /\.site-header\s*\{[^}]*left: 50%;/);
+  assert.doesNotMatch(styles, /\.site-header\s*\{[^}]*transform: translateX\(-50%\);/);
+  assert.match(styles, /\.site-header\s*\{[^}]*margin: 0 auto;/);
   assert.match(
     styles,
     /\.site-header\s*\{[^}]*background: rgba\(255, 255, 255, 0\.88\);[^}]*backdrop-filter: blur\(18px\);/,
