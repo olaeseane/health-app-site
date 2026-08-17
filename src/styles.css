@@ -1445,7 +1445,7 @@ svg {
 }
 
 .simplicity {
-  padding: clamp(72px, 6vw, 96px) var(--page-pad);
+  padding: clamp(72px, 6vw, 96px) var(--page-pad) clamp(44px, 5vw, 64px);
   background: var(--section-fog);
   box-shadow: 0 0 0 100vmax var(--section-fog);
   clip-path: inset(0 -100vmax);
@@ -1520,7 +1520,7 @@ svg {
 .simplicity__download {
   display: flex;
   justify-content: center;
-  margin-top: clamp(44px, 6vw, 72px);
+  margin-top: clamp(20px, 3vw, 32px);
 }
 
 .simplicity__download-link {
