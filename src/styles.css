@@ -124,7 +124,7 @@ svg {
   display: grid;
   width: min(100%, var(--max-width));
   margin: 0 auto;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   gap: 32px;
   padding: 24px var(--page-pad);
@@ -178,7 +178,10 @@ svg {
 .site-nav {
   display: flex;
   align-items: center;
-  gap: clamp(22px, 3vw, 44px);
+  justify-self: end;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: clamp(16px, 2.2vw, 36px);
 }
 
 .site-nav a,
