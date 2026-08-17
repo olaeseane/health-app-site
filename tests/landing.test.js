@@ -72,6 +72,15 @@ function section(id) {
   )?.[1];
 }
 
+const pngDimensions = (relativePath) => {
+  const data = readFileSync(new URL(relativePath, import.meta.url));
+
+  return {
+    width: data.readUInt32BE(16),
+    height: data.readUInt32BE(20),
+  };
+};
+
 test("hero presents one focused entry point", () => {
   const hero = section("top");
 
@@ -611,11 +620,20 @@ test("download route follows privacy with two real QR links", () => {
   assert.match(download, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);
   assert.match(download, /src="\.\/public\/download\/ios-testflight-qr\.png"/);
   assert.match(download, /src="\.\/public\/download\/ios-testflight-qr\.png"[\s\S]*?width="160"[\s\S]*?height="160"/);
-  assert.match(download, /href="https:\/\/hubthe\.team\/entity-files\/1e46406f-78da-4cec-afa1-9a8451951e93\/72d19454-eae1-46df-9a76-8187ba9531dc_predix-health-app-1\.16\.apk"/);
+  assert.match(download, /href="https:\/\/hubthe\.team\/shared\/docs\/bcaa672e-9fd8-43a3-91e2-abe3189a88ae"/);
+  assert.doesNotMatch(download, /predix-health-app-1\.16\.apk/);
   assert.match(download, /src="\.\/public\/download\/android-apk-qr\.png"/);
   assert.match(download, /src="\.\/public\/download\/android-apk-qr\.png"[\s\S]*?width="160"[\s\S]*?height="160"/);
   assert.ok(existsSync(new URL("../public/download/ios-testflight-qr.png", import.meta.url)));
   assert.ok(existsSync(new URL("../public/download/android-apk-qr.png", import.meta.url)));
+  assert.deepEqual(
+    pngDimensions("../public/download/ios-testflight-qr.png"),
+    { width: 720, height: 720 },
+  );
+  assert.deepEqual(
+    pngDimensions("../public/download/android-apk-qr.png"),
+    { width: 720, height: 720 },
+  );
   assert.ok(landing.indexOf('id="privacy"') < landing.indexOf('id="download"'));
   assert.match(
     styles,
