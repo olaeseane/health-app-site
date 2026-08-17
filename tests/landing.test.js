@@ -153,18 +153,30 @@ test("header links to the five current landing sections", () => {
   assert.match(styles, /\.brand__mark\s*\{[^}]*width: 52px;[^}]*height: 52px;/);
   assert.match(styles, /\.brand--footer \.brand__mark\s*\{[^}]*width: 44px;[^}]*height: 44px;/);
   assert.match(styles, /@media \(max-width: 820px\)[\s\S]*?\.brand__mark\s*\{[^}]*width: 46px;[^}]*height: 46px;/);
-  assert.match(header, /href="#first-route"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"[^>]*>С чего начать/);
-  assert.match(header, /href="#simplicity"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"[^>]*>Простота/);
+  assert.match(header, /href="#first-route"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"[^>]*>С чего начать/);
+  assert.match(header, /href="#simplicity"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"[^>]*>Простота/);
   assert.ok(
     header.indexOf('href="#first-route"') <
       header.indexOf('href="#simplicity"'),
   );
   assert.match(header, /href="#integrations"[^>]*>Интеграции/);
   assert.match(header, /href="#privacy"[^>]*>Анонимность/);
-  assert.match(header, /href="#download"[^>]*>Скачать/);
+  assert.match(header, /class="site-nav__cta"[^>]*href="#download"[^>]*style="color: #ffffff !important; text-decoration: none !important;"[^>]*>Скачать/);
   assert.match(
     styles,
-    /\.site-nav a:is\(:link, :visited, :hover, :focus-visible, :active\)\s*\{[^}]*color: var\(--graphite\) !important;[^}]*text-decoration-color: currentColor;/,
+    /\.site-header\s*\{[^}]*position: sticky;[^}]*top: 0;/,
+  );
+  assert.match(
+    styles,
+    /\.site-header\s*\{[^}]*background: rgba\(255, 255, 255, 0\.88\);[^}]*backdrop-filter: blur\(18px\);/,
+  );
+  assert.match(
+    styles,
+    /\.site-nav__cta\s*\{[^}]*background: var\(--tiffany-deep\);[^}]*color: var\(--white\) !important;[^}]*border-radius: 999px;/,
+  );
+  assert.match(
+    styles,
+    /\.site-nav a:not\(\.site-nav__cta\):is\(:link, :visited, :hover, :focus-visible, :active\)\s*\{[^}]*color: var\(--tiffany-deep\) !important;[^}]*text-decoration-color: currentColor;/,
   );
   assert.doesNotMatch(header, /href="#faq"|href="#documentation"/);
   assert.doesNotMatch(header, /href="#tasks"|>Основные задачи/);
@@ -211,6 +223,7 @@ test("section kickers use one shared visual format", () => {
     styles,
     /\.section-kicker\s*\{[\s\S]*?color: var\(--tiffany-deep\);[\s\S]*?font-family: var\(--body\);[\s\S]*?font-size: 0\.78rem;[\s\S]*?font-weight: 800;[\s\S]*?line-height: 1\.6;[\s\S]*?letter-spacing: 0\.14em;[\s\S]*?text-transform: uppercase;/,
   );
+  assert.match(styles, /\.section-kicker\s*\{[^}]*color: var\(--tiffany-deep\);/);
   assert.match(styles, /\.integrations__copy > p:not\(\.section-kicker\)/);
 });
 

@@ -38,11 +38,14 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.match(asciiPortalHtml, /&#1047;&#1076;&#1086;&#1088;&#1086;&#1074;&#1100;&#1077;/);
   assert.match(asciiPortalHtml, /class="site-nav"/);
   assert.match(asciiPortalHtml, /href="#first-route"/);
-  assert.match(asciiPortalHtml, /href="#first-route"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"/);
+  assert.match(asciiPortalHtml, /href="#first-route"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"/);
+  assert.match(asciiPortalHtml, /class="site-nav__cta"[^>]*href="#download"[^>]*style="color: #ffffff !important; text-decoration: none !important;"/);
+  assert.match(asciiPortalHtml, /\.site-header \{[^}]*position: sticky;[^}]*top: 0;[^}]*background: rgba\(255, 255, 255, 0\.88\);[^}]*backdrop-filter: blur\(18px\);/);
   assert.match(
     asciiPortalHtml,
-    /\.site-nav a:is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*color: var\(--graphite\) !important;\s*text-decoration-color: currentColor;/,
+    /\.site-nav a:not\(\.site-nav__cta\):is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*color: var\(--tiffany-deep\) !important;\s*text-decoration-color: currentColor;/,
   );
+  assert.match(asciiPortalHtml, /\.site-nav__cta \{[^}]*background: var\(--tiffany-deep\);[^}]*color: var\(--white\) !important;[^}]*border-radius: 999px;/);
   assert.match(
     asciiPortalHtml,
     /\.site-footer__links a:is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*color: var\(--graphite\) !important;\s*text-decoration-color: currentColor;/,
