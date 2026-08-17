@@ -385,7 +385,7 @@ test("getting started follows the hero as one connected route", () => {
     "Добавьте то, что уже знаете",
     "Получите первый результат",
     "Дополняйте портрет",
-    "Поднимайте себя лучше",
+    "Понимайте себя лучше",
   ]) {
     assert.ok(route.includes(step), step);
   }
