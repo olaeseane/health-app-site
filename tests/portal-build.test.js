@@ -63,7 +63,8 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
     asciiPortalHtml,
     /\.site-footer__links a:is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*color: var\(--tiffany-deep\) !important;\s*text-decoration-color: currentColor;/,
   );
-  assert.match(asciiPortalHtml, /\.site-footer__links a \{[^}]*font-size: 0\.9rem;/);
+  assert.match(asciiPortalHtml, /\.site-footer__links a \{[^}]*font-size: 0\.84rem;[^}]*text-decoration: none;/);
+  assert.match(asciiPortalHtml, /\.site-footer__links a:hover,[\s\S]*?\.site-footer__links a:focus-visible \{[^}]*text-decoration: underline;/);
   assert.match(asciiPortalHtml, /href="doc\.pdf"/);
   assert.match(asciiPortalHtml, /href="#top"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"/);
   assert.match(

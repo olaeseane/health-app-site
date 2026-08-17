@@ -1137,8 +1137,15 @@ svg {
 
 .site-footer__links a {
   color: var(--tiffany-deep);
-  font-size: 0.9rem;
+  font-size: 0.84rem;
+  text-decoration: none;
   white-space: nowrap;
+}
+
+.site-footer__links a:hover,
+.site-footer__links a:focus-visible {
+  color: var(--tiffany-dark);
+  text-decoration: underline;
 }
 
 .site-footer__links a:is(:link, :visited, :hover, :focus-visible, :active) {

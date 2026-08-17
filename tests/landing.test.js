@@ -254,7 +254,8 @@ test("footer links to the documentation placeholder", () => {
   assert.match(footer, /src="\.\/public\/icons\/chat-logo-96\.png"[^>]*width="20"[^>]*height="20"[^>]*alt=""/);
   assert.doesNotMatch(footer, /<span>Чат<\/span>|>Чат<\/a>/);
   assert.match(styles, /\.site-nav a\s*\{[^}]*font-size: 0\.9rem;/);
-  assert.match(styles, /\.site-footer__links a\s*\{[^}]*font-size: 0\.9rem;/);
+  assert.match(styles, /\.site-footer__links a\s*\{[^}]*font-size: 0\.84rem;[^}]*text-decoration: none;/);
+  assert.match(styles, /\.site-footer__links a:hover,[\s\S]*?\.site-footer__links a:focus-visible\s*\{[^}]*text-decoration: underline;/);
   assert.match(
     styles,
     /\.site-footer__links a:is\(:link, :visited, :hover, :focus-visible, :active\)\s*\{[^}]*color: var\(--tiffany-deep\) !important;[^}]*text-decoration-color: currentColor;/,
