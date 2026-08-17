@@ -176,6 +176,9 @@ test("header links to the five current landing sections", () => {
   assert.doesNotMatch(styles, /\.site-header\s*\{[^}]*left: 50%;/);
   assert.doesNotMatch(styles, /\.site-header\s*\{[^}]*transform: translateX\(-50%\);/);
   assert.match(styles, /\.site-header\s*\{[^}]*margin: 0 auto;/);
+  assert.doesNotMatch(styles, /\.site-header\s*\{[^}]*grid-template-columns: 1fr auto 1fr;/);
+  assert.match(styles, /\.site-header\s*\{[^}]*grid-template-columns: auto minmax\(0, 1fr\);/);
+  assert.match(styles, /\.site-nav\s*\{[^}]*justify-self: end;[^}]*justify-content: flex-end;[^}]*flex-wrap: wrap;/);
   assert.match(
     styles,
     /\.site-header\s*\{[^}]*background: rgba\(255, 255, 255, 0\.88\);[^}]*backdrop-filter: blur\(18px\);/,
