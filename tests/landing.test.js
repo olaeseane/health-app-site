@@ -327,7 +327,7 @@ test("desktop sections use the approved compact density", () => {
   assert.match(styles, /--max-width:\s*1320px;/);
   assert.match(
     styles,
-    /\.simplicity\s*\{[^}]*padding: clamp\(72px, 6vw, 96px\) var\(--page-pad\);/,
+    /\.simplicity\s*\{[^}]*padding: clamp\(72px, 6vw, 96px\) var\(--page-pad\) clamp\(44px, 5vw, 64px\);/,
   );
   assert.match(
     styles,
@@ -428,7 +428,8 @@ test("simplicity replaces the task directory with four editorial chapters", () =
     simplicity,
     /<\/div>\s*<div class="simplicity__download">\s*<a\s+class="button button--primary simplicity__download-link"\s+href="#download"\s+data-focus-target="download-title"\s*>\s*Скачать\s*<\/a>\s*<\/div>\s*$/,
   );
-  assert.match(styles, /\.simplicity__download\s*\{[^}]*display: flex;[^}]*justify-content: center;[^}]*margin-top: clamp\(44px, 6vw, 72px\);/);
+  assert.match(styles, /\.simplicity\s*\{[^}]*padding: clamp\(72px, 6vw, 96px\) var\(--page-pad\) clamp\(44px, 5vw, 64px\);/);
+  assert.match(styles, /\.simplicity__download\s*\{[^}]*display: flex;[^}]*justify-content: center;[^}]*margin-top: clamp\(20px, 3vw, 32px\);/);
   assert.equal(
     (simplicity.match(/class="simplicity__chapter"/g) ?? []).length,
     4,
