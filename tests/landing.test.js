@@ -86,8 +86,15 @@ test("hero presents one focused entry point", () => {
 
   assert.ok(hero);
   assert.doesNotMatch(hero, /Приложение «Здоровье»/);
-  assert.match(hero, /О здоровье можно знать много/);
-  assert.match(hero, /И всё ещё не знать, что делать/);
+  assert.match(
+    hero,
+    /<h1 id="hero-title">\s*<span class="hero-title__line">О здоровье можно знать много<\/span>\s*<\/h1>/,
+  );
+  assert.match(
+    hero,
+    /<p class="hero__lead">\s*И всё ещё не знать, что делать\s*<\/p>/,
+  );
+  assert.doesNotMatch(hero, /<span class="hero-title__line">И всё ещё не знать, что делать<\/span>/);
   assert.doesNotMatch(hero, /hero-title__dash/);
   assert.match(styles, /\.section-heading h2,[\s\S]*?margin-left: -0\.055em;/);
   assert.doesNotMatch(hero, /Понять свой следующий шаг/);
@@ -166,6 +173,9 @@ test("header links to the five current landing sections", () => {
     styles,
     /\.site-header\s*\{[^}]*position: sticky;[^}]*top: 0;/,
   );
+  assert.doesNotMatch(styles, /\.site-header\s*\{[^}]*left: 50%;/);
+  assert.doesNotMatch(styles, /\.site-header\s*\{[^}]*transform: translateX\(-50%\);/);
+  assert.match(styles, /\.site-header\s*\{[^}]*margin: 0 auto;/);
   assert.match(
     styles,
     /\.site-header\s*\{[^}]*background: rgba\(255, 255, 255, 0\.88\);[^}]*backdrop-filter: blur\(18px\);/,
@@ -385,10 +395,15 @@ test("simplicity replaces the task directory with four editorial chapters", () =
   assert.match(simplicity, /Здоровье требует много внимания/);
   assert.match(simplicity, /Предикс\.Здоровье — по минимуму/);
   assert.doesNotMatch(simplicity, /Убрали всё, что мешает начать/);
+  assert.doesNotMatch(
+    simplicity,
+    /<p class="simplicity__index">04 \/ СВЯЗЬ<\/p>[\s\S]*?<p class="simplicity__body">[\s\S]*?<\/p>\s*<a\s+class="button button--primary simplicity__download-link"/,
+  );
   assert.match(
     simplicity,
-    /<p class="simplicity__index">04 \/ СВЯЗЬ<\/p>[\s\S]*?<a\s+class="button button--primary simplicity__download-link"\s+href="#download"\s+data-focus-target="download-title"\s*>\s*Скачать\s*<\/a>/,
+    /<\/div>\s*<div class="simplicity__download">\s*<a\s+class="button button--primary simplicity__download-link"\s+href="#download"\s+data-focus-target="download-title"\s*>\s*Скачать\s*<\/a>\s*<\/div>\s*$/,
   );
+  assert.match(styles, /\.simplicity__download\s*\{[^}]*display: flex;[^}]*justify-content: center;[^}]*margin-top: clamp\(44px, 6vw, 72px\);/);
   assert.equal(
     (simplicity.match(/class="simplicity__chapter"/g) ?? []).length,
     4,
