@@ -232,17 +232,17 @@ test("footer links to the documentation placeholder", () => {
   );
   assert.doesNotMatch(footer, /<!-- <span class="brand__name">Здоровье<\/span> -->/);
   assert.match(footer, /class="site-footer__links"[^>]*aria-label="Ссылки в подвале"/);
-  assert.match(footer, /href="#top"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"[^>]*>В начало/);
+  assert.match(footer, /href="#top"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"[^>]*>В начало/);
   assert.match(footer, /<span aria-hidden="true">·<\/span>/);
   assert.match(
     footer,
-    /href="doc\.pdf"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"[^>]*>Документация/,
+    /href="doc\.pdf"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"[^>]*>Документация/,
   );
   assert.match(styles, /\.site-nav a\s*\{[^}]*font-size: 0\.9rem;/);
   assert.match(styles, /\.site-footer__links a\s*\{[^}]*font-size: 0\.9rem;/);
   assert.match(
     styles,
-    /\.site-footer__links a:is\(:link, :visited, :hover, :focus-visible, :active\)\s*\{[^}]*color: var\(--graphite\) !important;[^}]*text-decoration-color: currentColor;/,
+    /\.site-footer__links a:is\(:link, :visited, :hover, :focus-visible, :active\)\s*\{[^}]*color: var\(--tiffany-deep\) !important;[^}]*text-decoration-color: currentColor;/,
   );
   assert.match(styles, /\.site-footer__links\s*\{[\s\S]*?justify-self: end;/);
   assert.match(styles, /\.site-footer p\s*\{[^}]*font-size: 0\.74rem;/);
