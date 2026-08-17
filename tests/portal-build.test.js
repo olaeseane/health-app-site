@@ -38,6 +38,11 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.match(asciiPortalHtml, /&#1047;&#1076;&#1086;&#1088;&#1086;&#1074;&#1100;&#1077;/);
   assert.match(asciiPortalHtml, /class="site-nav"/);
   assert.match(asciiPortalHtml, /href="#first-route"/);
+  assert.match(asciiPortalHtml, /class="site-nav__chat"[^>]*href="http:\/\/chat"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*aria-label="&#1054;&#1090;&#1082;&#1088;&#1099;&#1090;&#1100; &#1095;&#1072;&#1090;"/);
+  assert.match(asciiPortalHtml, /class="site-footer__chat"[^>]*href="http:\/\/chat"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/);
+  assert.match(asciiPortalHtml, /<span>&#1063;&#1072;&#1090;<\/span>/);
+  assert.match(asciiPortalHtml, /data:image\/png;base64/);
+  assert.doesNotMatch(asciiPortalHtml, /chat-logo-source\.svg|data:image\/svg\+xml|\.svg/);
   assert.match(asciiPortalHtml, /href="#first-route"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"/);
   assert.match(asciiPortalHtml, /class="site-nav__cta"[^>]*href="#download"[^>]*style="color: #ffffff !important; text-decoration: none !important;"/);
   assert.doesNotMatch(asciiPortalHtml, /\.site-header \{[^}]*background: rgba\(255, 255, 255, 0\.88\);/);

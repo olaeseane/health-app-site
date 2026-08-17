@@ -249,6 +249,19 @@ svg {
   min-height: 38px;
 }
 
+.site-nav__chat {
+  width: 44px;
+  justify-content: center;
+  padding: 0;
+  border-radius: 999px;
+}
+
+.site-nav__chat img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
 .site-nav a:hover {
   color: var(--tiffany-dark);
   text-decoration: underline;
@@ -1131,6 +1144,18 @@ svg {
 .site-footer__links a:is(:link, :visited, :hover, :focus-visible, :active) {
   color: var(--tiffany-deep) !important;
   text-decoration-color: currentColor;
+}
+
+.site-footer__chat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.site-footer__chat img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 @media (min-width: 601px) {
