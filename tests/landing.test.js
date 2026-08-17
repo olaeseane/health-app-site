@@ -172,7 +172,14 @@ test("header links to the five current landing sections", () => {
   );
   assert.match(header, /href="#integrations"[^>]*>Интеграции/);
   assert.match(header, /href="#privacy"[^>]*>Анонимность/);
+  assert.match(header, /class="site-nav__chat"[^>]*href="http:\/\/chat"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*aria-label="Открыть чат"/);
+  assert.match(header, /src="\.\/public\/icons\/chat-logo-96\.png"[^>]*width="32"[^>]*height="32"[^>]*alt=""/);
+  assert.ok(header.indexOf('class="site-nav__chat"') < header.indexOf('class="site-nav__cta"'));
   assert.match(header, /class="site-nav__cta"[^>]*href="#download"[^>]*style="color: #ffffff !important; text-decoration: none !important;"[^>]*>Скачать/);
+  assert.ok(existsSync(new URL("../public/icons/chat-logo-source.svg", import.meta.url)));
+  assert.ok(existsSync(new URL("../public/icons/chat-logo-source.png", import.meta.url)));
+  assert.ok(existsSync(new URL("../public/icons/chat-logo.png", import.meta.url)));
+  assert.ok(existsSync(new URL("../public/icons/chat-logo-96.png", import.meta.url)));
   assert.match(
     styles,
     /\.site-header\s*\{[^}]*position: sticky;[^}]*top: 0;/,
@@ -213,6 +220,8 @@ test("header links to the five current landing sections", () => {
     styles,
     /\.site-nav a:not\(\.site-nav__cta\):is\(:link, :visited, :hover, :focus-visible, :active\)\s*\{[^}]*color: var\(--tiffany-deep\) !important;[^}]*text-decoration-color: currentColor;/,
   );
+  assert.match(styles, /\.site-nav__chat\s*\{[^}]*width: 44px;[^}]*justify-content: center;[^}]*border-radius: 999px;/);
+  assert.match(styles, /\.site-nav__chat img\s*\{[^}]*width: 32px;[^}]*height: 32px;/);
   assert.doesNotMatch(header, /href="#faq"|href="#documentation"/);
   assert.doesNotMatch(header, /href="#tasks"|>Основные задачи/);
   assert.doesNotMatch(styles, /\.header-route/);
@@ -238,6 +247,12 @@ test("footer links to the documentation placeholder", () => {
     footer,
     /href="doc\.pdf"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"[^>]*>Документация/,
   );
+  assert.match(
+    footer,
+    /class="site-footer__chat"[^>]*href="http:\/\/chat"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"/,
+  );
+  assert.match(footer, /src="\.\/public\/icons\/chat-logo-96\.png"[^>]*width="20"[^>]*height="20"[^>]*alt=""/);
+  assert.match(footer, /<span>Чат<\/span>/);
   assert.match(styles, /\.site-nav a\s*\{[^}]*font-size: 0\.9rem;/);
   assert.match(styles, /\.site-footer__links a\s*\{[^}]*font-size: 0\.9rem;/);
   assert.match(
@@ -245,6 +260,8 @@ test("footer links to the documentation placeholder", () => {
     /\.site-footer__links a:is\(:link, :visited, :hover, :focus-visible, :active\)\s*\{[^}]*color: var\(--tiffany-deep\) !important;[^}]*text-decoration-color: currentColor;/,
   );
   assert.match(styles, /\.site-footer__links\s*\{[\s\S]*?justify-self: end;/);
+  assert.match(styles, /\.site-footer__chat\s*\{[^}]*display: inline-flex;[^}]*align-items: center;[^}]*gap: 6px;/);
+  assert.match(styles, /\.site-footer__chat img\s*\{[^}]*width: 20px;[^}]*height: 20px;/);
   assert.match(styles, /\.site-footer p\s*\{[^}]*font-size: 0\.74rem;/);
 });
 
