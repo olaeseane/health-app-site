@@ -249,10 +249,10 @@ test("footer links to the documentation placeholder", () => {
   );
   assert.match(
     footer,
-    /class="site-footer__chat"[^>]*href="http:\/\/chat"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"/,
+    /class="site-footer__chat"[^>]*href="http:\/\/chat"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*aria-label="Открыть чат"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"/,
   );
   assert.match(footer, /src="\.\/public\/icons\/chat-logo-96\.png"[^>]*width="20"[^>]*height="20"[^>]*alt=""/);
-  assert.match(footer, /<span>Чат<\/span>/);
+  assert.doesNotMatch(footer, /<span>Чат<\/span>|>Чат<\/a>/);
   assert.match(styles, /\.site-nav a\s*\{[^}]*font-size: 0\.9rem;/);
   assert.match(styles, /\.site-footer__links a\s*\{[^}]*font-size: 0\.9rem;/);
   assert.match(
