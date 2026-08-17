@@ -138,14 +138,37 @@ svg {
     border-color 180ms ease;
 }
 
+.site-header::before {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background: transparent;
+  border-bottom: 0;
+  content: "";
+  pointer-events: none;
+  transition:
+    background-color 180ms ease,
+    backdrop-filter 180ms ease,
+    border-color 180ms ease;
+}
+
 .site-header--scrolled {
   padding-block: 12px;
+}
+
+.site-header--scrolled::before {
   background: rgba(244, 251, 250, 0.78);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(184, 223, 220, 0.32);
 }
 
 .brand {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   min-height: 44px;
   align-items: center;
@@ -196,6 +219,8 @@ svg {
 }
 
 .site-nav {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-self: end;
