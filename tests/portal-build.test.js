@@ -56,16 +56,16 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.match(asciiPortalHtml, /\.site-nav__cta \{[^}]*background: var\(--tiffany-deep\);[^}]*color: var\(--white\) !important;[^}]*border-radius: 999px;/);
   assert.match(
     asciiPortalHtml,
-    /\.site-footer__links a:is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*color: var\(--graphite\) !important;\s*text-decoration-color: currentColor;/,
+    /\.site-footer__links a:is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*color: var\(--tiffany-deep\) !important;\s*text-decoration-color: currentColor;/,
   );
   assert.match(asciiPortalHtml, /\.site-footer__links a \{[^}]*font-size: 0\.9rem;/);
   assert.match(asciiPortalHtml, /href="doc\.pdf"/);
-  assert.match(asciiPortalHtml, /href="#top"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"/);
+  assert.match(asciiPortalHtml, /href="#top"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"/);
   assert.match(
     asciiPortalHtml,
     /<a class="brand brand--footer" href="#top" style="color: #35333f !important; text-decoration: none !important; text-decoration-color: currentColor !important;">/,
   );
-  assert.match(asciiPortalHtml, /href="doc\.pdf"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*style="color: #35333f !important; text-decoration-color: currentColor !important;"/);
+  assert.match(asciiPortalHtml, /href="doc\.pdf"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"/);
   assert.doesNotMatch(asciiPortalHtml, /data:application\/(?:octet-stream|pdf);base64/);
   assert.match(asciiPortalHtml, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);
   assert.match(asciiPortalHtml, /href="https:\/\/hubthe\.team\/shared\/docs\/bcaa672e-9fd8-43a3-91e2-abe3189a88ae"/);
