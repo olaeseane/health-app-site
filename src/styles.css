@@ -1461,6 +1461,16 @@ svg {
   font-size: clamp(1rem, 1.35vw, 1.16rem);
 }
 
+.simplicity__download-link {
+  margin-top: 28px;
+  background: var(--tiffany-deep);
+}
+
+.simplicity__download-link:hover,
+.simplicity__download-link:active {
+  background: var(--tiffany-dark);
+}
+
 .simplicity__visual {
   position: relative;
   isolation: isolate;

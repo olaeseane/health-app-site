@@ -385,6 +385,10 @@ test("simplicity replaces the task directory with four editorial chapters", () =
   assert.match(simplicity, /Здоровье требует много внимания/);
   assert.match(simplicity, /Предикс\.Здоровье — по минимуму/);
   assert.doesNotMatch(simplicity, /Убрали всё, что мешает начать/);
+  assert.match(
+    simplicity,
+    /<p class="simplicity__index">04 \/ СВЯЗЬ<\/p>[\s\S]*?<a\s+class="button button--primary simplicity__download-link"\s+href="#download"\s+data-focus-target="download-title"\s*>\s*Скачать\s*<\/a>/,
+  );
   assert.equal(
     (simplicity.match(/class="simplicity__chapter"/g) ?? []).length,
     4,
