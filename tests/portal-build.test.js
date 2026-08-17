@@ -39,8 +39,8 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.match(asciiPortalHtml, /class="site-nav"/);
   assert.match(asciiPortalHtml, /href="#first-route"/);
   assert.match(asciiPortalHtml, /class="site-nav__chat"[^>]*href="http:\/\/chat"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*aria-label="&#1054;&#1090;&#1082;&#1088;&#1099;&#1090;&#1100; &#1095;&#1072;&#1090;"/);
-  assert.match(asciiPortalHtml, /class="site-footer__chat"[^>]*href="http:\/\/chat"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/);
-  assert.match(asciiPortalHtml, /<span>&#1063;&#1072;&#1090;<\/span>/);
+  assert.match(asciiPortalHtml, /class="site-footer__chat"[^>]*href="http:\/\/chat"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*aria-label="&#1054;&#1090;&#1082;&#1088;&#1099;&#1090;&#1100; &#1095;&#1072;&#1090;"/);
+  assert.doesNotMatch(asciiPortalHtml, /<span>&#1063;&#1072;&#1090;<\/span>|>Чат<\/a>/);
   assert.match(asciiPortalHtml, /data:image\/png;base64/);
   assert.doesNotMatch(asciiPortalHtml, /chat-logo-source\.svg|data:image\/svg\+xml|\.svg/);
   assert.match(asciiPortalHtml, /href="#first-route"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"/);
