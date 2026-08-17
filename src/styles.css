@@ -128,9 +128,9 @@ svg {
   align-items: center;
   gap: 32px;
   padding: 24px var(--page-pad);
-  background: rgba(244, 251, 250, 0.64);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(184, 223, 220, 0.35);
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom: 0;
 }
 
 .brand {
