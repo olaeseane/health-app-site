@@ -44,6 +44,9 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.doesNotMatch(asciiPortalHtml, /\.site-header \{[^}]*background: rgba\(244, 251, 250, 0\.64\);/);
   assert.doesNotMatch(asciiPortalHtml, /\.site-header \{[^}]*box-shadow:/);
   assert.match(asciiPortalHtml, /\.site-header \{[^}]*position: sticky;[^}]*top: 0;[^}]*background: transparent;[^}]*backdrop-filter: none;[^}]*border-bottom: 0;/);
+  assert.match(asciiPortalHtml, /\.site-header--scrolled \{[^}]*padding-block: 12px;[^}]*background: rgba\(244, 251, 250, 0\.78\);[^}]*backdrop-filter: blur\(14px\);[^}]*border-bottom: 1px solid rgba\(184, 223, 220, 0\.32\);/);
+  assert.match(asciiPortalHtml, /const HEADER_SCROLL_THRESHOLD = 24;/);
+  assert.match(asciiPortalHtml, /classList\.toggle\("site-header--scrolled", window\.scrollY > HEADER_SCROLL_THRESHOLD\)/);
   assert.match(
     asciiPortalHtml,
     /\.site-nav a:not\(\.site-nav__cta\):is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*color: var\(--tiffany-deep\) !important;\s*text-decoration-color: currentColor;/,
