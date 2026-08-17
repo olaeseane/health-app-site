@@ -180,10 +180,11 @@ test("header links to the five current landing sections", () => {
   assert.match(styles, /\.site-header\s*\{[^}]*grid-template-columns: auto minmax\(0, 1fr\);/);
   assert.match(styles, /\.site-nav\s*\{[^}]*justify-self: end;[^}]*justify-content: flex-end;[^}]*flex-wrap: wrap;/);
   assert.doesNotMatch(styles, /\.site-header\s*\{[^}]*background: rgba\(255, 255, 255, 0\.88\);/);
+  assert.doesNotMatch(styles, /\.site-header\s*\{[^}]*background: rgba\(244, 251, 250, 0\.64\);/);
   assert.doesNotMatch(styles, /\.site-header\s*\{[^}]*box-shadow:/);
   assert.match(
     styles,
-    /\.site-header\s*\{[^}]*background: rgba\(244, 251, 250, 0\.64\);[^}]*backdrop-filter: blur\(14px\);[^}]*border-bottom: 1px solid rgba\(184, 223, 220, 0\.35\);/,
+    /\.site-header\s*\{[^}]*background: transparent;[^}]*backdrop-filter: none;[^}]*border-bottom: 0;/,
   );
   assert.match(
     styles,
