@@ -265,6 +265,20 @@ body[data-portal-build="inline"] .simplicity__download-link:is(:link, :visited, 
   text-decoration-color: transparent !important;
 }
 
+body[data-portal-build="inline"] .site-footer__chat {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  flex: 0 0 36px !important;
+}
+
+body[data-portal-build="inline"] .site-footer__chat img {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  max-width: none !important;
+}
+
 @media (max-width: 820px) {
   body[data-portal-build="inline"] .site-header--portal + .health-site-main {
     padding-top: 92px;

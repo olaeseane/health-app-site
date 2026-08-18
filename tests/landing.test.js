@@ -251,7 +251,7 @@ test("footer links to the documentation placeholder", () => {
     footer,
     /class="site-footer__chat"[^>]*href="http:\/\/chat"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*aria-label="Открыть чат"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"/,
   );
-  assert.match(footer, /src="\.\/public\/icons\/chat-logo-96\.png"[^>]*width="20"[^>]*height="20"[^>]*alt=""/);
+  assert.match(footer, /src="\.\/public\/icons\/chat-logo-96\.png"[^>]*width="32"[^>]*height="32"[^>]*alt=""/);
   assert.doesNotMatch(footer, /<span>Чат<\/span>|>Чат<\/a>/);
   assert.match(styles, /\.site-nav a\s*\{[^}]*font-size: 0\.9rem;/);
   assert.match(styles, /\.site-footer__links a\s*\{[^}]*font-size: 0\.84rem;[^}]*text-decoration: none;/);
@@ -261,8 +261,8 @@ test("footer links to the documentation placeholder", () => {
     /\.site-footer__links a:is\(:link, :visited, :hover, :focus-visible, :active\)\s*\{[^}]*color: var\(--tiffany-deep\) !important;[^}]*text-decoration-color: currentColor;/,
   );
   assert.match(styles, /\.site-footer__links\s*\{[\s\S]*?justify-self: end;/);
-  assert.match(styles, /\.site-footer__chat\s*\{[^}]*display: inline-flex;[^}]*align-items: center;[^}]*gap: 6px;/);
-  assert.match(styles, /\.site-footer__chat img\s*\{[^}]*width: 20px;[^}]*height: 20px;/);
+  assert.match(styles, /\.site-footer__chat\s*\{[^}]*display: inline-flex;[^}]*width: 36px;[^}]*height: 36px;[^}]*justify-content: center;[^}]*flex: 0 0 36px;/);
+  assert.match(styles, /\.site-footer__chat img\s*\{[^}]*width: 32px;[^}]*height: 32px;[^}]*max-width: none;/);
   assert.match(styles, /\.site-footer p\s*\{[^}]*font-size: 0\.74rem;/);
 });
 
