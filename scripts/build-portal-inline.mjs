@@ -245,8 +245,11 @@ function withPortalCssOverrides(css) {
   z-index: 2147483647 !important;
   top: 0 !important;
   left: 50% !important;
-  width: min(100%, var(--max-width)) !important;
-  margin: 0 auto !important;
+  width: 100vw !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding-inline: max(var(--page-pad), calc((100vw - var(--max-width)) / 2 + var(--page-pad))) !important;
   transform: translateX(-50%) !important;
   background: #f4fbfa !important;
   background-color: #f4fbfa !important;
