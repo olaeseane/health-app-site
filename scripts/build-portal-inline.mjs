@@ -240,39 +240,42 @@ function addPortalHeaderClass(html) {
 function withPortalCssOverrides(css) {
   return `${css}
 
-body[data-portal-build="inline"] .site-header--portal {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  background: transparent;
+.site-header--portal {
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  top: 0 !important;
+  left: 50% !important;
+  width: min(100%, var(--max-width)) !important;
+  margin: 0 auto !important;
+  transform: translateX(-50%) !important;
+  background: #f4fbfa !important;
+  background-color: #f4fbfa !important;
+  border-bottom: 1px solid rgba(184, 223, 220, 0.42) !important;
 }
 
-body[data-portal-build="inline"] .site-header--portal::before {
-  background: rgba(244, 251, 250, 0.92);
-  backdrop-filter: none;
-  border-bottom: 1px solid rgba(184, 223, 220, 0.42);
+.site-header--portal::before {
+  display: none !important;
 }
 
-body[data-portal-build="inline"] .site-header--portal + .health-site-main {
-  padding-top: clamp(92px, 9vh, 108px);
+.site-header--portal + .health-site-main {
+  padding-top: clamp(92px, 9vh, 108px) !important;
 }
 
-body[data-portal-build="inline"] .simplicity__download-link:is(:link, :visited, :hover, :focus-visible, :active) {
+.simplicity__download-link:is(:link, :visited, :hover, :focus-visible, :active) {
   background: var(--tiffany-deep) !important;
   color: var(--white) !important;
   text-decoration: none !important;
   text-decoration-color: transparent !important;
 }
 
-body[data-portal-build="inline"] .site-footer__chat {
+.site-footer__chat {
   width: 36px !important;
   height: 36px !important;
   min-width: 36px !important;
   flex: 0 0 36px !important;
 }
 
-body[data-portal-build="inline"] .site-footer__chat img {
+.site-footer__chat img {
   width: 32px !important;
   height: 32px !important;
   min-width: 32px !important;
@@ -280,8 +283,8 @@ body[data-portal-build="inline"] .site-footer__chat img {
 }
 
 @media (max-width: 820px) {
-  body[data-portal-build="inline"] .site-header--portal + .health-site-main {
-    padding-top: 92px;
+  .site-header--portal + .health-site-main {
+    padding-top: 92px !important;
   }
 }`;
 }
