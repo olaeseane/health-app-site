@@ -258,6 +258,13 @@ body[data-portal-build="inline"] .site-header--portal + .health-site-main {
   padding-top: clamp(92px, 9vh, 108px);
 }
 
+body[data-portal-build="inline"] .simplicity__download-link:is(:link, :visited, :hover, :focus-visible, :active) {
+  background: var(--tiffany-deep) !important;
+  color: var(--white) !important;
+  text-decoration: none !important;
+  text-decoration-color: transparent !important;
+}
+
 @media (max-width: 820px) {
   body[data-portal-build="inline"] .site-header--portal + .health-site-main {
     padding-top: 92px;
