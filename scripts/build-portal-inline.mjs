@@ -230,18 +230,56 @@ function addPortalInlineTaskHandlers(html) {
     });
 }
 
+function addPortalHeaderClass(html) {
+  return html.replace(
+    '<header class="site-header"',
+    '<header class="site-header site-header--portal"',
+  );
+}
+
+function withPortalCssOverrides(css) {
+  return `${css}
+
+body[data-portal-build="inline"] .site-header--portal {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: transparent;
+}
+
+body[data-portal-build="inline"] .site-header--portal::before {
+  background: rgba(244, 251, 250, 0.92);
+  backdrop-filter: none;
+  border-bottom: 1px solid rgba(184, 223, 220, 0.42);
+}
+
+body[data-portal-build="inline"] .site-header--portal + .health-site-main {
+  padding-top: clamp(92px, 9vh, 108px);
+}
+
+@media (max-width: 820px) {
+  body[data-portal-build="inline"] .site-header--portal + .health-site-main {
+    padding-top: 92px;
+  }
+}`;
+}
+
 async function buildPortalInline() {
   await mkdir(distDirectory, { recursive: true });
 
   let html = await readFile(new URL("index.html", projectRoot), "utf8");
-  const css = await inlineCssUrls(
-    await readFile(new URL("src/styles.css", projectRoot), "utf8"),
+  const css = withPortalCssOverrides(
+    await inlineCssUrls(
+      await readFile(new URL("src/styles.css", projectRoot), "utf8"),
+    ),
   );
   const js = await inlineAppAssetUrls(
     await readFile(new URL("src/app.js", projectRoot), "utf8"),
   );
 
   html = removePortalSkipLink(html);
+  html = addPortalHeaderClass(html);
   html = addPortalInlineTaskHandlers(html);
   html = await inlineHtmlAssetUrls(html);
   html = html.replaceAll(
