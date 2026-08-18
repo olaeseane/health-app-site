@@ -32,7 +32,7 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
     statSync(asciiPortal).size < 1_000_000,
     "ASCII portal inline build should stay under 1 MB",
   );
-  assert.match(asciiPortalHtml, /<header class="site-header"/);
+  assert.match(asciiPortalHtml, /<header class="site-header site-header--portal"/);
   assert.match(asciiPortalHtml, /class="brand__wordmark"/);
   assert.match(asciiPortalHtml, /&#1055;&#1088;&#1077;&#1076;&#1080;&#1082;&#1089;/);
   assert.match(asciiPortalHtml, /&#1047;&#1076;&#1086;&#1088;&#1086;&#1074;&#1100;&#1077;/);
@@ -50,6 +50,9 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.doesNotMatch(asciiPortalHtml, /\.site-header \{[^}]*box-shadow:/);
   assert.match(asciiPortalHtml, /\.site-header \{[^}]*position: sticky;[^}]*top: 0;[^}]*background: transparent;[^}]*backdrop-filter: none;[^}]*border-bottom: 0;/);
   assert.match(asciiPortalHtml, /\.site-header::before \{[^}]*left: 50%;[^}]*width: 100vw;[^}]*transform: translateX\(-50%\);[^}]*background: transparent;[^}]*border-bottom: 0;/);
+  assert.match(asciiPortalHtml, /body\[data-portal-build="inline"\] \.site-header--portal \{\s*position: fixed;\s*top: 0;\s*left: 50%;\s*transform: translateX\(-50%\);\s*background: transparent;/);
+  assert.match(asciiPortalHtml, /body\[data-portal-build="inline"\] \.site-header--portal::before \{\s*background: rgba\(244, 251, 250, 0\.92\);\s*backdrop-filter: none;\s*border-bottom: 1px solid rgba\(184, 223, 220, 0\.42\);/);
+  assert.match(asciiPortalHtml, /body\[data-portal-build="inline"\] \.site-header--portal \+ \.health-site-main \{\s*padding-top: clamp\(92px, 9vh, 108px\);/);
   assert.match(asciiPortalHtml, /\.site-header--scrolled \{[^}]*padding-block: 12px;/);
   assert.match(asciiPortalHtml, /\.site-header--scrolled::before \{[^}]*background: rgba\(244, 251, 250, 0\.78\);[^}]*backdrop-filter: blur\(14px\);[^}]*border-bottom: 1px solid rgba\(184, 223, 220, 0\.32\);/);
   assert.match(asciiPortalHtml, /const HEADER_SCROLL_THRESHOLD = 24;/);
