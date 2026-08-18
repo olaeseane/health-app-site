@@ -59,7 +59,10 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.match(asciiPortalHtml, /\.site-header--scrolled \{[^}]*padding-block: 12px;/);
   assert.match(asciiPortalHtml, /\.site-header--scrolled::before \{[^}]*background: rgba\(244, 251, 250, 0\.78\);[^}]*backdrop-filter: blur\(14px\);[^}]*border-bottom: 1px solid rgba\(184, 223, 220, 0\.32\);/);
   assert.match(asciiPortalHtml, /const HEADER_SCROLL_THRESHOLD = 24;/);
-  assert.match(asciiPortalHtml, /classList\.toggle\("site-header--scrolled", window\.scrollY > HEADER_SCROLL_THRESHOLD\)/);
+  assert.match(asciiPortalHtml, /const HEADER_SCROLL_RESET_THRESHOLD = 4;/);
+  assert.match(asciiPortalHtml, /if \(window\.scrollY > HEADER_SCROLL_THRESHOLD\) \{/);
+  assert.match(asciiPortalHtml, /if \(window\.scrollY <= HEADER_SCROLL_RESET_THRESHOLD\) \{/);
+  assert.doesNotMatch(asciiPortalHtml, /classList\.toggle\("site-header--scrolled", window\.scrollY > HEADER_SCROLL_THRESHOLD\)/);
   assert.match(
     asciiPortalHtml,
     /\.site-nav a:not\(\.site-nav__cta\):is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*color: var\(--tiffany-deep\) !important;\s*text-decoration-color: currentColor;/,

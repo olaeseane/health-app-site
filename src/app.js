@@ -1,4 +1,5 @@
 const HEADER_SCROLL_THRESHOLD = 24;
+const HEADER_SCROLL_RESET_THRESHOLD = 4;
 
 function installFocusTargetLinks() {
   document.querySelectorAll("[data-focus-target]").forEach((link) => {
@@ -18,7 +19,13 @@ function installHeaderScrollState() {
   if (!header) return;
 
   const syncHeaderSurface = () => {
-    header.classList.toggle("site-header--scrolled", window.scrollY > HEADER_SCROLL_THRESHOLD);
+    if (window.scrollY > HEADER_SCROLL_THRESHOLD) {
+      header.classList.add("site-header--scrolled");
+    }
+
+    if (window.scrollY <= HEADER_SCROLL_RESET_THRESHOLD) {
+      header.classList.remove("site-header--scrolled");
+    }
   };
 
   syncHeaderSurface();

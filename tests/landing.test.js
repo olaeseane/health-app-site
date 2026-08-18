@@ -142,8 +142,11 @@ test("client interaction script works when index.html is opened directly", () =>
     /<script[^>]+type="module"[^>]+src="\.\/src\/app\.js"/,
   );
   assert.match(app, /const HEADER_SCROLL_THRESHOLD = 24;/);
+  assert.match(app, /const HEADER_SCROLL_RESET_THRESHOLD = 4;/);
   assert.match(app, /document\.querySelector\("\.site-header"\)/);
-  assert.match(app, /classList\.toggle\("site-header--scrolled", window\.scrollY > HEADER_SCROLL_THRESHOLD\)/);
+  assert.doesNotMatch(app, /classList\.toggle\("site-header--scrolled", window\.scrollY > HEADER_SCROLL_THRESHOLD\)/);
+  assert.match(app, /if \(window\.scrollY > HEADER_SCROLL_THRESHOLD\) \{/);
+  assert.match(app, /if \(window\.scrollY <= HEADER_SCROLL_RESET_THRESHOLD\) \{/);
   assert.match(app, /window\.addEventListener\("scroll", syncHeaderSurface, \{ passive: true \}\)/);
 });
 
