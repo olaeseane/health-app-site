@@ -54,6 +54,8 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.match(asciiPortalHtml, /body\[data-portal-build="inline"\] \.site-header--portal::before \{\s*background: rgba\(244, 251, 250, 0\.92\);\s*backdrop-filter: none;\s*border-bottom: 1px solid rgba\(184, 223, 220, 0\.42\);/);
   assert.match(asciiPortalHtml, /body\[data-portal-build="inline"\] \.site-header--portal \+ \.health-site-main \{\s*padding-top: clamp\(92px, 9vh, 108px\);/);
   assert.match(asciiPortalHtml, /body\[data-portal-build="inline"\] \.simplicity__download-link:is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*background: var\(--tiffany-deep\) !important;\s*color: var\(--white\) !important;\s*text-decoration: none !important;\s*text-decoration-color: transparent !important;/);
+  assert.match(asciiPortalHtml, /body\[data-portal-build="inline"\] \.site-footer__chat \{\s*width: 36px !important;\s*height: 36px !important;\s*min-width: 36px !important;\s*flex: 0 0 36px !important;/);
+  assert.match(asciiPortalHtml, /body\[data-portal-build="inline"\] \.site-footer__chat img \{\s*width: 32px !important;\s*height: 32px !important;\s*min-width: 32px !important;\s*max-width: none !important;/);
   assert.match(asciiPortalHtml, /\.site-header--scrolled \{[^}]*padding-block: 12px;/);
   assert.match(asciiPortalHtml, /\.site-header--scrolled::before \{[^}]*background: rgba\(244, 251, 250, 0\.78\);[^}]*backdrop-filter: blur\(14px\);[^}]*border-bottom: 1px solid rgba\(184, 223, 220, 0\.32\);/);
   assert.match(asciiPortalHtml, /const HEADER_SCROLL_THRESHOLD = 24;/);

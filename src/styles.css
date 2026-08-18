@@ -1155,13 +1155,17 @@ svg {
 
 .site-footer__chat {
   display: inline-flex;
+  width: 36px;
+  height: 36px;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  flex: 0 0 36px;
 }
 
 .site-footer__chat img {
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
+  max-width: none;
   object-fit: contain;
 }
 
