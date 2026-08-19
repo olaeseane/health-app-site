@@ -48,6 +48,7 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.doesNotMatch(asciiPortalHtml, /\.site-header \{[^}]*background: rgba\(255, 255, 255, 0\.88\);/);
   assert.doesNotMatch(asciiPortalHtml, /\.site-header \{[^}]*background: rgba\(244, 251, 250, 0\.64\);/);
   assert.doesNotMatch(asciiPortalHtml, /\.site-header \{[^}]*box-shadow:/);
+  assert.match(asciiPortalHtml, /<style data-portal-inline="styles">\n#wrapper #header,\n\.breadcrumbs,\n\.section-footer,\n\.footer-copyright \{\n  display: none;\n\}\n\n#content \{\n  padding: 0;\n\}\n\n@font-face/);
   assert.match(asciiPortalHtml, /\.site-header \{[^}]*position: sticky;[^}]*top: 0;[^}]*background: transparent;[^}]*backdrop-filter: none;[^}]*border-bottom: 0;/);
   assert.match(asciiPortalHtml, /\.site-header::before \{[^}]*left: 50%;[^}]*width: 100vw;[^}]*transform: translateX\(-50%\);[^}]*background: transparent;[^}]*border-bottom: 0;/);
   assert.match(asciiPortalHtml, /\.site-header--portal \{\s*position: fixed !important;\s*z-index: 2147483647 !important;\s*top: 0 !important;\s*left: 50% !important;\s*width: 100vw !important;\s*max-width: none !important;\s*box-sizing: border-box !important;\s*margin: 0 !important;\s*padding-inline: max\(var\(--page-pad\), calc\(\(100vw - var\(--max-width\)\) \/ 2 \+ var\(--page-pad\)\)\) !important;[\s\S]*?background: #f4fbfa !important;\s*background-color: #f4fbfa !important;\s*border-bottom: 1px solid rgba\(184, 223, 220, 0\.42\) !important;/);
