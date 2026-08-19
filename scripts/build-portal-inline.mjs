@@ -238,7 +238,18 @@ function addPortalHeaderClass(html) {
 }
 
 function withPortalCssOverrides(css) {
-  return `${css}
+  return `#wrapper #header,
+.breadcrumbs,
+.section-footer,
+.footer-copyright {
+  display: none;
+}
+
+#content {
+  padding: 0;
+}
+
+${css}
 
 .site-header--portal {
   position: fixed !important;
