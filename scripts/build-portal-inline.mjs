@@ -275,6 +275,13 @@ ${css}
   padding-top: clamp(92px, 9vh, 108px) !important;
 }
 
+.hero .button--primary:is(:link, :visited, :hover, :focus-visible, :active) {
+  background: var(--tiffany-dark) !important;
+  color: var(--white) !important;
+  text-decoration: none !important;
+  text-decoration-color: transparent !important;
+}
+
 .simplicity__download-link:is(:link, :visited, :hover, :focus-visible, :active) {
   background: var(--tiffany-deep) !important;
   color: var(--white) !important;
