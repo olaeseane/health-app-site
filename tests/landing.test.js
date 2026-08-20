@@ -31,9 +31,9 @@ const pngSize = (path) => {
 const simplicityChapters = [
   {
     index: "01 / ПИТАНИЕ",
-    title: "Дневник ведёт сам себя",
-    lead: "Просто сфотографируйте еду",
-    body: "ИИ определит блюдо, рассчитает среднее КБЖУ и автоматически добавит запись",
+    title: "Фотографируйте еду",
+    lead: "Дневник ведёт сам себя",
+    body: "ИИ определяет блюдо, рассчитывает среднее КБЖУ и автоматом добавляет запись",
     screenshots: ["food1.png", "food2.png"],
   },
   {
@@ -448,8 +448,8 @@ test("simplicity replaces the task directory with four editorial chapters", () =
   assert.ok(simplicity);
   const normalizedSimplicity = simplicity.replace(/\s+/g, " ");
   assert.match(simplicity, /Простота использования/);
-  assert.match(simplicity, /Здоровье требует много внимания/);
-  assert.match(simplicity, /Предикс\.Здоровье — по минимуму/);
+  assert.match(simplicity, /Забота о себе требует много внимания/);
+  assert.match(simplicity, /Мы — по минимуму/);
   assert.doesNotMatch(simplicity, /Убрали всё, что мешает начать/);
   assert.doesNotMatch(
     simplicity,
