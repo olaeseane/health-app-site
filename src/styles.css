@@ -406,20 +406,45 @@ svg {
   font-size: 0.93rem;
   font-weight: 700;
   text-decoration: none;
+  transition:
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
 }
 
 .button--primary {
   background: var(--graphite);
-  color: var(--white);
+  color: var(--white) !important;
+  box-shadow: 0 12px 28px rgba(18, 104, 107, 0.16);
+  text-decoration: none !important;
+}
+
+.button--primary:is(:link, :visited, :hover, :focus-visible, :active) {
+  color: var(--white) !important;
+  text-decoration: none !important;
+  text-decoration-color: transparent !important;
 }
 
 .hero .button--primary {
   background: var(--tiffany-dark);
 }
 
-.hero .button--primary:hover,
-.hero .button--primary:active {
+.button--primary:hover {
   background: var(--tiffany-deep);
+  box-shadow: 0 16px 34px rgba(18, 104, 107, 0.24);
+  transform: translateY(-1px);
+}
+
+.button--primary:active {
+  background: var(--tiffany-deep);
+  box-shadow: 0 10px 24px rgba(18, 104, 107, 0.2);
+  transform: translateY(0);
+}
+
+.button--primary:focus-visible {
+  outline: 3px solid rgba(127, 211, 205, 0.45);
+  outline-offset: 3px;
 }
 
 .route-link {
