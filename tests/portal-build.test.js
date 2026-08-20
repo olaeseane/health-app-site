@@ -58,6 +58,10 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.match(asciiPortalHtml, /\.button--primary:hover \{\s*background: var\(--tiffany-deep\) !important;\s*box-shadow: 0 16px 34px rgba\(18, 104, 107, 0\.24\) !important;\s*transform: translateY\(-1px\) !important;/);
   assert.match(asciiPortalHtml, /\.button--primary:active \{\s*background: var\(--tiffany-deep\) !important;\s*box-shadow: 0 10px 24px rgba\(18, 104, 107, 0\.2\) !important;\s*transform: translateY\(0\) !important;/);
   assert.match(asciiPortalHtml, /\.button--primary:focus-visible \{\s*outline: 3px solid rgba\(127, 211, 205, 0\.45\) !important;\s*outline-offset: 3px !important;/);
+  assert.match(asciiPortalHtml, /\.site-nav__cta:is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*color: var\(--white\) !important;\s*text-decoration: none !important;\s*text-decoration-color: transparent !important;/);
+  assert.match(asciiPortalHtml, /\.site-nav__cta:hover \{\s*background: var\(--tiffany-dark\) !important;\s*box-shadow: 0 16px 34px rgba\(18, 104, 107, 0\.24\) !important;\s*transform: translateY\(-1px\) !important;/);
+  assert.match(asciiPortalHtml, /\.site-nav__cta:active \{\s*background: var\(--tiffany-dark\) !important;\s*box-shadow: 0 10px 24px rgba\(18, 104, 107, 0\.2\) !important;\s*transform: translateY\(0\) !important;/);
+  assert.match(asciiPortalHtml, /\.site-nav__cta:focus-visible \{\s*outline: 3px solid rgba\(127, 211, 205, 0\.45\) !important;\s*outline-offset: 3px !important;/);
   assert.match(asciiPortalHtml, /\.simplicity__download-link:is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*background: var\(--tiffany-deep\) !important;\s*color: var\(--white\) !important;\s*text-decoration: none !important;\s*text-decoration-color: transparent !important;/);
   assert.match(asciiPortalHtml, /\.site-footer__chat \{\s*width: 36px !important;\s*height: 36px !important;\s*min-width: 36px !important;\s*flex: 0 0 36px !important;/);
   assert.match(asciiPortalHtml, /\.site-footer__chat img \{\s*width: 32px !important;\s*height: 32px !important;\s*min-width: 32px !important;\s*max-width: none !important;/);

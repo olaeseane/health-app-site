@@ -217,8 +217,12 @@ test("header links to the five current landing sections", () => {
   assert.match(styles, /\.site-header--scrolled \.site-nav__cta\s*\{[^}]*min-height: 36px;/);
   assert.match(
     styles,
-    /\.site-nav__cta\s*\{[^}]*background: var\(--tiffany-deep\);[^}]*color: var\(--white\) !important;[^}]*border-radius: 999px;/,
+    /\.site-nav__cta\s*\{[^}]*background: var\(--tiffany-deep\);[^}]*color: var\(--white\) !important;[^}]*border-radius: 999px;[^}]*transition:[^}]*transform 180ms ease;/,
   );
+  assert.match(styles, /\.site-nav__cta:is\(:link, :visited, :hover, :focus-visible, :active\)\s*\{[^}]*color: var\(--white\) !important;[^}]*text-decoration: none !important;[^}]*text-decoration-color: transparent !important;/);
+  assert.match(styles, /\.site-nav__cta:hover\s*\{[^}]*background: var\(--tiffany-dark\);[^}]*box-shadow: 0 16px 34px rgba\(18, 104, 107, 0\.24\);[^}]*transform: translateY\(-1px\);/);
+  assert.match(styles, /\.site-nav__cta:active\s*\{[^}]*background: var\(--tiffany-dark\);[^}]*box-shadow: 0 10px 24px rgba\(18, 104, 107, 0\.2\);[^}]*transform: translateY\(0\);/);
+  assert.match(styles, /\.site-nav__cta:focus-visible\s*\{[^}]*outline: 3px solid rgba\(127, 211, 205, 0\.45\);[^}]*outline-offset: 3px;/);
   assert.match(styles, /\.button\s*\{[^}]*transition:[^}]*background-color 180ms ease,[^}]*box-shadow 180ms ease,[^}]*color 180ms ease,[^}]*transform 180ms ease;/);
   assert.match(styles, /\.button--primary\s*\{[^}]*color: var\(--white\) !important;[^}]*box-shadow: 0 12px 28px rgba\(18, 104, 107, 0\.16\);[^}]*text-decoration: none !important;/);
   assert.match(styles, /\.button--primary:is\(:link, :visited, :hover, :focus-visible, :active\)\s*\{[^}]*color: var\(--white\) !important;[^}]*text-decoration: none !important;[^}]*text-decoration-color: transparent !important;/);

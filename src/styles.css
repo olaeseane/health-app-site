@@ -281,6 +281,11 @@ svg {
   box-shadow: 0 12px 28px rgba(18, 104, 107, 0.2);
   font-weight: 800;
   text-decoration: none !important;
+  transition:
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
 }
 
 .site-header--scrolled .site-nav__cta {
@@ -291,6 +296,24 @@ svg {
   background: var(--tiffany-deep);
   color: var(--white) !important;
   text-decoration: none !important;
+  text-decoration-color: transparent !important;
+}
+
+.site-nav__cta:hover {
+  background: var(--tiffany-dark);
+  box-shadow: 0 16px 34px rgba(18, 104, 107, 0.24);
+  transform: translateY(-1px);
+}
+
+.site-nav__cta:active {
+  background: var(--tiffany-dark);
+  box-shadow: 0 10px 24px rgba(18, 104, 107, 0.2);
+  transform: translateY(0);
+}
+
+.site-nav__cta:focus-visible {
+  outline: 3px solid rgba(127, 211, 205, 0.45);
+  outline-offset: 3px;
 }
 
 .hero {
