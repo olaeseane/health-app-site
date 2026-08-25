@@ -83,7 +83,7 @@ async function optimizePortalScreenshot(relativePath) {
     "jpeg",
     "-s",
     "formatOptions",
-    "76",
+    "74",
     fileURLToPath(resizedUrl),
     "--out",
     fileURLToPath(optimizedUrl),
