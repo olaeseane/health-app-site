@@ -34,7 +34,7 @@ const simplicityChapters = [
     title: "Фотографируйте еду",
     lead: "Дневник ведёт сам себя",
     body: "ИИ определяет блюдо, рассчитывает среднее КБЖУ и автоматом добавляет запись",
-    screenshots: ["food1.png"],
+    screenshots: ["food1.png", "food2.png"],
   },
   {
     index: "02 / ПРИВЫЧКИ",
@@ -392,7 +392,7 @@ test("hero keeps its illustration while simplicity uses four real screens", () =
     /alt="Слоистый архив дня с маршрутом между самочувствием, активностью, документами и подсказками"/,
   );
   assert.doesNotMatch(hero, /class="atlas"/);
-  assert.equal((simplicity.match(/<img\b/g) ?? []).length, 5);
+  assert.equal((simplicity.match(/<img\b/g) ?? []).length, 6);
 });
 
 test("getting started follows the hero as one connected route", () => {
@@ -465,7 +465,7 @@ test("simplicity replaces the task directory with four editorial chapters", () =
     (simplicity.match(/class="simplicity__chapter"/g) ?? []).length,
     4,
   );
-  assert.equal((simplicity.match(/<img\b/g) ?? []).length, 5);
+  assert.equal((simplicity.match(/<img\b/g) ?? []).length, 6);
 
   for (const chapter of simplicityChapters) {
     assert.ok(normalizedSimplicity.includes(chapter.index), chapter.index);
@@ -485,7 +485,7 @@ test("simplicity replaces the task directory with four editorial chapters", () =
     }
   }
 
-  assert.equal((simplicity.match(/class="simplicity__visual simplicity__visual--pair"/g) ?? []).length, 1);
+  assert.equal((simplicity.match(/class="simplicity__visual simplicity__visual--pair"/g) ?? []).length, 2);
 
   for (const { screenshots } of simplicityChapters) {
     for (const screenshot of screenshots) {
