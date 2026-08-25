@@ -114,11 +114,10 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
     distLogoSize < 35_000,
     "dist logo mark should be optimized PNG",
   );
-  assert.equal((asciiPortalHtml.match(/data:image\/jpeg;base64,/g) ?? []).length, 6);
+  assert.equal((asciiPortalHtml.match(/data:image\/jpeg;base64,/g) ?? []).length, 5);
 
   for (const screenshot of [
     "food1.png",
-    "food2.png",
     "habits1.png",
     "doc1.png",
     "doc2.png",
