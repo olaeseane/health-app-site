@@ -66,6 +66,27 @@ const privacyPrinciples = [
   "Геолокация не нужна",
 ];
 
+test("Yandex Metrika loads once at the start of the page body", () => {
+  assert.match(
+    landing,
+    /<body>\s*<!-- Yandex\.Metrika counter -->[\s\S]*?<a class="skip-link"/,
+  );
+  assert.equal(
+    (landing.match(/https:\/\/mc\.yandex\.ru\/metrika\/tag\.js\?id=112104449/g) ?? [])
+      .length,
+    1,
+  );
+  assert.match(
+    landing,
+    /ym\(112104449, 'init', \{ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document\.referrer, url: location\.href, accurateTrackBounce:true, trackLinks:true\}\);/,
+  );
+  assert.equal(
+    (landing.match(/https:\/\/mc\.yandex\.ru\/watch\/112104449/g) ?? []).length,
+    1,
+  );
+  assert.match(landing, /<noscript><div><img[^>]*alt="" \/><\/div><\/noscript>/);
+});
+
 function section(id) {
   return landing.match(
     new RegExp(`<section\\b[^>]*\\bid="${id}"[^>]*>([\\s\\S]*?)</section>`),
