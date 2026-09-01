@@ -42,11 +42,16 @@ test("redirect pages send one platform goal and always continue to download", ()
   );
   assert.match(androidPage, /data-goal="download_android"/);
   assert.match(androidPage, /data-destination="\/download\/predix-health-app\.apk"/);
+  assert.match(iosPage, /<h1>Открываем TestFlight…<\/h1>/);
+  assert.match(androidPage, /<h1>Начинаем загрузку…<\/h1>/);
+  assert.doesNotMatch(iosPage, /Переходим к загрузке|Сейчас откроется TestFlight/);
+  assert.doesNotMatch(androidPage, /Переходим к загрузке|Сейчас начнётся загрузка приложения/);
 
   for (const page of [iosPage, androidPage]) {
     assert.match(page, /<meta name="robots" content="noindex, nofollow" \/>/);
     assert.match(page, /<script defer src="\.\.\/redirect\.js"><\/script>/);
     assert.match(page, /<noscript>[\s\S]*?http-equiv="refresh"/);
+    assert.match(page, /<a data-fallback-link[^>]*>\s*Продолжить вручную\s*<\/a>/);
   }
 
   assert.match(redirectScript, /112104449/);
