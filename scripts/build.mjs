@@ -34,6 +34,9 @@ await cp(new URL("../public/", import.meta.url), new URL("public/", outputDirect
 await cp(new URL("../video/", import.meta.url), new URL("video/", outputDirectory), {
   recursive: true,
 });
+await cp(new URL("../go/", import.meta.url), new URL("go/", outputDirectory), {
+  recursive: true,
+});
 await removeSvgAssets(new URL("public/", outputDirectory));
 
 console.log("Built static landing page in dist/");

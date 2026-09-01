@@ -253,9 +253,9 @@ function addPortalDocumentationLink(html) {
 
 function restorePortalQrOnlyPresentation(html) {
   const platforms = [
-    ["https://testflight.apple.com/join/KCJxFcV1", "iOS", "Скачать iOS"],
+    ["/go/ios/", "iOS", "Скачать iOS"],
     [
-      "https://hubthe.team/shared/docs/bcaa672e-9fd8-43a3-91e2-abe3189a88ae",
+      "/go/android/",
       "Android",
       "Скачать Android",
     ],

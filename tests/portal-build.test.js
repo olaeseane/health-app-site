@@ -100,8 +100,8 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   );
   assert.match(asciiPortalHtml, /href="doc\.pdf"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"/);
   assert.doesNotMatch(asciiPortalHtml, /data:application\/(?:octet-stream|pdf);base64/);
-  assert.match(asciiPortalHtml, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);
-  assert.match(asciiPortalHtml, /href="https:\/\/hubthe\.team\/shared\/docs\/bcaa672e-9fd8-43a3-91e2-abe3189a88ae"/);
+  assert.match(asciiPortalHtml, /href="\/go\/ios\/"/);
+  assert.match(asciiPortalHtml, /href="\/go\/android\/"/);
   assert.equal((asciiPortalHtml.match(/class="download-option__link"/g) ?? []).length, 0);
   assert.match(portalHtml, /<strong>iOS<\/strong>/);
   assert.match(portalHtml, /<strong>Android<\/strong>/);
