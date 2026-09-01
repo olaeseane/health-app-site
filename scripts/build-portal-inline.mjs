@@ -244,6 +244,28 @@ function addPortalDocumentationLink(html) {
   );
 }
 
+function restorePortalDownloadPresentation(html) {
+  const platforms = [
+    ["https://testflight.apple.com/join/KCJxFcV1", "iOS"],
+    [
+      "https://hubthe.team/shared/docs/bcaa672e-9fd8-43a3-91e2-abe3189a88ae",
+      "Android",
+    ],
+  ];
+
+  for (const [href, label] of platforms) {
+    html = html.replace(
+      `<figcaption>\n                <a\n                  class="download-option__link"\n                  href="${href}"`,
+      `<figcaption>\n                <strong>${label}</strong>\n                <a\n                  class="download-option__link"\n                  href="${href}"`,
+    );
+  }
+
+  return html.replace(
+    "                  Скачать Android\n                </a>",
+    "                  Скачать для Android\n                </a>",
+  );
+}
+
 function withPortalCssOverrides(css) {
   return `#wrapper #header,
 .breadcrumbs,
@@ -336,7 +358,10 @@ ${css}
 }
 
 .download-option__link:is(:link, :visited, :hover, :focus-visible, :active) {
+  width: min(100%, 220px) !important;
+  border: 0 !important;
   background: var(--tiffany-deep) !important;
+  box-shadow: 0 10px 24px rgba(18, 104, 107, 0.2) !important;
   color: var(--white) !important;
   text-decoration: none !important;
   text-decoration-color: transparent !important;
@@ -393,6 +418,7 @@ async function buildPortalInline() {
   html = removePortalSkipLink(html);
   html = addPortalHeaderClass(html);
   html = addPortalDocumentationLink(html);
+  html = restorePortalDownloadPresentation(html);
   html = addPortalInlineTaskHandlers(html);
   html = await inlineHtmlAssetUrls(html);
   html = html.replaceAll(
