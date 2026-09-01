@@ -27,6 +27,10 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
 
   const asciiPortal = new URL("../dist/portal-inline-ascii.html", import.meta.url);
   const asciiPortalHtml = readFileSync(asciiPortal, "utf8");
+  const portalHtml = readFileSync(
+    new URL("../dist/portal-inline.html", import.meta.url),
+    "utf8",
+  );
 
   assert.ok(
     statSync(asciiPortal).size < 1_000_000,
@@ -97,8 +101,11 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.equal((asciiPortalHtml.match(/class="download-option__link"/g) ?? []).length, 2);
   assert.match(
     asciiPortalHtml,
-    /\.download-option__link:is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*background: var\(--tiffany-deep\) !important;\s*color: var\(--white\) !important;\s*text-decoration: none !important;/,
+    /\.download-option__link:is\(:link, :visited, :hover, :focus-visible, :active\) \{[^}]*width: min\(100%, 220px\) !important;[^}]*border: 0 !important;[^}]*background: var\(--tiffany-deep\) !important;[^}]*box-shadow: 0 10px 24px rgba\(18, 104, 107, 0\.2\) !important;[^}]*color: var\(--white\) !important;[^}]*text-decoration: none !important;/,
   );
+  assert.match(portalHtml, /<strong>iOS<\/strong>/);
+  assert.match(portalHtml, /<strong>Android<\/strong>/);
+  assert.match(portalHtml, />\s*Скачать для Android\s*<\/a>/);
   assert.doesNotMatch(asciiPortalHtml, /predix-health-app-1\.16\.apk/);
   assert.ok(
     (asciiPortalHtml.match(/data:image\/png;base64,/g) ?? []).length >= 4,

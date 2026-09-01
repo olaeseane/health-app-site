@@ -707,8 +707,7 @@ test("download route follows privacy with two real QR links", () => {
   assert.ok(download);
   assert.match(download, /Скачать приложение/);
   assert.match(download, /Ваш первый осознанный шаг/);
-  assert.match(download, /<strong>iOS<\/strong>/);
-  assert.match(download, /<strong>Android<\/strong>/);
+  assert.doesNotMatch(download, /<strong>iOS<\/strong>|<strong>Android<\/strong>/);
   assert.doesNotMatch(download, /<span>TestFlight<\/span>/);
   assert.doesNotMatch(download, /<span>APK<\/span>/);
   assert.doesNotMatch(download.replace(/href="[^"]*"/g, ""), /TestFlight|APK/);
@@ -721,7 +720,7 @@ test("download route follows privacy with two real QR links", () => {
   );
   assert.match(
     download,
-    /class="download-option__link"\s+href="https:\/\/hubthe\.team\/shared\/docs\/bcaa672e-9fd8-43a3-91e2-abe3189a88ae"[^>]*>\s*Скачать для Android\s*<\/a>/,
+    /class="download-option__link"\s+href="https:\/\/hubthe\.team\/shared\/docs\/bcaa672e-9fd8-43a3-91e2-abe3189a88ae"[^>]*>\s*Скачать Android\s*<\/a>/,
   );
   assert.doesNotMatch(download, /Ссылка появится позже/);
   assert.match(download, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);
@@ -772,11 +771,11 @@ test("download route follows privacy with two real QR links", () => {
   );
   assert.match(
     styles,
-    /\.download-option__link\s*\{[^}]*display: inline-flex;[^}]*width: min\(100%, 220px\);[^}]*min-height: 44px;[^}]*background: var\(--tiffany-deep\);[^}]*color: var\(--white\);[^}]*text-decoration: none;/,
+    /\.download-option__link\s*\{[^}]*display: inline-flex;[^}]*width: auto;[^}]*min-height: 44px;[^}]*border: 1px solid var\(--tiffany-deep\);[^}]*background: rgba\(255, 255, 255, 0\.88\);[^}]*box-shadow: none;[^}]*color: var\(--tiffany-deep\);[^}]*text-decoration: none;/,
   );
   assert.match(
     styles,
-    /\.download-option__link:hover\s*\{[^}]*background: var\(--tiffany-deep\);[^}]*transform: translateY\(-1px\);/,
+    /\.download-option__link:hover\s*\{[^}]*background: rgba\(127, 211, 205, 0\.16\);[^}]*color: var\(--tiffany-deep\);[^}]*transform: translateY\(-1px\);/,
   );
   assert.match(
     styles,
