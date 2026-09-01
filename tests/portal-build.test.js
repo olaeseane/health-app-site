@@ -37,13 +37,10 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
     "ASCII portal inline build should stay under 1 MB",
   );
   assert.match(asciiPortalHtml, /<header class="site-header site-header--portal"/);
-  assert.equal(
-    (asciiPortalHtml.match(/https:\/\/mc\.yandex\.ru\/metrika\/tag\.js\?id=112104449/g) ?? [])
-      .length,
-    1,
+  assert.doesNotMatch(
+    asciiPortalHtml,
+    /mc\.yandex\.ru|ym\(112104449|Yandex\.Metrika counter/,
   );
-  assert.match(asciiPortalHtml, /ym\(112104449, 'init'/);
-  assert.match(asciiPortalHtml, /https:\/\/mc\.yandex\.ru\/watch\/112104449/);
   assert.match(asciiPortalHtml, /class="brand__wordmark"/);
   assert.match(asciiPortalHtml, /&#1055;&#1088;&#1077;&#1076;&#1080;&#1082;&#1089;/);
   assert.match(asciiPortalHtml, /&#1047;&#1076;&#1086;&#1088;&#1086;&#1074;&#1100;&#1077;/);
