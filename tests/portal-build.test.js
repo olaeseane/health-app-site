@@ -94,6 +94,11 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.doesNotMatch(asciiPortalHtml, /data:application\/(?:octet-stream|pdf);base64/);
   assert.match(asciiPortalHtml, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);
   assert.match(asciiPortalHtml, /href="https:\/\/hubthe\.team\/shared\/docs\/bcaa672e-9fd8-43a3-91e2-abe3189a88ae"/);
+  assert.equal((asciiPortalHtml.match(/class="download-option__link"/g) ?? []).length, 2);
+  assert.match(
+    asciiPortalHtml,
+    /\.download-option__link:is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*background: var\(--tiffany-deep\) !important;\s*color: var\(--white\) !important;\s*text-decoration: none !important;/,
+  );
   assert.doesNotMatch(asciiPortalHtml, /predix-health-app-1\.16\.apk/);
   assert.ok(
     (asciiPortalHtml.match(/data:image\/png;base64,/g) ?? []).length >= 4,

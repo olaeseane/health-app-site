@@ -714,6 +714,15 @@ test("download route follows privacy with two real QR links", () => {
   assert.doesNotMatch(download.replace(/href="[^"]*"/g, ""), /TestFlight|APK/);
   assert.doesNotMatch(download, /APK 1\.16/);
   assert.equal((download.match(/class="download-option"/g) ?? []).length, 2);
+  assert.equal((download.match(/class="download-option__link"/g) ?? []).length, 2);
+  assert.match(
+    download,
+    /class="download-option__link"\s+href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"[^>]*>\s*Скачать iOS\s*<\/a>/,
+  );
+  assert.match(
+    download,
+    /class="download-option__link"\s+href="https:\/\/hubthe\.team\/shared\/docs\/bcaa672e-9fd8-43a3-91e2-abe3189a88ae"[^>]*>\s*Скачать для Android\s*<\/a>/,
+  );
   assert.doesNotMatch(download, /Ссылка появится позже/);
   assert.match(download, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);
   assert.match(download, /src="\.\/public\/download\/ios-testflight-qr\.png"/);
@@ -760,6 +769,18 @@ test("download route follows privacy with two real QR links", () => {
   assert.match(
     styles,
     /@media \(max-width: 600px\)[\s\S]*?\.download-section__route\s*\{[^}]*display: none;/,
+  );
+  assert.match(
+    styles,
+    /\.download-option__link\s*\{[^}]*display: inline-flex;[^}]*width: min\(100%, 220px\);[^}]*min-height: 44px;[^}]*background: var\(--tiffany-deep\);[^}]*color: var\(--white\);[^}]*text-decoration: none;/,
+  );
+  assert.match(
+    styles,
+    /\.download-option__link:hover\s*\{[^}]*background: var\(--tiffany-deep\);[^}]*transform: translateY\(-1px\);/,
+  );
+  assert.match(
+    styles,
+    /\.download-option__link:focus-visible\s*\{[^}]*outline: 3px solid rgba\(127, 211, 205, 0\.45\);[^}]*outline-offset: 3px;/,
   );
 });
 
