@@ -240,7 +240,7 @@ test("header links to the five current landing sections", () => {
   assert.doesNotMatch(styles, /\.header-route/);
 });
 
-test("footer links to the documentation placeholder", () => {
+test("ordinary web footer omits the portal-only documentation link", () => {
   const footer = landing.match(
     /<footer\b[^>]*class="site-footer"[^>]*>([\s\S]*?)<\/footer>/,
   )?.[1];
@@ -256,10 +256,7 @@ test("footer links to the documentation placeholder", () => {
   assert.match(footer, /class="site-footer__links"[^>]*aria-label="Ссылки в подвале"/);
   assert.match(footer, /href="#top"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"[^>]*>В начало/);
   assert.match(footer, /<span aria-hidden="true">·<\/span>/);
-  assert.match(
-    footer,
-    /href="doc\.pdf"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"[^>]*>Документация/,
-  );
+  assert.doesNotMatch(footer, /href="doc\.pdf"|>Документация<\/a>/);
   assert.match(
     footer,
     /class="site-footer__chat"[^>]*href="http:\/\/chat"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*aria-label="Открыть чат"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"/,

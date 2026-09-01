@@ -237,6 +237,13 @@ function addPortalHeaderClass(html) {
   );
 }
 
+function addPortalDocumentationLink(html) {
+  return html.replace(
+    "<!-- portal-documentation-link -->",
+    '<span aria-hidden="true">·</span>\n        <a href="doc.pdf" target="_blank" rel="noopener noreferrer" style="color: #12686b !important; text-decoration-color: currentColor !important;">Документация</a>',
+  );
+}
+
 function withPortalCssOverrides(css) {
   return `#wrapper #header,
 .breadcrumbs,
@@ -364,6 +371,7 @@ async function buildPortalInline() {
 
   html = removePortalSkipLink(html);
   html = addPortalHeaderClass(html);
+  html = addPortalDocumentationLink(html);
   html = addPortalInlineTaskHandlers(html);
   html = await inlineHtmlAssetUrls(html);
   html = html.replaceAll(
