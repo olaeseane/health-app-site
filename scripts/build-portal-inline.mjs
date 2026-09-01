@@ -220,6 +220,13 @@ function removePortalSkipLink(html) {
   return html.replace(/\n\s*<a class="skip-link"[\s\S]*?<\/a>\n/, "\n");
 }
 
+function removePortalMetrika(html) {
+  return html.replace(
+    /\n\s*<!-- Yandex\.Metrika counter -->[\s\S]*?<!-- \/Yandex\.Metrika counter -->\n/,
+    "\n",
+  );
+}
+
 function addPortalInlineTaskHandlers(html) {
   return html
     .replace(/(<li class="task-item[^"]*" data-task-item="([^"]+)")/g, (_, prefix, taskId) => {
@@ -389,6 +396,7 @@ async function buildPortalInline() {
     await readFile(new URL("src/app.js", projectRoot), "utf8"),
   );
 
+  html = removePortalMetrika(html);
   html = removePortalSkipLink(html);
   html = addPortalHeaderClass(html);
   html = addPortalDocumentationLink(html);
