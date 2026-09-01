@@ -737,17 +737,17 @@ test("download route follows privacy with two real QR links", () => {
   assert.equal((download.match(/class="download-option__link"/g) ?? []).length, 2);
   assert.match(
     download,
-    /class="download-option__link"\s+href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"[^>]*>\s*Скачать iOS\s*<\/a>/,
+    /class="download-option__link"\s+href="\/go\/ios\/"[^>]*>\s*Скачать iOS\s*<\/a>/,
   );
   assert.match(
     download,
-    /class="download-option__link"\s+href="https:\/\/hubthe\.team\/shared\/docs\/bcaa672e-9fd8-43a3-91e2-abe3189a88ae"[^>]*>\s*Скачать Android\s*<\/a>/,
+    /class="download-option__link"\s+href="\/go\/android\/"[^>]*>\s*Скачать Android\s*<\/a>/,
   );
   assert.doesNotMatch(download, /Ссылка появится позже/);
-  assert.match(download, /href="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/);
+  assert.match(download, /href="\/go\/ios\/"/);
   assert.match(download, /src="\.\/public\/download\/ios-testflight-qr\.png"/);
   assert.match(download, /src="\.\/public\/download\/ios-testflight-qr\.png"[\s\S]*?width="160"[\s\S]*?height="160"/);
-  assert.match(download, /href="https:\/\/hubthe\.team\/shared\/docs\/bcaa672e-9fd8-43a3-91e2-abe3189a88ae"/);
+  assert.match(download, /href="\/go\/android\/"/);
   assert.doesNotMatch(download, /predix-health-app-1\.16\.apk/);
   assert.match(download, /src="\.\/public\/download\/android-apk-qr\.png"/);
   assert.match(download, /src="\.\/public\/download\/android-apk-qr\.png"[\s\S]*?width="160"[\s\S]*?height="160"/);
