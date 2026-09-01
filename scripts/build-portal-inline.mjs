@@ -244,26 +244,24 @@ function addPortalDocumentationLink(html) {
   );
 }
 
-function restorePortalDownloadPresentation(html) {
+function restorePortalQrOnlyPresentation(html) {
   const platforms = [
-    ["https://testflight.apple.com/join/KCJxFcV1", "iOS"],
+    ["https://testflight.apple.com/join/KCJxFcV1", "iOS", "Скачать iOS"],
     [
       "https://hubthe.team/shared/docs/bcaa672e-9fd8-43a3-91e2-abe3189a88ae",
       "Android",
+      "Скачать Android",
     ],
   ];
 
-  for (const [href, label] of platforms) {
+  for (const [href, label, buttonText] of platforms) {
     html = html.replace(
-      `<figcaption>\n                <a\n                  class="download-option__link"\n                  href="${href}"`,
-      `<figcaption>\n                <strong>${label}</strong>\n                <a\n                  class="download-option__link"\n                  href="${href}"`,
+      `<figcaption>\n                <a\n                  class="download-option__link"\n                  href="${href}"\n                >\n                  ${buttonText}\n                </a>\n              </figcaption>`,
+      `<figcaption>\n                <strong>${label}</strong>\n              </figcaption>`,
     );
   }
 
-  return html.replace(
-    "                  Скачать Android\n                </a>",
-    "                  Скачать для Android\n                </a>",
-  );
+  return html;
 }
 
 function withPortalCssOverrides(css) {
@@ -357,30 +355,6 @@ ${css}
   text-decoration-color: transparent !important;
 }
 
-.download-option__link:is(:link, :visited, :hover, :focus-visible, :active) {
-  width: min(100%, 220px) !important;
-  border: 0 !important;
-  background: var(--tiffany-deep) !important;
-  box-shadow: 0 10px 24px rgba(18, 104, 107, 0.2) !important;
-  color: var(--white) !important;
-  text-decoration: none !important;
-  text-decoration-color: transparent !important;
-}
-
-.download-option__link:hover {
-  box-shadow: 0 16px 34px rgba(18, 104, 107, 0.24) !important;
-  transform: translateY(-1px) !important;
-}
-
-.download-option__link:active {
-  transform: translateY(0) !important;
-}
-
-.download-option__link:focus-visible {
-  outline: 3px solid rgba(127, 211, 205, 0.45) !important;
-  outline-offset: 3px !important;
-}
-
 .site-footer__chat {
   width: 36px !important;
   height: 36px !important;
@@ -418,7 +392,7 @@ async function buildPortalInline() {
   html = removePortalSkipLink(html);
   html = addPortalHeaderClass(html);
   html = addPortalDocumentationLink(html);
-  html = restorePortalDownloadPresentation(html);
+  html = restorePortalQrOnlyPresentation(html);
   html = addPortalInlineTaskHandlers(html);
   html = await inlineHtmlAssetUrls(html);
   html = html.replaceAll(
