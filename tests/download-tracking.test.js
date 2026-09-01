@@ -8,6 +8,7 @@ const buildScript = readFileSync(new URL("scripts/build.mjs", root), "utf8");
 const redirectScriptUrl = new URL("go/redirect.js", root);
 const iosPageUrl = new URL("go/ios/index.html", root);
 const androidPageUrl = new URL("go/android/index.html", root);
+const redirectStylesUrl = new URL("go/styles.css", root);
 const qrGeneratorUrl = new URL("scripts/generate-download-qrs.py", root);
 
 test("download buttons and clickable QR images share platform redirect routes", () => {
@@ -34,6 +35,7 @@ test("redirect pages send one platform goal and always continue to download", ()
   const iosPage = readFileSync(iosPageUrl, "utf8");
   const androidPage = readFileSync(androidPageUrl, "utf8");
   const redirectScript = readFileSync(redirectScriptUrl, "utf8");
+  const redirectStyles = readFileSync(redirectStylesUrl, "utf8");
 
   assert.match(iosPage, /data-goal="download_ios"/);
   assert.match(
@@ -59,6 +61,11 @@ test("redirect pages send one platform goal and always continue to download", ()
   assert.match(redirectScript, /window\.setTimeout\(redirect, 1200\)/);
   assert.match(redirectScript, /window\.location\.replace\(destination\)/);
   assert.match(redirectScript, /https:\/\/mc\.yandex\.ru\/metrika\/tag\.js\?id=112104449/);
+  assert.match(
+    redirectStyles,
+    /h1\s*\{[^}]*font-size: clamp\(1\.35rem, 3\.2vw, 1\.85rem\);/,
+  );
+  assert.match(redirectStyles, /a\s*\{[^}]*margin-top: 28px;/);
 });
 
 test("ordinary build copies redirect pages and QR generator uses temporary domain", () => {
