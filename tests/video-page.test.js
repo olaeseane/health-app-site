@@ -9,7 +9,8 @@ const buildScript = readFileSync(
   "utf8",
 );
 const videoPageUrl = new URL("video/index.html", projectRoot);
-const placeholderUrl = new URL("video/placeholder.mp4", projectRoot);
+const videoUrl = new URL("video/video.mp4", projectRoot);
+const legacyPlaceholderUrl = new URL("video/placeholder.mp4", projectRoot);
 const posterUrl = new URL("video/poster.png", projectRoot);
 
 test("standalone video page is unlinked and excluded from analytics", () => {
@@ -33,19 +34,25 @@ test("video page exposes native playback controls without autoplay or download U
   assert.match(page, /<video\b[^>]*\bcontrolslist="nodownload noremoteplayback"/);
   assert.match(page, /<video\b[^>]*\bdisablepictureinpicture\b/);
   assert.doesNotMatch(page, /<video\b[^>]*\bautoplay\b/);
-  assert.match(page, /<source src="\.\/placeholder\.mp4" type="video\/mp4" \/>/);
+  assert.match(page, /<source src="\.\/video\.mp4" type="video\/mp4" \/>/);
   assert.match(page, /poster="\.\/poster\.png"/);
   assert.match(page, /contextmenu[\s\S]*?preventDefault/);
 });
 
-test("video placeholder assets are valid and included in ordinary builds", () => {
-  assert.ok(existsSync(placeholderUrl), "video/placeholder.mp4 should exist");
+test("video assets use their final names and are included in ordinary builds", () => {
+  assert.ok(existsSync(videoUrl), "video/video.mp4 should exist");
+  assert.ok(!existsSync(legacyPlaceholderUrl), "legacy placeholder.mp4 should be removed");
   assert.ok(existsSync(posterUrl), "video/poster.png should exist");
-  assert.ok(statSync(placeholderUrl).size > 1_000, "placeholder MP4 should not be empty");
+  assert.ok(statSync(videoUrl).size > 1_000, "video MP4 should not be empty");
   assert.ok(statSync(posterUrl).size > 1_000, "poster PNG should not be empty");
 
-  const mp4Header = readFileSync(placeholderUrl).subarray(4, 8).toString("ascii");
+  const mp4Header = readFileSync(videoUrl).subarray(4, 8).toString("ascii");
   assert.equal(mp4Header, "ftyp");
+  const poster = readFileSync(posterUrl);
+  assert.deepEqual(
+    { width: poster.readUInt32BE(16), height: poster.readUInt32BE(20) },
+    { width: 1280, height: 720 },
+  );
   assert.match(
     buildScript,
     /await cp\(new URL\("\.\.\/video\/", import\.meta\.url\), new URL\("video\/", outputDirectory\), \{[\s\S]*?recursive: true,[\s\S]*?\}\);/,
