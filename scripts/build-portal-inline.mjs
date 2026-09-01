@@ -335,6 +335,27 @@ ${css}
   text-decoration-color: transparent !important;
 }
 
+.download-option__link:is(:link, :visited, :hover, :focus-visible, :active) {
+  background: var(--tiffany-deep) !important;
+  color: var(--white) !important;
+  text-decoration: none !important;
+  text-decoration-color: transparent !important;
+}
+
+.download-option__link:hover {
+  box-shadow: 0 16px 34px rgba(18, 104, 107, 0.24) !important;
+  transform: translateY(-1px) !important;
+}
+
+.download-option__link:active {
+  transform: translateY(0) !important;
+}
+
+.download-option__link:focus-visible {
+  outline: 3px solid rgba(127, 211, 205, 0.45) !important;
+  outline-offset: 3px !important;
+}
+
 .site-footer__chat {
   width: 36px !important;
   height: 36px !important;
