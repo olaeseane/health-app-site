@@ -112,9 +112,18 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   );
   assert.match(asciiPortalHtml, /href="doc\.pdf"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"/);
   assert.doesNotMatch(asciiPortalHtml, /data:application\/(?:octet-stream|pdf);base64/);
-  assert.match(asciiPortalHtml, /href="\/go\/ios\/"/);
-  assert.match(asciiPortalHtml, /href="\/go\/android\/"/);
+  assert.doesNotMatch(asciiPortalHtml, /href="\/go\/(?:ios|android)\/"/);
+  assert.equal((asciiPortalHtml.match(/<a\s+class="download-option__code"/g) ?? []).length, 0);
+  assert.equal((asciiPortalHtml.match(/<div class="download-option__code">/g) ?? []).length, 2);
   assert.equal((asciiPortalHtml.match(/class="download-option__link"/g) ?? []).length, 0);
+  assert.match(
+    asciiPortalHtml,
+    /\.download-option__code \{[^}]*cursor: default !important;/,
+  );
+  assert.match(
+    asciiPortalHtml,
+    /\.download-option__code:hover \{[^}]*transform: none !important;/,
+  );
   assert.match(portalHtml, /<strong>iOS<\/strong>/);
   assert.match(portalHtml, /<strong>Android<\/strong>/);
   assert.doesNotMatch(

@@ -263,6 +263,12 @@ function restorePortalQrOnlyPresentation(html) {
 
   for (const [href, label, buttonText] of platforms) {
     html = html.replace(
+      new RegExp(
+        `<a\\s+class="download-option__code"\\s+href="${href}"\\s+aria-label="[^"]+"\\s*>\\s*(<img\\s[\\s\\S]*?\\/>)\\s*<\\/a>`,
+      ),
+      '<div class="download-option__code">\n                $1\n              </div>',
+    );
+    html = html.replace(
       `<figcaption>\n                <a\n                  class="download-option__link"\n                  href="${href}"\n                >\n                  ${buttonText}\n                </a>\n              </figcaption>`,
       `<figcaption>\n                <strong>${label}</strong>\n              </figcaption>`,
     );
@@ -360,6 +366,14 @@ ${css}
   color: var(--white) !important;
   text-decoration: none !important;
   text-decoration-color: transparent !important;
+}
+
+.download-option__code {
+  cursor: default !important;
+}
+
+.download-option__code:hover {
+  transform: none !important;
 }
 
 .site-footer__chat {
