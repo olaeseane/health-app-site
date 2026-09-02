@@ -804,18 +804,30 @@ test("download route follows privacy with two real QR links", () => {
   );
 });
 
-test("mobile footer keeps its links readable", () => {
+test("mobile hero and footer use a compact two-row composition", () => {
   assert.match(
     styles,
     /\.site-footer__links a\s*\{[^}]*white-space: nowrap;/,
   );
   assert.match(
     styles,
-    /@media \(max-width: 600px\)[\s\S]*?\.site-footer\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\);/,
+    /@media \(max-width: 600px\)[\s\S]*?\.site-header\s*\{[^}]*padding-block: 16px;/,
   );
   assert.match(
     styles,
-    /@media \(max-width: 600px\)[\s\S]*?\.site-footer__links\s*\{[^}]*justify-self: start;/,
+    /@media \(max-width: 600px\)[\s\S]*?\.hero\s*\{[^}]*padding-top: clamp\(48px, 14vw, 56px\);/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.site-footer\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\) auto;[^}]*align-items: center;[^}]*column-gap: 16px;[^}]*row-gap: 24px;[^}]*padding: 32px var\(--page-pad\) 38px;/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.site-footer > div\s*\{[^}]*grid-column: 1 \/ -1;[^}]*grid-row: 2;/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.site-footer__links\s*\{[^}]*grid-column: 2;[^}]*grid-row: 1;[^}]*justify-self: end;/,
   );
 });
 

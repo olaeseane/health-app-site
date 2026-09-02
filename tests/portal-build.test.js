@@ -62,6 +62,18 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.match(asciiPortalHtml, /\.site-header--portal \{\s*position: fixed !important;\s*z-index: 2147483647 !important;\s*top: 0 !important;\s*left: 50% !important;\s*width: 100vw !important;\s*max-width: none !important;\s*box-sizing: border-box !important;\s*margin: 0 !important;\s*padding-inline: max\(var\(--page-pad\), calc\(\(100vw - var\(--max-width\)\) \/ 2 \+ var\(--page-pad\)\)\) !important;[\s\S]*?background: #f4fbfa !important;\s*background-color: #f4fbfa !important;\s*border-bottom: 1px solid rgba\(184, 223, 220, 0\.42\) !important;/);
   assert.match(asciiPortalHtml, /\.site-header--portal::before \{\s*display: none !important;/);
   assert.match(asciiPortalHtml, /\.site-header--portal \+ \.health-site-main \{\s*padding-top: clamp\(92px, 9vh, 108px\) !important;/);
+  assert.match(
+    asciiPortalHtml,
+    /@media \(max-width: 600px\)[\s\S]*?\.site-header--portal \{[^}]*padding-top: 18px !important;[^}]*padding-bottom: 24px !important;/,
+  );
+  assert.match(
+    asciiPortalHtml,
+    /@media \(max-width: 600px\)[\s\S]*?\.health-site-main \.hero \{[^}]*padding-top: 120px !important;/,
+  );
+  assert.match(
+    asciiPortalHtml,
+    /@media \(max-width: 600px\)[\s\S]*?\.site-footer \{[^}]*grid-template-columns: minmax\(0, 1fr\) !important;[^}]*align-items: start !important;[^}]*gap: 28px !important;[^}]*padding: 42px var\(--page-pad\) 54px !important;/,
+  );
   assert.match(asciiPortalHtml, /\.button--primary:is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*color: var\(--white\) !important;\s*text-decoration: none !important;\s*text-decoration-color: transparent !important;/);
   assert.match(asciiPortalHtml, /\.button--primary:hover \{\s*background: var\(--tiffany-deep\) !important;\s*box-shadow: 0 16px 34px rgba\(18, 104, 107, 0\.24\) !important;\s*transform: translateY\(-1px\) !important;/);
   assert.match(asciiPortalHtml, /\.button--primary:active \{\s*background: var\(--tiffany-deep\) !important;\s*box-shadow: 0 10px 24px rgba\(18, 104, 107, 0\.2\) !important;\s*transform: translateY\(0\) !important;/);
