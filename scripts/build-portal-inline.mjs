@@ -380,6 +380,35 @@ ${css}
   .site-header--portal + .health-site-main {
     padding-top: 92px !important;
   }
+}
+
+@media (max-width: 600px) {
+  .site-header--portal {
+    padding-top: 18px !important;
+    padding-bottom: 24px !important;
+  }
+
+  .health-site-main .hero {
+    padding-top: 120px !important;
+  }
+
+  .site-footer {
+    grid-template-columns: minmax(0, 1fr) !important;
+    align-items: start !important;
+    gap: 28px !important;
+    padding: 42px var(--page-pad) 54px !important;
+  }
+
+  .site-footer > div {
+    grid-column: auto !important;
+    grid-row: 3 !important;
+  }
+
+  .site-footer__links {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    justify-self: start !important;
+  }
 }`;
 }
 

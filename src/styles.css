@@ -1395,6 +1395,7 @@ svg {
 
   .site-header {
     gap: 16px;
+    padding-block: 16px;
   }
 
   .brand__name {
@@ -1402,7 +1403,7 @@ svg {
   }
 
   .hero {
-    padding-top: 120px;
+    padding-top: clamp(48px, 14vw, 56px);
     background:
       radial-gradient(circle at 68% 54%, rgba(74, 141, 255, 0.07), transparent 28%),
       radial-gradient(circle at 82% 68%, rgba(244, 138, 116, 0.08), transparent 24%),
@@ -1512,17 +1513,22 @@ svg {
   }
 
   .site-footer {
-    grid-template-columns: minmax(0, 1fr);
-    align-items: start;
-    gap: 28px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 16px;
+    row-gap: 24px;
+    padding: 32px var(--page-pad) 38px;
   }
 
   .site-footer > div {
-    grid-row: 3;
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 
   .site-footer__links {
-    justify-self: start;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
   }
 }
 
