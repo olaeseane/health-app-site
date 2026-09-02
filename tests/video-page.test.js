@@ -35,7 +35,7 @@ test("video page exposes native playback controls without autoplay or download U
   assert.match(page, /<video\b[^>]*\bdisablepictureinpicture\b/);
   assert.doesNotMatch(page, /<video\b[^>]*\bautoplay\b/);
   assert.match(page, /<source src="\.\/video\.mp4" type="video\/mp4" \/>/);
-  assert.match(page, /poster="\.\/poster\.png"/);
+  assert.doesNotMatch(page, /<video\b[^>]*\bposter=/);
   assert.match(page, /contextmenu[\s\S]*?preventDefault/);
 });
 
