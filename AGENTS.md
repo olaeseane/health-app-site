@@ -17,6 +17,9 @@ navigator for the «Здоровье» application.
   `docs/screenshots.md` provide approved copy and evidence mapping.
 - `.impeccable/surfaces/landing.md` records the chosen landing direction and
   interaction constraints.
+- [`docs/site-versions.md`](docs/site-versions.md) is the source of truth for
+  v1/v2 source boundaries, build outputs, routes, analytics, and portal
+  isolation. Read it before implementing or changing either site version.
 
 ## Build, Test, and Development Commands
 
