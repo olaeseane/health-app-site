@@ -58,18 +58,12 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.doesNotMatch(asciiPortalHtml, /\.site-header \{[^}]*box-shadow:/);
   assert.match(asciiPortalHtml, /<style data-portal-inline="styles">\n#wrapper #header,\n\.breadcrumbs,\n\.section-footer,\n\.footer-copyright \{\n  display: none;\n\}\n\n#content \{\n  padding: 0;\n\}\n\n@font-face/);
   assert.match(asciiPortalHtml, /\.site-header \{[^}]*position: sticky;[^}]*top: 0;[^}]*background: transparent;[^}]*backdrop-filter: none;[^}]*border-bottom: 0;/);
-  assert.match(asciiPortalHtml, /\.site-header::before \{[^}]*left: 50%;[^}]*width: 100vw;[^}]*transform: translateX\(-50%\);[^}]*background: transparent;[^}]*border-bottom: 0;/);
+  assert.match(asciiPortalHtml, /\.site-header::before \{[^}]*left: 50%;[^}]*width: 100vw;[^}]*transform: translateX\(-50%\);[^}]*background: rgba\(244, 251, 250, 0\.78\);[^}]*backdrop-filter: blur\(14px\);[^}]*border-bottom: 1px solid rgba\(184, 223, 220, 0\.32\);/);
   assert.match(asciiPortalHtml, /\.site-header--portal \{\s*position: fixed !important;\s*z-index: 2147483647 !important;\s*top: 0 !important;\s*left: 50% !important;\s*width: 100vw !important;\s*max-width: none !important;\s*box-sizing: border-box !important;\s*margin: 0 !important;\s*padding-inline: max\(var\(--page-pad\), calc\(\(100vw - var\(--max-width\)\) \/ 2 \+ var\(--page-pad\)\)\) !important;[\s\S]*?background: #f4fbfa !important;\s*background-color: #f4fbfa !important;\s*border-bottom: 1px solid rgba\(184, 223, 220, 0\.42\) !important;/);
   assert.match(asciiPortalHtml, /\.site-header--portal::before \{\s*display: none !important;/);
-  assert.match(asciiPortalHtml, /\.site-header--portal \+ \.health-site-main \{\s*padding-top: clamp\(92px, 9vh, 108px\) !important;/);
-  assert.match(
-    asciiPortalHtml,
-    /@media \(max-width: 600px\)[\s\S]*?\.site-header--portal \{[^}]*padding-top: 18px !important;[^}]*padding-bottom: 24px !important;/,
-  );
-  assert.match(
-    asciiPortalHtml,
-    /@media \(max-width: 600px\)[\s\S]*?\.health-site-main \.hero \{[^}]*padding-top: 120px !important;/,
-  );
+  assert.match(asciiPortalHtml, /\.site-header--portal \{[^}]*padding-block: 12px !important;/);
+  assert.match(asciiPortalHtml, /\.site-header--portal \+ \.health-site-main \{\s*padding-top: 68px !important;/);
+  assert.doesNotMatch(asciiPortalHtml, /padding-top: 92px !important|padding-top: 120px !important|padding-top: 18px !important;/);
   assert.match(
     asciiPortalHtml,
     /@media \(max-width: 600px\)[\s\S]*?\.site-footer \{[^}]*grid-template-columns: minmax\(0, 1fr\) !important;[^}]*align-items: start !important;[^}]*gap: 28px !important;[^}]*padding: 42px var\(--page-pad\) 54px !important;/,
@@ -85,13 +79,10 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
   assert.match(asciiPortalHtml, /\.simplicity__download-link:is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*background: var\(--tiffany-deep\) !important;\s*color: var\(--white\) !important;\s*text-decoration: none !important;\s*text-decoration-color: transparent !important;/);
   assert.match(asciiPortalHtml, /\.site-footer__chat \{\s*width: 36px !important;\s*height: 36px !important;\s*min-width: 36px !important;\s*flex: 0 0 36px !important;/);
   assert.match(asciiPortalHtml, /\.site-footer__chat img \{\s*width: 32px !important;\s*height: 32px !important;\s*min-width: 32px !important;\s*max-width: none !important;/);
-  assert.match(asciiPortalHtml, /\.site-header--scrolled \{[^}]*padding-block: 12px;/);
-  assert.match(asciiPortalHtml, /\.site-header--scrolled::before \{[^}]*background: rgba\(244, 251, 250, 0\.78\);[^}]*backdrop-filter: blur\(14px\);[^}]*border-bottom: 1px solid rgba\(184, 223, 220, 0\.32\);/);
-  assert.match(asciiPortalHtml, /const HEADER_SCROLL_THRESHOLD = 24;/);
-  assert.match(asciiPortalHtml, /const HEADER_SCROLL_RESET_THRESHOLD = 4;/);
-  assert.match(asciiPortalHtml, /if \(window\.scrollY > HEADER_SCROLL_THRESHOLD\) \{/);
-  assert.match(asciiPortalHtml, /if \(window\.scrollY <= HEADER_SCROLL_RESET_THRESHOLD\) \{/);
-  assert.doesNotMatch(asciiPortalHtml, /classList\.toggle\("site-header--scrolled", window\.scrollY > HEADER_SCROLL_THRESHOLD\)/);
+  assert.doesNotMatch(
+    asciiPortalHtml,
+    /HEADER_SCROLL|installHeaderScrollState|site-header--scrolled|scrollY|addEventListener\("scroll"/,
+  );
   assert.match(
     asciiPortalHtml,
     /\.site-nav a:not\(\.site-nav__cta\):is\(:link, :visited, :hover, :focus-visible, :active\) \{\s*color: var\(--tiffany-deep\) !important;\s*text-decoration-color: currentColor;/,

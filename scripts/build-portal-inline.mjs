@@ -301,6 +301,7 @@ ${css}
   box-sizing: border-box !important;
   margin: 0 !important;
   padding-inline: max(var(--page-pad), calc((100vw - var(--max-width)) / 2 + var(--page-pad))) !important;
+  padding-block: 12px !important;
   transform: translateX(-50%) !important;
   background: #f4fbfa !important;
   background-color: #f4fbfa !important;
@@ -312,7 +313,7 @@ ${css}
 }
 
 .site-header--portal + .health-site-main {
-  padding-top: clamp(92px, 9vh, 108px) !important;
+  padding-top: 68px !important;
 }
 
 .button--primary:is(:link, :visited, :hover, :focus-visible, :active) {
@@ -390,22 +391,7 @@ ${css}
   max-width: none !important;
 }
 
-@media (max-width: 820px) {
-  .site-header--portal + .health-site-main {
-    padding-top: 92px !important;
-  }
-}
-
 @media (max-width: 600px) {
-  .site-header--portal {
-    padding-top: 18px !important;
-    padding-bottom: 24px !important;
-  }
-
-  .health-site-main .hero {
-    padding-top: 120px !important;
-  }
-
   .site-footer {
     grid-template-columns: minmax(0, 1fr) !important;
     align-items: start !important;

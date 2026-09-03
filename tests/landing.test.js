@@ -162,13 +162,11 @@ test("client interaction script works when index.html is opened directly", () =>
     landing,
     /<script[^>]+type="module"[^>]+src="\.\/src\/app\.js"/,
   );
-  assert.match(app, /const HEADER_SCROLL_THRESHOLD = 24;/);
-  assert.match(app, /const HEADER_SCROLL_RESET_THRESHOLD = 4;/);
-  assert.match(app, /document\.querySelector\("\.site-header"\)/);
-  assert.doesNotMatch(app, /classList\.toggle\("site-header--scrolled", window\.scrollY > HEADER_SCROLL_THRESHOLD\)/);
-  assert.match(app, /if \(window\.scrollY > HEADER_SCROLL_THRESHOLD\) \{/);
-  assert.match(app, /if \(window\.scrollY <= HEADER_SCROLL_RESET_THRESHOLD\) \{/);
-  assert.match(app, /window\.addEventListener\("scroll", syncHeaderSurface, \{ passive: true \}\)/);
+  assert.match(app, /function installFocusTargetLinks\(\)/);
+  assert.doesNotMatch(
+    app,
+    /HEADER_SCROLL|installHeaderScrollState|site-header--scrolled|scrollY|addEventListener\("scroll"/,
+  );
 });
 
 test("header links to the five current landing sections", () => {
@@ -185,9 +183,9 @@ test("header links to the five current landing sections", () => {
   assert.doesNotMatch(header, /<!-- <span class="brand__name">Здоровье<\/span> -->/);
   assert.match(styles, /\.brand__prefix\s*\{[^}]*color: var\(--graphite\);/);
   assert.match(styles, /\.brand__name\s*\{[^}]*color: var\(--tiffany-dark\);/);
-  assert.match(styles, /\.brand__mark\s*\{[^}]*width: 52px;[^}]*height: 52px;/);
+  assert.match(styles, /\.brand__mark\s*\{[^}]*width: 44px;[^}]*height: 44px;/);
   assert.match(styles, /\.brand--footer \.brand__mark\s*\{[^}]*width: 44px;[^}]*height: 44px;/);
-  assert.match(styles, /@media \(max-width: 820px\)[\s\S]*?\.brand__mark\s*\{[^}]*width: 46px;[^}]*height: 46px;/);
+  assert.doesNotMatch(styles, /\.brand__mark\s*\{[^}]*width: (?:46|52)px;/);
   assert.match(header, /href="#first-route"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"[^>]*>С чего начать/);
   assert.match(header, /href="#simplicity"[^>]*style="color: #12686b !important; text-decoration-color: currentColor !important;"[^>]*>Простота/);
   assert.ok(
@@ -214,28 +212,20 @@ test("header links to the five current landing sections", () => {
   assert.doesNotMatch(styles, /\.site-header\s*\{[^}]*grid-template-columns: 1fr auto 1fr;/);
   assert.match(styles, /\.site-header\s*\{[^}]*grid-template-columns: auto minmax\(0, 1fr\);/);
   assert.match(styles, /\.site-nav\s*\{[^}]*justify-self: end;[^}]*justify-content: flex-end;[^}]*flex-wrap: wrap;/);
-  assert.doesNotMatch(styles, /\.site-header\s*\{[^}]*background: rgba\(255, 255, 255, 0\.88\);/);
-  assert.doesNotMatch(styles, /\.site-header\s*\{[^}]*background: rgba\(244, 251, 250, 0\.64\);/);
-  assert.doesNotMatch(styles, /\.site-header\s*\{[^}]*box-shadow:/);
   assert.match(
     styles,
-    /\.site-header\s*\{[^}]*background: transparent;[^}]*backdrop-filter: none;[^}]*border-bottom: 0;/,
+    /\.site-header\s*\{[^}]*padding: 12px var\(--page-pad\);[^}]*background: transparent;[^}]*backdrop-filter: none;[^}]*border-bottom: 0;/,
   );
   assert.match(
     styles,
-    /\.site-header::before\s*\{[^}]*left: 50%;[^}]*width: 100vw;[^}]*transform: translateX\(-50%\);[^}]*background: transparent;[^}]*border-bottom: 0;/,
+    /\.site-header::before\s*\{[^}]*left: 50%;[^}]*width: 100vw;[^}]*transform: translateX\(-50%\);[^}]*background: rgba\(244, 251, 250, 0\.78\);[^}]*backdrop-filter: blur\(14px\);[^}]*border-bottom: 1px solid rgba\(184, 223, 220, 0\.32\);/,
   );
-  assert.match(
-    styles,
-    /\.site-header--scrolled\s*\{[^}]*padding-block: 12px;/,
-  );
-  assert.match(
-    styles,
-    /\.site-header--scrolled::before\s*\{[^}]*background: rgba\(244, 251, 250, 0\.78\);[^}]*backdrop-filter: blur\(14px\);[^}]*border-bottom: 1px solid rgba\(184, 223, 220, 0\.32\);/,
-  );
-  assert.match(styles, /\.site-header--scrolled \.brand__mark\s*\{[^}]*width: 44px;[^}]*height: 44px;/);
-  assert.match(styles, /\.site-header--scrolled \.site-nav a\s*\{[^}]*min-height: 38px;/);
-  assert.match(styles, /\.site-header--scrolled \.site-nav__cta\s*\{[^}]*min-height: 36px;/);
+  assert.match(styles, /\.site-nav a\s*\{[^}]*min-height: 38px;/);
+  assert.match(styles, /\.site-nav__cta\s*\{[^}]*min-height: 36px;/);
+  assert.doesNotMatch(styles, /site-header--scrolled/);
+  assert.doesNotMatch(styles, /\.site-header\s*\{[^}]*transition:/);
+  assert.doesNotMatch(styles, /\.site-header::before\s*\{[^}]*transition:/);
+  assert.doesNotMatch(styles, /\.brand__mark\s*\{[^}]*transition:/);
   assert.match(
     styles,
     /\.site-nav__cta\s*\{[^}]*background: var\(--tiffany-deep\);[^}]*color: var\(--white\) !important;[^}]*border-radius: 999px;[^}]*transition:[^}]*transform 180ms ease;/,
@@ -811,7 +801,7 @@ test("mobile hero and footer use a compact two-row composition", () => {
   );
   assert.match(
     styles,
-    /@media \(max-width: 600px\)[\s\S]*?\.site-header\s*\{[^}]*padding-block: 16px;/,
+    /@media \(max-width: 600px\)[\s\S]*?\.site-header\s*\{[^}]*padding-block: 12px;/,
   );
   assert.match(
     styles,
