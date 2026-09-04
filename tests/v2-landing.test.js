@@ -384,23 +384,46 @@ test("simplicity becomes a native snap carousel with the four approved cards", (
 
   assert.match(
     simplicity,
-    /<div class="carousel"[^>]*tabindex="0"[^>]*role="region"[^>]*aria-label="[^"]+"[^>]*>/,
+    /<div\s+class="carousel"\s+id="simplicity-carousel"\s+data-carousel\s+tabindex="0"\s+role="region"\s+aria-label="[^"]+">/,
   );
   assert.match(
     simplicity,
-    /<\/ol>\s*<\/div>\s*<p class="carousel__closing">Всё это дополняет ваш портрет<\/p>/,
+    /class="carousel__status"[^>]*aria-live="polite"[^>]*>[\s\S]*?data-carousel-current>01<[\s\S]*?data-carousel-total>04</,
   );
-  assert.doesNotMatch(simplicity, /<button|autoplay|carousel__arrow/);
+  assert.match(
+    simplicity,
+    /<button\s+class="carousel__button"\s+type="button"\s+data-carousel-prev\s+aria-controls="simplicity-carousel"\s+aria-label="Предыдущая карточка"\s+disabled>/,
+  );
+  assert.match(
+    simplicity,
+    /<button\s+class="carousel__button"\s+type="button"\s+data-carousel-next\s+aria-controls="simplicity-carousel"\s+aria-label="Следующая карточка">/,
+  );
+  assert.match(
+    simplicity,
+    /<\/ol>\s*<\/div>[\s\S]*?<p class="carousel__closing">Всё это дополняет ваш портрет<\/p>/,
+  );
+  assert.doesNotMatch(simplicity, /autoplay|carousel__progress|carousel__pagination|data-carousel-dot|type="range"/);
 
   assert.match(
     styles,
-    /\.carousel\s*\{[^}]*overflow-x: auto;[^}]*scroll-snap-type: x mandatory;/,
+    /\.carousel\s*\{[^}]*overflow-x: auto;[^}]*scroll-snap-type: x mandatory;[^}]*scrollbar-width: none;/,
   );
-  assert.match(styles, /\.carousel__card\s*\{[^}]*scroll-snap-align: start;/);
+  assert.match(styles, /\.carousel::-webkit-scrollbar\s*\{[^}]*display: none;/);
+  assert.match(styles, /\.carousel__button\s*\{[^}]*width: 48px;[^}]*height: 48px;/);
+  assert.match(styles, /\.carousel__card\s*\{[^}]*width: clamp\(360px, 38vw, 510px\);[^}]*scroll-snap-align: start;/s);
   assert.match(styles, /\.carousel__track\s*\{[^}]*display: flex;/);
   assert.match(
     styles,
-    /@media \(max-width: 820px\)[\s\S]*?\.carousel__card\s*\{[^}]*flex:/,
+    /\.carousel__track::after\s*\{[^}]*content:\s*"";[^}]*flex:\s*0 0 calc\(100% - var\(--page-pad\) - var\(--carousel-card-width\)\);/s,
+    "the final card has enough trailing space to become the nearest active card",
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 820px\)[\s\S]*?\.carousel__card\s*\{[^}]*width: min\(80vw, 620px\);/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.carousel__card\s*\{[^}]*width: min\(86vw, 400px\);/,
   );
 });
 
@@ -651,6 +674,114 @@ function createFakeEnvironment({
     replaceStateCalls,
   };
 }
+
+test("v2 carousel controls move one card and keep status in sync", () => {
+  const source = readSource(v2AppUrl);
+  const sandbox = loadV2App(source);
+
+  assert.equal(typeof sandbox.clampCarouselIndex, "function");
+  assert.equal(typeof sandbox.findNearestCarouselIndex, "function");
+  assert.equal(typeof sandbox.installCarouselControls, "function");
+  assert.equal(sandbox.clampCarouselIndex(-1, 4), 0);
+  assert.equal(sandbox.clampCarouselIndex(8, 4), 3);
+  assert.equal(sandbox.findNearestCarouselIndex(530, [0, 520, 1040, 1560]), 1);
+
+  const createTarget = () => {
+    const handlers = {};
+    return {
+      handlers,
+      disabled: false,
+      attributes: new Map(),
+      addEventListener(type, handler) {
+        (handlers[type] ??= []).push(handler);
+      },
+      setAttribute(name, value) {
+        this.attributes.set(name, value);
+      },
+      removeAttribute(name) {
+        this.attributes.delete(name);
+      },
+    };
+  };
+
+  const cards = [24, 544, 1064, 1584].map((offsetLeft) => ({ offsetLeft }));
+  const carousel = createTarget();
+  carousel.scrollLeft = 0;
+  carousel.querySelectorAll = () => cards;
+  carousel.scrollCalls = [];
+  carousel.scrollTo = (options) => {
+    carousel.scrollCalls.push(options);
+    carousel.scrollLeft = options.left;
+    for (const handler of carousel.handlers.scroll ?? []) handler();
+  };
+
+  const previous = createTarget();
+  const next = createTarget();
+  const current = { textContent: "" };
+  const total = { textContent: "" };
+  const selectors = new Map([
+    ["[data-carousel]", carousel],
+    ["[data-carousel-prev]", previous],
+    ["[data-carousel-next]", next],
+    ["[data-carousel-current]", current],
+    ["[data-carousel-total]", total],
+  ]);
+  const document = {
+    querySelector: (selector) => selectors.get(selector) ?? null,
+    querySelectorAll: () => [],
+  };
+  const window = {
+    matchMedia: () => ({ matches: false }),
+    addEventListener() {},
+  };
+
+  sandbox.installCarouselControls(document, window);
+  assert.equal(current.textContent, "01");
+  assert.equal(total.textContent, "04");
+  assert.equal(previous.disabled, true);
+  assert.equal(next.disabled, false);
+
+
+  next.handlers.click[0]();
+  assert.deepEqual(
+    carousel.scrollCalls.map((call) => ({ ...call })),
+    [{ left: 520, behavior: "smooth" }],
+  );
+  assert.equal(current.textContent, "02");
+  assert.equal(previous.disabled, false);
+
+  const keyEvent = {
+    key: "ArrowLeft",
+    preventDefault() { keyEvent.defaultPrevented = true; },
+  };
+  carousel.handlers.keydown[0](keyEvent);
+  assert.ok(keyEvent.defaultPrevented);
+  assert.equal(carousel.scrollCalls.at(-1).left, 0);
+  assert.equal(current.textContent, "01");
+
+  const reducedCarousel = createTarget();
+  reducedCarousel.scrollLeft = 0;
+  reducedCarousel.querySelectorAll = () => cards;
+  reducedCarousel.scrollTo = (options) => { reducedCarousel.lastScroll = options; };
+  const reducedPrevious = createTarget();
+  const reducedNext = createTarget();
+  const reducedSelectors = new Map([
+    ["[data-carousel]", reducedCarousel],
+    ["[data-carousel-prev]", reducedPrevious],
+    ["[data-carousel-next]", reducedNext],
+    ["[data-carousel-current]", { textContent: "" }],
+    ["[data-carousel-total]", { textContent: "" }],
+  ]);
+  sandbox.installCarouselControls({
+    querySelector: (selector) => reducedSelectors.get(selector) ?? null,
+    querySelectorAll: () => Array.from({ length: 4 }, createTarget),
+  }, {
+    matchMedia: () => ({ matches: true }),
+    addEventListener() {},
+  });
+  reducedNext.handlers.click[0]();
+  assert.equal(reducedCarousel.lastScroll.behavior, "auto");
+});
 
 test("v2 app scrolls to the QR composition and moves focus without trapping it", () => {
   const source = readSource(v2AppUrl);
