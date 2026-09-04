@@ -650,6 +650,7 @@ img {
 
 .simplicity {
   display: flex;
+  width: min(100%, 1480px);
   flex-direction: column;
   padding: clamp(72px, 6vw, 96px) 0 clamp(48px, 5vw, 72px);
   background: var(--section-fog);
@@ -767,8 +768,11 @@ img {
 }
 
 .carousel {
-  --carousel-card-width: clamp(360px, 38vw, 510px);
-  --carousel-screenshot-height: 410px;
+  --carousel-card-width: clamp(510px, 42vw, 580px);
+  --carousel-screenshot-height: min(
+    480px,
+    calc((var(--carousel-card-width) - 94px) * 1.032)
+  );
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
@@ -805,8 +809,8 @@ img {
   flex: 0 0 auto;
   flex-direction: column;
   min-width: 0;
-  width: clamp(360px, 38vw, 510px);
-  min-height: 640px;
+  width: var(--carousel-card-width);
+  min-height: calc(var(--carousel-screenshot-height) + 230px);
   justify-content: space-between;
   gap: 30px;
   padding: clamp(28px, 2.8vw, 38px);

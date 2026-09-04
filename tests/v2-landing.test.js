@@ -410,12 +410,17 @@ test("simplicity becomes a native snap carousel with the four approved cards", (
     /\.carousel\s*\{[^}]*overflow-x: auto;[^}]*scroll-snap-type: x mandatory;[^}]*scrollbar-width: none;/,
   );
   assert.match(styles, /\.carousel::-webkit-scrollbar\s*\{[^}]*display: none;/);
+  assert.match(styles, /\.simplicity\s*\{[^}]*width: min\(100%, 1480px\);/s);
+  assert.match(
+    styles,
+    /\.carousel\s*\{[^}]*--carousel-card-width: clamp\(510px, 42vw, 580px\);[^}]*--carousel-screenshot-height: min\(\s*480px,\s*calc\(\(var\(--carousel-card-width\) - 94px\) \* 1\.032\)\s*\);/s,
+  );
   assert.match(styles, /\.carousel__button\s*\{[^}]*width: 48px;[^}]*height: 48px;[^}]*place-items: center;/s);
   assert.match(styles, /\.carousel__arrow\s*\{[^}]*width: 20px;[^}]*height: 14px;/s);
   assert.match(styles, /\.carousel__arrow::before\s*\{[^}]*top: 6px;[^}]*height: 2px;/s);
   assert.match(styles, /\.carousel__arrow::after\s*\{[^}]*transform: rotate\(45deg\);/s);
   assert.match(styles, /\.carousel__button--previous \.carousel__arrow\s*\{[^}]*transform: scaleX\(-1\);/s);
-  assert.match(styles, /\.carousel__card\s*\{[^}]*width: clamp\(360px, 38vw, 510px\);[^}]*scroll-snap-align: start;/s);
+  assert.match(styles, /\.carousel__card\s*\{[^}]*width: var\(--carousel-card-width\);[^}]*scroll-snap-align: start;/s);
   assert.match(
     styles,
     /\.carousel__visual\s*\{[^}]*height: var\(--carousel-screenshot-height\);[^}]*align-items: flex-end;/s,
