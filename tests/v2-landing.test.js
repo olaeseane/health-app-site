@@ -420,7 +420,11 @@ test("simplicity becomes a native snap carousel with the four approved cards", (
   assert.match(styles, /\.carousel__arrow::before\s*\{[^}]*top: 6px;[^}]*height: 2px;/s);
   assert.match(styles, /\.carousel__arrow::after\s*\{[^}]*transform: rotate\(45deg\);/s);
   assert.match(styles, /\.carousel__button--previous \.carousel__arrow\s*\{[^}]*transform: scaleX\(-1\);/s);
-  assert.match(styles, /\.carousel__card\s*\{[^}]*width: var\(--carousel-card-width\);[^}]*scroll-snap-align: start;/s);
+  assert.match(
+    styles,
+    /\.carousel__card\s*\{[^}]*width: var\(--carousel-card-width\);[^}]*border: 0;[^}]*background: #ffffff;[^}]*box-shadow: none;[^}]*scroll-snap-align: start;/s,
+    "carousel cards stay grouped but no longer add another border-and-shadow layer",
+  );
   assert.match(
     styles,
     /\.carousel__visual\s*\{[^}]*height: var\(--carousel-screenshot-height\);[^}]*align-items: flex-end;/s,
