@@ -422,8 +422,13 @@ test("simplicity becomes a native snap carousel with the four approved cards", (
   assert.match(styles, /\.carousel__button--previous \.carousel__arrow\s*\{[^}]*transform: scaleX\(-1\);/s);
   assert.match(
     styles,
-    /\.carousel__card\s*\{[^}]*width: var\(--carousel-card-width\);[^}]*border: 0;[^}]*background: #ffffff;[^}]*box-shadow: none;[^}]*scroll-snap-align: start;/s,
-    "carousel cards stay grouped but no longer add another border-and-shadow layer",
+    /\.carousel__card\s*\{[^}]*width: var\(--carousel-card-width\);[^}]*border: 0;[^}]*background: #f4fbfb;[^}]*box-shadow: none;[^}]*scroll-snap-align: start;/s,
+    "all carousel cards use the same flat background as the analyses card",
+  );
+  assert.doesNotMatch(
+    styles,
+    /\.carousel__card:nth-child\([^)]*\)\s*\{[^}]*background:/s,
+    "individual carousel cards must not override the shared background",
   );
   assert.match(
     styles,

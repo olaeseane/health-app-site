@@ -821,22 +821,10 @@ img {
   overflow: hidden;
   border: 0;
   border-radius: 30px;
-  background: #ffffff;
+  background: #f4fbfb;
   box-shadow: none;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-}
-
-.carousel__card:nth-child(2) {
-  background: #f4fbfb;
-}
-
-.carousel__card:nth-child(3) {
-  background: #eef8f7;
-}
-
-.carousel__card:nth-child(4) {
-  background: #f7faf9;
 }
 
 .carousel__copy {
