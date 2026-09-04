@@ -106,6 +106,14 @@ The v2 build should be deployable beneath the same Nginx-served domain as v1.
 The deployment must result in an `install/index.html` path beneath the active
 web root, while `/` continues to serve v1.
 
+GitHub Pages uses the same public layout. `npm run build:pages` composes only
+the ordinary artifacts into `dist-pages/`: v1 at the artifact root and v2
+beneath `dist-pages/install/`. The Pages workflow tests and rebuilds this tree
+from `main`; portal inline artifacts are excluded from the public artifact.
+The Pages-only composition adapts v1 root-relative download routes for the
+repository subpath and uses the approved external Android destination because
+the production `/download/` endpoint is not hosted by GitHub Pages.
+
 Use relative internal asset URLs that work beneath `/install/`. Test both the
 trailing-slash route `/install/` and Nginx behavior for `/install` before
 production rollout.
