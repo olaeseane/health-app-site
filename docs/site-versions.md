@@ -3,8 +3,9 @@
 ## Status
 
 This document records the approved architecture for maintaining two landing
-site variants in one repository. Version 1 exists today. Version 2 is approved
-in principle but has not been implemented yet.
+site variants in one repository. Version 1 exists today. Version 2, the
+install-focused landing, is implemented under `v2/` and builds independently
+into `dist-v2/`.
 
 ## Goals
 
@@ -41,19 +42,21 @@ commands.
 
 Version 2 is a separate install-focused experience.
 
-| Target | Planned source | Planned build output | Public route |
+| Target | Source | Build output | Public route |
 | --- | --- | --- | --- |
 | Ordinary web | `v2/index.html`, `v2/styles.css`, `v2/app.js` | `dist-v2/` | `/install/` |
-| Portal | v2-specific portal transform | `dist-v2/portal-inline-ascii.html` | Portal-managed |
+| Portal | `scripts/build-v2-portal-inline.mjs` | `dist-v2/portal-inline-ascii.html` | Portal-managed |
 
-Planned commands:
+Commands:
 
 ```sh
 npm run build:v2
 npm run build:v2:portal-inline
 ```
 
-These commands do not exist yet. Add them only when implementing version 2.
+Page content and presentation for v2 are governed by
+[`v2-install-landing-spec.md`](v2-install-landing-spec.md); this document
+governs architecture.
 
 ## Source and dependency boundaries
 
@@ -127,15 +130,15 @@ The ordinary v2 site uses the existing Yandex Metrika counter:
 ```
 
 Version 2 must use v2-specific goal IDs or labels so its conversions are not
-mixed with v1 conversions. Proposed IDs are:
+mixed with v1 conversions. The implemented IDs are:
 
 ```text
 v2_download_ios
 v2_download_android
 ```
 
-Confirm the final IDs with the person managing Yandex Metrika before wiring
-production events.
+The person managing Yandex Metrika must create the two JavaScript goals in the
+Metrika interface before production attribution is expected.
 
 The portal v2 artifact must not embed Yandex Metrika. If portal QR scans need
 conversion attribution, route them through approved ordinary-domain redirect
@@ -158,25 +161,30 @@ Do not overwrite `dist/portal-inline-ascii.html` when building portal v2.
 
 ## Testing requirements
 
-Add dedicated contracts when v2 is implemented, expected to include:
+Dedicated v2 contracts live in:
 
 ```text
 tests/v2-landing.test.js
+tests/v2-download-tracking.test.js
 tests/v2-portal-build.test.js
+tests/v2-portal-paths.test.js
 ```
 
-The implementation must verify:
+They verify:
 
 - v1 ordinary build remains unchanged;
 - v1 portal build remains unchanged;
 - v2 ordinary build outputs `dist-v2/`;
-- v2 is served correctly at `/install/`;
 - v2 contains `noindex, nofollow`;
 - v2 analytics use only approved v2 identifiers;
 - portal v2 contains no analytics code;
-- shared asset references resolve;
-- desktop and mobile layouts have no horizontal overflow;
-- keyboard focus, reduced motion, and 200% zoom remain usable.
+- shared asset references resolve beneath `/install/`;
+- portal asset resolution cannot escape `dist-v2/`;
+- keyboard focus and reduced-motion behavior follow the interaction contract.
+
+Browser QA separately verifies `/install/` routing, desktop and 390 px mobile
+layouts, keyboard carousel use, page overflow, CTA focus placement, failed
+resources, and usability at 200% zoom.
 
 ## Git workflow
 
