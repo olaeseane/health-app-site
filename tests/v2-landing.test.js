@@ -392,16 +392,17 @@ test("simplicity becomes a native snap carousel with the four approved cards", (
   );
   assert.match(
     simplicity,
-    /<button\s+class="carousel__button"\s+type="button"\s+data-carousel-prev\s+aria-controls="simplicity-carousel"\s+aria-label="Предыдущая карточка"\s+disabled>/,
+    /<button\s+class="carousel__button carousel__button--previous"\s+type="button"\s+data-carousel-prev\s+aria-controls="simplicity-carousel"\s+aria-label="Предыдущая карточка"\s+disabled><span class="carousel__arrow" aria-hidden="true"><\/span><\/button>/,
   );
   assert.match(
     simplicity,
-    /<button\s+class="carousel__button"\s+type="button"\s+data-carousel-next\s+aria-controls="simplicity-carousel"\s+aria-label="Следующая карточка">/,
+    /<button\s+class="carousel__button carousel__button--next"\s+type="button"\s+data-carousel-next\s+aria-controls="simplicity-carousel"\s+aria-label="Следующая карточка"><span class="carousel__arrow" aria-hidden="true"><\/span><\/button>/,
   );
   assert.match(
     simplicity,
-    /<\/ol>\s*<\/div>[\s\S]*?<p class="carousel__closing">Всё это дополняет ваш портрет<\/p>/,
+    /<h2[^>]*>[\s\S]*?Здоровье не нужно собирать вручную[\s\S]*?<\/h2>\s*<p class="simplicity__lead">Всё это дополняет ваш портрет<\/p>/,
   );
+  assert.doesNotMatch(simplicity, /carousel__footer|carousel__closing|>←<|>→</);
   assert.doesNotMatch(simplicity, /autoplay|carousel__progress|carousel__pagination|data-carousel-dot|type="range"/);
 
   assert.match(
@@ -409,8 +410,21 @@ test("simplicity becomes a native snap carousel with the four approved cards", (
     /\.carousel\s*\{[^}]*overflow-x: auto;[^}]*scroll-snap-type: x mandatory;[^}]*scrollbar-width: none;/,
   );
   assert.match(styles, /\.carousel::-webkit-scrollbar\s*\{[^}]*display: none;/);
-  assert.match(styles, /\.carousel__button\s*\{[^}]*width: 48px;[^}]*height: 48px;/);
+  assert.match(styles, /\.carousel__button\s*\{[^}]*width: 48px;[^}]*height: 48px;[^}]*place-items: center;/s);
+  assert.match(styles, /\.carousel__arrow\s*\{[^}]*width: 20px;[^}]*height: 14px;/s);
+  assert.match(styles, /\.carousel__arrow::before\s*\{[^}]*top: 6px;[^}]*height: 2px;/s);
+  assert.match(styles, /\.carousel__arrow::after\s*\{[^}]*transform: rotate\(45deg\);/s);
+  assert.match(styles, /\.carousel__button--previous \.carousel__arrow\s*\{[^}]*transform: scaleX\(-1\);/s);
   assert.match(styles, /\.carousel__card\s*\{[^}]*width: clamp\(360px, 38vw, 510px\);[^}]*scroll-snap-align: start;/s);
+  assert.match(
+    styles,
+    /\.carousel__visual\s*\{[^}]*height: var\(--carousel-screenshot-height\);[^}]*align-items: flex-end;/s,
+  );
+  assert.match(
+    styles,
+    /\.carousel__visual img\s*\{[^}]*width: auto;[^}]*height: var\(--carousel-screenshot-height\);[^}]*object-fit: contain;/s,
+  );
+  assert.doesNotMatch(styles, /\.carousel__visual--pair img:(?:first|last)-child\s*\{[^}]*transform:/s);
   assert.match(styles, /\.carousel__track\s*\{[^}]*display: flex;/);
   assert.match(
     styles,
