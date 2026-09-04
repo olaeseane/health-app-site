@@ -481,6 +481,11 @@ test("outcome section pairs the approved copy with the decorative character", ()
   );
   assert.match(
     styles,
+    /\.outcome \.button--primary\s*\{[^}]*background: var\(--tiffany-dark\);/,
+    "the outcome CTA uses the established green primary-button style",
+  );
+  assert.match(
+    styles,
     /@media \(max-width: 820px\)[\s\S]*?\.outcome\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\);/,
   );
 });
