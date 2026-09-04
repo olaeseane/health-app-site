@@ -251,8 +251,8 @@ test("hero uses the approved install copy with a focusable offset QR composition
   assert.match(hero, /Сканируйте QR-код/);
   assert.match(
     hero,
-    /<img\s+class="hero__qr-arrow"\s+src="\.\/public\/v2\/decorations\/qr-pair-arrow\.png"\s+width="176"\s+height="160"\s+alt=""\s+aria-hidden="true"\s*\/>/,
-    "the hero uses the approved curved decorative arrow",
+    /<img\s+class="hero__qr-arrow"\s+src="\.\/public\/v2\/decorations\/qr-pair-arrow\.png"\s+width="88"\s+height="64"\s+alt=""\s+aria-hidden="true"\s*\/>/,
+    "the hero uses the tightly cropped curved decorative arrow",
   );
   assert.match(
     styles,
@@ -261,23 +261,18 @@ test("hero uses the approved install copy with a focusable offset QR composition
   );
   assert.match(
     styles,
-    /\.hero__qr-arrow\s*{[^}]*position:\s*absolute;[^}]*left:\s*50%;[^}]*transform:\s*translateX\(-25px\);/s,
-    "the arrow tip is anchored to the midpoint between the QR cards",
+    /\.hero__qr-arrow\s*{[^}]*position:\s*absolute;[^}]*left:\s*50%;[^}]*top:\s*calc\(100% \+ 2px\);[^}]*width:\s*88px;[^}]*height:\s*64px;[^}]*transform:\s*translateX\(-8px\);/s,
+    "the cropped arrow starts below the instruction and targets the clear upper gap",
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 820px\)[\s\S]*?\.hero__qr-arrow\s*{[^}]*top:\s*calc\(100% - 3px\);/,
+    "the short arrow stays clear of both QR cards on tablet and mobile",
   );
   assert.match(
     styles,
     /@media \(max-width: 600px\)[\s\S]*?\.hero__qr-cards\s*{[^}]*gap:\s*34px;/,
     "narrow screens leave enough clear space around the centered arrowhead",
-  );
-  assert.match(
-    styles,
-    /@media \(max-width: 820px\)[\s\S]*?\.hero__qr-arrow\s*{[^}]*height:\s*149px;/,
-    "the tablet arrow targets the vertical midpoint of the staggered cards",
-  );
-  assert.match(
-    styles,
-    /@media \(max-width: 600px\)[\s\S]*?\.hero__qr-arrow\s*{[^}]*height:\s*calc\(20px \+ 26\.8vw\);/,
-    "the mobile arrow follows the responsive vertical midpoint of the QR pair",
   );
   assert.match(
     hero,
