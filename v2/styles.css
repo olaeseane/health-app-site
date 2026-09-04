@@ -446,9 +446,9 @@ img {
   position: absolute;
   left: 50%;
   top: calc(100% + 2px);
-  width: 176px;
-  height: 160px;
-  transform: translateX(-25px);
+  width: 88px;
+  height: 64px;
+  transform: translateX(-8px);
   pointer-events: none;
   user-select: none;
 }
@@ -1193,7 +1193,7 @@ img {
   }
 
   .hero__qr-arrow {
-    height: 149px;
+    top: calc(100% - 3px);
   }
 
   .hero__qr-card--android {
@@ -1297,10 +1297,6 @@ img {
 
   .hero__qr {
     margin-top: 36px;
-  }
-
-  .hero__qr-arrow {
-    height: calc(20px + 26.8vw);
   }
 
   .hero__qr-cards {
