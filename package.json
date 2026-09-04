@@ -8,6 +8,7 @@
     "build:portal-inline": "npm run build && node scripts/build-portal-inline.mjs",
     "build:v2": "node scripts/run-v2-build.mjs ordinary",
     "build:v2:portal-inline": "node scripts/run-v2-build.mjs portal-inline",
+    "build:pages": "npm run build && npm run build:v2 && node scripts/build-pages.mjs",
     "dev": "python3 -m http.server 4173 --bind 127.0.0.1",
     "test": "node --test --test-concurrency=1"
   }
