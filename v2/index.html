@@ -234,14 +234,24 @@
         id="simplicity"
         aria-labelledby="simplicity-title"
       >
-        <div class="section-heading simplicity__heading">
-          <p class="section-kicker">Простота использования</p>
-          <h2 id="simplicity-title" tabindex="-1">
-            Здоровье не нужно собирать вручную
-          </h2>
+        <div class="simplicity__header">
+          <div class="section-heading simplicity__heading">
+            <p class="section-kicker">Простота использования</p>
+            <h2 id="simplicity-title" tabindex="-1">
+              Здоровье не нужно собирать вручную
+            </h2>
+          </div>
+
+          <div class="carousel__toolbar" aria-label="Управление карточками">
+            <span class="carousel__status" aria-live="polite"><span data-carousel-current>01</span><span aria-hidden="true"> / </span><span data-carousel-total>04</span></span>
+            <div class="carousel__buttons">
+              <button class="carousel__button" type="button" data-carousel-prev aria-controls="simplicity-carousel" aria-label="Предыдущая карточка" disabled>←</button>
+              <button class="carousel__button" type="button" data-carousel-next aria-controls="simplicity-carousel" aria-label="Следующая карточка">→</button>
+            </div>
+          </div>
         </div>
 
-        <div class="carousel" tabindex="0" role="region" aria-label="Прокрутка карточек раздела «Простота использования»">
+        <div class="carousel" id="simplicity-carousel" data-carousel tabindex="0" role="region" aria-label="Прокрутка карточек раздела «Простота использования»">
           <ol class="carousel__track">
             <li class="carousel__card">
               <div class="carousel__copy">
@@ -336,7 +346,9 @@
           </ol>
         </div>
 
-        <p class="carousel__closing">Всё это дополняет ваш портрет</p>
+        <div class="carousel__footer">
+          <p class="carousel__closing">Всё это дополняет ваш портрет</p>
+        </div>
       </section>
 
       <section class="outcome" id="outcome" aria-labelledby="outcome-title">
