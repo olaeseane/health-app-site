@@ -9,8 +9,12 @@ navigator for the «Здоровье» application.
 - `src/styles.css` contains the visual system and responsive layouts;
   `src/app.js` owns task-screen interactions; `src/atlas.js` owns canonical
   route state.
-- `public/` contains the logo, local Manrope fonts, illustrations, and real
-  application screenshots.
+- `v2/` contains the isolated install-focused landing (`v2/index.html`,
+  `v2/styles.css`, `v2/app.js`, and `v2/go/` redirect pages) with content
+  governed by [`docs/v2-install-landing-spec.md`](docs/v2-install-landing-spec.md).
+- `public/` contains shared v1 assets: the logo, local Manrope fonts,
+  illustrations, and real application screenshots. V2-only QR, character, and
+  icon assets live under `v2/public/v2/` so v1 builds remain byte-isolated.
 - `tests/` contains Node-based state and observable landing-contract tests.
 - `PRODUCT.md` and `DESIGN.md` are the durable product and design-system
   sources. `docs/landing-content.md`, `docs/faq.md`, and
@@ -33,8 +37,12 @@ npm test
 
 - `npm run dev` serves the repository at `http://127.0.0.1:4173`.
 - `npm run build` recreates the deployable `dist/` directory.
-- `npm test` runs atlas-state and landing-contract tests with Node's built-in
-  test runner.
+- `npm run build:v2` recreates the deployable `dist-v2/` install landing
+  served beneath `/install/`.
+- `npm run build:v2:portal-inline` recreates the self-contained
+  `dist-v2/portal-inline-ascii.html` portal artifact.
+- `npm test` runs atlas-state and landing-contract tests for both site
+  versions with Node's built-in test runner.
 
 Before submit changes, run:
 
