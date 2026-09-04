@@ -227,6 +227,7 @@ test("v2 header navigation replaces integrations with the outcome anchor", () =>
 
 test("hero uses the approved install copy with a focusable offset QR composition", () => {
   const landing = readSource(v2IndexUrl);
+  const styles = readSource(v2StylesUrl);
   const hero = sectionOf(landing, "top");
 
   assert.ok(hero);
@@ -248,6 +249,36 @@ test("hero uses the approved install copy with a focusable offset QR composition
     /<[^>]*\bid="download-qr"[^>]*tabindex="-1"/,
   );
   assert.match(hero, /Сканируйте QR-код/);
+  assert.match(
+    hero,
+    /<img\s+class="hero__qr-arrow"\s+src="\.\/public\/v2\/decorations\/qr-pair-arrow\.png"\s+width="176"\s+height="160"\s+alt=""\s+aria-hidden="true"\s*\/>/,
+    "the hero uses the approved curved decorative arrow",
+  );
+  assert.match(
+    styles,
+    /\.hero__qr-intro\s*{[^}]*position:\s*relative;[^}]*width:\s*min\(100%,\s*430px\);[^}]*justify-content:\s*flex-end;/s,
+    "the instruction is aligned over the QR pair",
+  );
+  assert.match(
+    styles,
+    /\.hero__qr-arrow\s*{[^}]*position:\s*absolute;[^}]*left:\s*50%;[^}]*transform:\s*translateX\(-25px\);/s,
+    "the arrow tip is anchored to the midpoint between the QR cards",
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.hero__qr-cards\s*{[^}]*gap:\s*34px;/,
+    "narrow screens leave enough clear space around the centered arrowhead",
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 820px\)[\s\S]*?\.hero__qr-arrow\s*{[^}]*height:\s*149px;/,
+    "the tablet arrow targets the vertical midpoint of the staggered cards",
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.hero__qr-arrow\s*{[^}]*height:\s*calc\(20px \+ 26\.8vw\);/,
+    "the mobile arrow follows the responsive vertical midpoint of the QR pair",
+  );
   assert.match(
     hero,
     /href="\.\/go\/ios\/"[^>]*>[\s\S]*?src="\.\/public\/v2\/download\/ios-qr\.png"[^>]*?width="160"[^>]*?height="160"/,
@@ -518,7 +549,8 @@ test("download section keeps the supporting line and v2 redirect routes aligned"
   assert.match(styles, /\.download-option__code\s*\{[^}]*width: 188px;[^}]*padding: 14px;/);
   assert.match(
     styles,
-    /@media \(max-width: 600px\)[\s\S]*?\.hero__qr-link,[\s\S]*?\.download-option__code\s*\{[^}]*width: 160px;[^}]*padding: 0;/,
+    /@media \(max-width: 600px\)[\s\S]*?\.hero__qr-link,[\s\S]*?\.download-option__code\s*\{[^}]*width: min\(100%, 160px\);[^}]*padding: 0;/,
+    "mobile QR cards shrink below 160px instead of overlapping",
   );
   assert.match(
     download,

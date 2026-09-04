@@ -427,9 +427,11 @@ img {
 
 .hero__qr-intro {
   display: flex;
+  position: relative;
+  width: min(100%, 430px);
+  justify-content: flex-end;
   align-items: center;
-  gap: 12px;
-  margin: 0 0 18px 8px;
+  margin: 0 0 18px;
 }
 
 .hero__qr-instruction {
@@ -441,12 +443,14 @@ img {
 }
 
 .hero__qr-arrow {
-  width: 13px;
-  height: 13px;
-  border-right: 3px solid var(--tiffany-dark);
-  border-bottom: 3px solid var(--tiffany-dark);
-  border-radius: 0 0 3px 0;
-  transform: rotate(45deg) translateY(-2px);
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 2px);
+  width: 176px;
+  height: 160px;
+  transform: translateX(-25px);
+  pointer-events: none;
+  user-select: none;
 }
 
 .hero__qr-cards {
@@ -1188,6 +1192,10 @@ img {
     margin: 42px auto 0;
   }
 
+  .hero__qr-arrow {
+    height: 149px;
+  }
+
   .hero__qr-card--android {
     margin-top: 56px;
   }
@@ -1291,8 +1299,12 @@ img {
     margin-top: 36px;
   }
 
+  .hero__qr-arrow {
+    height: calc(20px + 26.8vw);
+  }
+
   .hero__qr-cards {
-    gap: 18px;
+    gap: 34px;
   }
 
   .hero__qr-card--android {
@@ -1301,7 +1313,7 @@ img {
 
   .hero__qr-link,
   .download-option__code {
-    width: 160px;
+    width: min(100%, 160px);
     padding: 0;
   }
 
