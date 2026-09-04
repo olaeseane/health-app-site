@@ -395,6 +395,10 @@ img {
   background: var(--tiffany-dark);
 }
 
+.outcome .button--primary {
+  background: var(--tiffany-dark);
+}
+
 .button--primary:hover {
   background: var(--tiffany-deep);
   box-shadow: 0 16px 34px rgba(18, 104, 107, 0.24);
