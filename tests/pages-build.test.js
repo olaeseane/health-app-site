@@ -63,7 +63,8 @@ test("Pages workflow validates and deploys the combined ordinary build", () => {
     workflow,
     /deploy:\s*\n\s*permissions:\s*\n\s*pages:\s*write\s*\n\s*id-token:\s*write/,
   );
-  assert.match(workflow, /run:\s*npm test/);
+  assert.match(workflow, /run:\s*node --test tests\/pages-build\.test\.js/);
+  assert.doesNotMatch(workflow, /run:\s*npm test/);
   assert.match(workflow, /run:\s*npm run build:pages/);
   assert.match(workflow, /actions\/checkout@v7/);
   assert.match(workflow, /actions\/setup-node@v7/);
