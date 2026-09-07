@@ -201,7 +201,8 @@ test("v2 header navigation replaces integrations with the outcome anchor", () =>
   assert.match(header, /<div class="brand" aria-label="Здоровье">/);
   assert.match(header, /href="#first-route"[^>]*>С чего начать<\/a>/);
   assert.match(header, /href="#simplicity"[^>]*>Простота<\/a>/);
-  assert.match(header, /href="#outcome"[^>]*>Что в итоге\?<\/a>/);
+  assert.match(header, /href="#outcome"[^>]*>Выгода<\/a>/);
+  assert.doesNotMatch(header, /href="#outcome"[^>]*>Что в итоге\?<\/a>/);
   assert.match(header, /href="#privacy"[^>]*>Анонимность<\/a>/);
   assert.ok(
     header.indexOf('href="#first-route"') <
@@ -237,8 +238,9 @@ test("hero uses the approved install copy with a focusable offset QR composition
   );
   assert.match(
     hero,
-    /Предикс\.Здоровье собирает данные о питании, активности, анализах и привычках в единый портрет здоровья и помогает понять, что делать дальше/,
+    /Предикс\.Здоровье формирует данные о питании, активности, анализах и привычках в единый портрет здоровья и помогает понять, что делать дальше/,
   );
+  assert.doesNotMatch(hero, /Предикс\.Здоровье собирает данные о питании/);
   assert.equal((hero.match(/class="button\b/g) ?? []).length, 1);
   assert.match(
     hero,
@@ -294,8 +296,8 @@ test("hero uses the approved install copy with a focusable offset QR composition
   )?.[1];
   assert.ok(advantages);
   assert.equal((advantages.match(/<li\b/g) ?? []).length, 3);
+  assert.match(advantages, /<span>Используйте<br \/>анонимно<\/span>/);
   for (const text of [
-    "Используйте анонимно",
     "Ваши данные под вашим контролем",
     "Начните с минимума информации",
   ]) {
