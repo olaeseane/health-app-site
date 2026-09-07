@@ -1046,38 +1046,6 @@ img {
   place-items: center;
 }
 
-.download-section__route {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.download-section__route::before {
-  position: absolute;
-  top: 42%;
-  left: 50%;
-  width: 92%;
-  height: 170px;
-  transform: translate(-50%, -50%) rotate(-5deg);
-  border-top: 4px solid var(--line);
-  border-radius: 50%;
-  content: "";
-}
-
-.download-section__route::after {
-  position: absolute;
-  top: calc(42% - 5px);
-  left: 4%;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--tiffany-dark);
-  box-shadow: 470px 12px 0 var(--tiffany-dark);
-  content: "";
-}
-
 .download-options {
   position: relative;
   z-index: 1;
@@ -1517,10 +1485,6 @@ img {
 
   .download-option__code {
     border-radius: 14px;
-  }
-
-  .download-section__route {
-    display: none;
   }
 
   .site-footer {
