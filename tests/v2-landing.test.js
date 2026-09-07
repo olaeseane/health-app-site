@@ -497,7 +497,7 @@ test("outcome section pairs the approved copy with the decorative character", ()
   const outcome = sectionOf(landing, "outcome");
 
   assert.ok(outcome);
-  assert.match(outcome, /<p class="section-kicker">Что в итоге\?<\/p>/);
+  assert.match(outcome, /<p class="section-kicker">Выгода<\/p>/);
   assert.match(
     outcome,
     /<h2 id="outcome-title">\s*Не просто данные, а понимание, что делать дальше\s*<\/h2>/,
