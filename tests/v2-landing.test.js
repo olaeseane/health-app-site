@@ -402,9 +402,25 @@ test("simplicity becomes a native snap carousel with the four approved cards", (
   );
   assert.match(
     simplicity,
-    /<h2[^>]*>[\s\S]*?Здоровье не нужно собирать вручную[\s\S]*?<\/h2>\s*<p class="simplicity__lead">Всё это дополняет ваш портрет<\/p>/,
+    /<h2[^>]*>[\s\S]*?Здоровье не нужно собирать вручную[\s\S]*?<\/h2>/,
   );
-  assert.doesNotMatch(simplicity, /carousel__footer|carousel__closing|>←<|>→</);
+  assert.doesNotMatch(simplicity, /class="simplicity__lead"/);
+  const carouselFooter = simplicity.match(
+    /<div class="carousel__footer">([\s\S]*)$/,
+  )?.[1];
+  assert.ok(carouselFooter);
+  assert.match(
+    carouselFooter,
+    /<p class="carousel__closing"><span class="carousel__closing-rule" aria-hidden="true"><\/span><span>Всё это дополняет ваш портрет<\/span><\/p>/,
+  );
+  assert.match(carouselFooter, /class="carousel__toolbar"/);
+  assert.equal((simplicity.match(/class="carousel__toolbar"/g) ?? []).length, 1);
+  assert.ok(
+    simplicity.indexOf('class="carousel__footer"') >
+      simplicity.indexOf('id="simplicity-carousel"'),
+    "the closing line and controls must follow the horizontal carousel",
+  );
+  assert.doesNotMatch(simplicity, />←<|>→</);
   assert.doesNotMatch(simplicity, /autoplay|carousel__progress|carousel__pagination|data-carousel-dot|type="range"/);
 
   assert.match(
@@ -442,6 +458,18 @@ test("simplicity becomes a native snap carousel with the four approved cards", (
   );
   assert.doesNotMatch(styles, /\.carousel__visual--pair img:(?:first|last)-child\s*\{[^}]*transform:/s);
   assert.match(styles, /\.carousel__track\s*\{[^}]*display: flex;/);
+  assert.match(
+    styles,
+    /\.carousel__footer\s*\{[^}]*display: flex;[^}]*align-items: center;[^}]*justify-content: space-between;[^}]*padding-inline: var\(--page-pad\);/s,
+  );
+  assert.match(
+    styles,
+    /\.carousel__closing-rule\s*\{[^}]*width: 42px;[^}]*height: 2px;[^}]*background: var\(--tiffany-dark\);/s,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 600px\)[\s\S]*?\.carousel__footer\s*\{[^}]*flex-direction: column;[^}]*align-items: stretch;/,
+  );
   assert.match(
     styles,
     /\.carousel__track::after\s*\{[^}]*content:\s*"";[^}]*flex:\s*0 0 calc\(100% - var\(--page-pad\) - var\(--carousel-card-width\)\);/s,
