@@ -600,6 +600,16 @@ img {
   list-style: none;
 }
 
+.first-route__actions {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(36px, 3vw, 48px);
+}
+
+.first-route .button--primary {
+  background: var(--tiffany-dark);
+}
+
 .first-route__grid::before {
   position: absolute;
   top: 21px;
