@@ -278,12 +278,14 @@ test("hero uses the approved install copy with a focusable offset QR composition
   );
   assert.match(
     hero,
-    /href="\.\/go\/ios\/"[^>]*>[\s\S]*?src="\.\/public\/v2\/download\/ios-qr\.png"[^>]*?width="160"[^>]*?height="160"/,
+    /<div class="hero__qr-code">\s*<img\s+src="\.\/public\/v2\/download\/ios-qr\.png"[^>]*?width="160"[^>]*?height="160"/,
   );
   assert.match(
     hero,
-    /href="\.\/go\/android\/"[^>]*>[\s\S]*?src="\.\/public\/v2\/download\/android-qr\.png"[^>]*?width="160"[^>]*?height="160"/,
+    /<div class="hero__qr-code">\s*<img\s+src="\.\/public\/v2\/download\/android-qr\.png"[^>]*?width="160"[^>]*?height="160"/,
   );
+  assert.doesNotMatch(hero, /<a[^>]*class="hero__qr-(?:link|code)"/);
+  assert.doesNotMatch(hero, /href="\.\/go\/(?:ios|android)\/"/);
   assert.match(hero, /<strong>iPhone<\/strong>/);
   assert.match(hero, /<strong>Android<\/strong>/);
   assert.ok(
@@ -655,25 +657,28 @@ test("download section keeps the supporting line and v2 redirect routes aligned"
   assert.match(styles, /\.download-option__code\s*\{[^}]*width: 188px;[^}]*padding: 14px;/);
   assert.match(
     styles,
-    /@media \(max-width: 600px\)[\s\S]*?\.hero__qr-link,[\s\S]*?\.download-option__code\s*\{[^}]*width: min\(100%, 160px\);[^}]*padding: 0;/,
+    /@media \(max-width: 600px\)[\s\S]*?\.hero__qr-code,[\s\S]*?\.download-option__code\s*\{[^}]*width: min\(100%, 160px\);[^}]*padding: 0;/,
     "mobile QR cards shrink below 160px instead of overlapping",
   );
+  assert.doesNotMatch(styles, /hero__qr-link|download-option__link/);
   assert.match(
     download,
-    /href="\.\/go\/ios\/"[^>]*aria-label="[^"]+"\s*>\s*<img\s[^\n]*src="\.\/public\/v2\/download\/ios-qr\.png"/,
+    /<div class="download-option__code">\s*<img\s[^\n]*src="\.\/public\/v2\/download\/ios-qr\.png"/,
   );
   assert.match(
     download,
-    /href="\.\/go\/android\/"[^>]*aria-label="[^"]+"\s*>\s*<img\s[^\n]*src="\.\/public\/v2\/download\/android-qr\.png"/,
+    /<div class="download-option__code">\s*<img\s[^\n]*src="\.\/public\/v2\/download\/android-qr\.png"/,
   );
   assert.match(
     download,
-    /class="download-option__link"\s+href="\.\/go\/ios\/"[^>]*>\s*Скачать iOS\s*<\/a>/,
+    /<span class="download-option__label">iOS<\/span>/,
   );
   assert.match(
     download,
-    /class="download-option__link"\s+href="\.\/go\/android\/"[^>]*>\s*Скачать Android\s*<\/a>/,
+    /<span class="download-option__label">Android<\/span>/,
   );
+  assert.doesNotMatch(download, /<a\b/);
+  assert.doesNotMatch(download, /Скачать (?:iOS|Android)/);
   assert.doesNotMatch(download, /href="\/go\//);
   assert.doesNotMatch(download, /Ссылка появится позже/);
 });

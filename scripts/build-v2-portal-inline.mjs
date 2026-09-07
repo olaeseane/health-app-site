@@ -242,39 +242,6 @@ function addPortalDocumentationLink(html) {
   );
 }
 
-function escapeRegExp(text) {
-  return text.replaceAll(".", "\\.").replaceAll("/", "\\/");
-}
-
-function unwrapHeroQrLinks(html) {
-  return html.replace(
-    /<a\s+class="hero__qr-link"\s+href="\.\/go\/(?:ios|android)\/"\s+aria-label="[^"]+"\s*>\s*(<img\s[\s\S]*?\/>)\s*<\/a>/g,
-    '<div class="hero__qr-link">\n                $1\n              </div>',
-  );
-}
-
-function restorePortalDownloadPresentation(html) {
-  const platforms = [
-    ["./go/ios/", "iOS", "Скачать iOS"],
-    ["./go/android/", "Android", "Скачать Android"],
-  ];
-
-  for (const [href, label, buttonText] of platforms) {
-    html = html.replace(
-      new RegExp(
-        `<a\\s+class="download-option__code"\\s+href="${escapeRegExp(href)}"\\s+aria-label="[^"]+"\\s*>\\s*(<img\\s[\\s\\S]*?\\/>)\\s*<\\/a>`,
-      ),
-      '<div class="download-option__code">\n                $1\n              </div>',
-    );
-    html = html.replace(
-      `<figcaption>\n                <a\n                  class="download-option__link"\n                  href="${href}"\n                >\n                  ${buttonText}\n                </a>\n              </figcaption>`,
-      `<figcaption>\n                <strong>${label}</strong>\n              </figcaption>`,
-    );
-  }
-
-  return html;
-}
-
 function withPortalCssOverrides(css) {
   return `#wrapper #header,
 .breadcrumbs,
@@ -364,12 +331,11 @@ html {
   outline-offset: 3px !important;
 }
 
-.hero__qr-link,
+.hero__qr-code,
 .download-option__code {
   cursor: default !important;
 }
 
-.hero__qr-link:hover,
 .download-option__code:hover {
   transform: none !important;
 }
@@ -432,8 +398,6 @@ async function buildPortalInline() {
   html = removePortalSkipLink(html);
   html = addPortalHeaderClass(html);
   html = addPortalDocumentationLink(html);
-  html = unwrapHeroQrLinks(html);
-  html = restorePortalDownloadPresentation(html);
   html = await inlineHtmlAssetUrls(html);
   html = html.replaceAll(
     /\n\s*<link\s+rel="preload"[\s\S]*?\/>/g,
