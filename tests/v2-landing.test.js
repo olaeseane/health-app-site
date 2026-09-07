@@ -518,7 +518,7 @@ test("outcome section pairs the approved copy with the decorative character", ()
   assert.doesNotMatch(outcome, /robot\.svg|<svg/);
   assert.match(
     styles,
-    /\.outcome\s*\{[^}]*display: grid;[^}]*grid-template-columns:/,
+    /\.outcome\s*\{[^}]*display: grid;[^}]*width: 100%;[^}]*grid-template-columns:/,
   );
   assert.match(
     styles,
