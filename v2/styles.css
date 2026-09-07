@@ -817,13 +817,13 @@ img {
 }
 
 .carousel__closing {
-  align-self: center;
+  align-self: flex-start;
   margin: 0;
   color: var(--graphite-soft);
   font-size: clamp(1rem, 1.25vw, 1.12rem);
   font-weight: 700;
   line-height: 1.45;
-  text-align: center;
+  text-align: left;
 }
 
 .carousel__footer .carousel__toolbar {
