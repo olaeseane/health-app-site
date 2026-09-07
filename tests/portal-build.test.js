@@ -41,6 +41,10 @@ test("portal inline build optimizes screenshot assets before inlining", async ()
     asciiPortalHtml,
     /mc\.yandex\.ru|ym\(112104449|Yandex\.Metrika counter/,
   );
+  assert.doesNotMatch(
+    asciiPortalHtml,
+    /survey-invite|forms\.yandex\.ru|&#1055;&#1088;&#1086;&#1081;&#1090;&#1080; &#1086;&#1087;&#1088;&#1086;&#1089;/,
+  );
   assert.match(asciiPortalHtml, /class="brand__wordmark"/);
   assert.match(asciiPortalHtml, /&#1055;&#1088;&#1077;&#1076;&#1080;&#1082;&#1089;/);
   assert.match(asciiPortalHtml, /&#1047;&#1076;&#1086;&#1088;&#1086;&#1074;&#1100;&#1077;/);
