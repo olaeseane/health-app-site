@@ -77,11 +77,13 @@ test("build:v2:portal-inline emits one ASCII-safe self-contained artifact under 
   assert.doesNotMatch(html, /skip-link/);
 
   assert.equal((html.match(/<a\s+class="hero__qr-link"/g) ?? []).length, 0);
-  assert.equal((html.match(/<div class="hero__qr-link">/g) ?? []).length, 2);
+  assert.equal((html.match(/<div class="hero__qr-code">/g) ?? []).length, 2);
   assert.equal((html.match(/<a\s+class="download-option__code"/g) ?? []).length, 0);
   assert.equal((html.match(/<div class="download-option__code">/g) ?? []).length, 2);
   assert.equal((html.match(/class="download-option__link"/g) ?? []).length, 0);
   assert.doesNotMatch(html, /&#1057;&#1082;&#1072;&#1095;&#1072;&#1090;&#1100; (?:iOS|Android)/);
+  assert.match(html, /<span class="download-option__label">iOS<\/span>/);
+  assert.match(html, /<span class="download-option__label">Android<\/span>/);
   assert.match(html, /<strong>iPhone<\/strong>/);
   assert.match(html, /<strong>Android<\/strong>/);
   assert.doesNotMatch(html, /href="\.\.\/go\//);

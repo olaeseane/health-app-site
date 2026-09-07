@@ -124,11 +124,14 @@ test("v2 redirect pages send distinct v2 goals and keep the approved destination
   assert.match(redirectStyles, /a\s*\{[^}]*margin-top: 28px;/);
 });
 
-test("v2 landing QR codes and buttons share one platform goal per platform", () => {
+test("v2 landing keeps platform routes inside scan-only QR images", () => {
   const landing = readFileSync(new URL("v2/index.html", root), "utf8");
 
-  assert.equal((landing.match(/href="\.\/go\/ios\/"/g) ?? []).length, 3);
-  assert.equal((landing.match(/href="\.\/go\/android\/"/g) ?? []).length, 3);
+  assert.equal((landing.match(/href="\.\/go\/ios\/"/g) ?? []).length, 0);
+  assert.equal((landing.match(/href="\.\/go\/android\/"/g) ?? []).length, 0);
+  assert.equal((landing.match(/class="hero__qr-code"/g) ?? []).length, 2);
+  assert.equal((landing.match(/class="download-option__code"/g) ?? []).length, 2);
+  assert.doesNotMatch(landing, /<a[^>]*>\s*<img[^>]*-qr\.png/);
   assert.doesNotMatch(landing, /href="https:\/\/testflight\.apple\.com|href="https:\/\/predix-health\.ru\/download\//);
   assert.doesNotMatch(landing, /v2_download_ios|v2_download_android/);
 });
