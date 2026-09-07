@@ -627,7 +627,7 @@ test("first-route, privacy and footer carry the v1 contracts into v2", () => {
   );
 });
 
-test("download section keeps the supporting line and v2 redirect routes aligned", () => {
+test("download section keeps scan-only QR options without a decorative route", () => {
   const landing = readSource(v2IndexUrl);
   const styles = readSource(v2StylesUrl);
   const download = sectionOf(landing, "download");
@@ -647,13 +647,8 @@ test("download section keeps the supporting line and v2 redirect routes aligned"
   assert.doesNotMatch(download, /знаете о себе<\./);
 
   assert.equal((download.match(/class="download-option"/g) ?? []).length, 2);
-  assert.match(
-    download,
-    /<span class="download-section__route" aria-hidden="true"><\/span>/,
-  );
-  assert.match(styles, /\.download-section__route\s*\{[^}]*position: absolute;/);
-  assert.match(styles, /\.download-section__route::before[\s\S]*?border-top:/);
-  assert.match(styles, /\.download-section__route::after[\s\S]*?box-shadow: 470px 12px 0 var\(--tiffany-dark\);/);
+  assert.doesNotMatch(download, /download-section__route/);
+  assert.doesNotMatch(styles, /\.download-section__route/);
   assert.match(styles, /\.download-option__code\s*\{[^}]*width: 188px;[^}]*padding: 14px;/);
   assert.match(
     styles,
