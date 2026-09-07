@@ -506,10 +506,29 @@ test("first-route, privacy and footer carry the v1 contracts into v2", () => {
   const styles = readSource(v2StylesUrl);
   const v1Landing = readSource(new URL("index.html", root));
 
+  const firstRoute = sectionOf(landing, "first-route");
+  assert.ok(firstRoute);
+  assert.match(
+    firstRoute,
+    /<div class="first-route__actions">\s*<a\s+class="button button--primary"\s+href="#download-qr"\s+data-focus-target="download-qr"\s*>\s*Скачать Предикс\.Здоровье\s*<\/a>\s*<\/div>/,
+  );
+  assert.match(
+    styles,
+    /\.first-route__actions\s*\{[^}]*display: flex;[^}]*justify-content: center;[^}]*margin-top:/s,
+  );
+  assert.match(
+    styles,
+    /\.first-route \.button--primary\s*\{[^}]*background: var\(--tiffany-dark\);/,
+  );
   assert.equal(
-    normalizeWhitespace(sectionOf(landing, "first-route")),
+    normalizeWhitespace(
+      firstRoute.replace(
+        /<div class="first-route__actions">[\s\S]*?<\/div>/,
+        "",
+      ),
+    ),
     normalizeWhitespace(sectionOf(v1Landing, "first-route")),
-    "first-route must be carried over unchanged",
+    "first-route must preserve the v1 content apart from the approved v2 CTA",
   );
 
   const v2Footer = normalizeWhitespace(
