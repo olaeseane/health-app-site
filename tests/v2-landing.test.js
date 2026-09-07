@@ -465,7 +465,7 @@ test("simplicity becomes a native snap carousel with the four approved cards", (
   );
   assert.match(
     styles,
-    /\.carousel__closing\s*\{[^}]*align-self: center;[^}]*text-align: center;/s,
+    /\.carousel__closing\s*\{[^}]*align-self: flex-start;[^}]*text-align: left;/s,
   );
   assert.match(
     styles,
