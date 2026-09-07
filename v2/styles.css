@@ -817,23 +817,11 @@ img {
 }
 
 .carousel__closing {
-  display: flex;
-  align-items: center;
-  gap: 14px;
   margin: 0;
   color: var(--graphite-soft);
   font-size: clamp(1rem, 1.25vw, 1.12rem);
   font-weight: 700;
   line-height: 1.45;
-}
-
-.carousel__closing-rule {
-  display: block;
-  width: 42px;
-  height: 2px;
-  flex: 0 0 42px;
-  border-radius: 999px;
-  background: var(--tiffany-dark);
 }
 
 .carousel__card {

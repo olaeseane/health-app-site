@@ -411,8 +411,9 @@ test("simplicity becomes a native snap carousel with the four approved cards", (
   assert.ok(carouselFooter);
   assert.match(
     carouselFooter,
-    /<p class="carousel__closing"><span class="carousel__closing-rule" aria-hidden="true"><\/span><span>Всё это дополняет ваш портрет<\/span><\/p>/,
+    /<p class="carousel__closing">Всё это дополняет ваш портрет<\/p>/,
   );
+  assert.doesNotMatch(carouselFooter, /carousel__closing-rule/);
   assert.match(carouselFooter, /class="carousel__toolbar"/);
   assert.equal((simplicity.match(/class="carousel__toolbar"/g) ?? []).length, 1);
   assert.ok(
@@ -462,10 +463,7 @@ test("simplicity becomes a native snap carousel with the four approved cards", (
     styles,
     /\.carousel__footer\s*\{[^}]*display: flex;[^}]*align-items: center;[^}]*justify-content: space-between;[^}]*padding-inline: var\(--page-pad\);/s,
   );
-  assert.match(
-    styles,
-    /\.carousel__closing-rule\s*\{[^}]*width: 42px;[^}]*height: 2px;[^}]*background: var\(--tiffany-dark\);/s,
-  );
+  assert.doesNotMatch(styles, /\.carousel__closing-rule\s*\{/);
   assert.match(
     styles,
     /@media \(max-width: 600px\)[\s\S]*?\.carousel__footer\s*\{[^}]*flex-direction: column;[^}]*align-items: stretch;/,
