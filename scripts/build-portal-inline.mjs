@@ -227,6 +227,20 @@ function removePortalMetrika(html) {
   );
 }
 
+function removeOrdinarySurveyInvite(html) {
+  return html.replace(
+    /\n\s*<section\s+class="survey-invite"[\s\S]*?<\/section>\n/,
+    "\n",
+  );
+}
+
+function removeOrdinarySurveyStyles(css) {
+  return css.replaceAll(
+    /\n\s*\/\* ordinary-survey-start \*\/[\s\S]*?\/\* ordinary-survey-end \*\/\n/g,
+    "\n",
+  );
+}
+
 function addPortalInlineTaskHandlers(html) {
   return html
     .replace(/(<li class="task-item[^"]*" data-task-item="([^"]+)")/g, (_, prefix, taskId) => {
@@ -418,7 +432,9 @@ async function buildPortalInline() {
   let html = await readFile(new URL("index.html", projectRoot), "utf8");
   const css = withPortalCssOverrides(
     await inlineCssUrls(
-      await readFile(new URL("src/styles.css", projectRoot), "utf8"),
+      removeOrdinarySurveyStyles(
+        await readFile(new URL("src/styles.css", projectRoot), "utf8"),
+      ),
     ),
   );
   const js = await inlineAppAssetUrls(
@@ -427,6 +443,7 @@ async function buildPortalInline() {
 
   html = removePortalMetrika(html);
   html = removePortalSkipLink(html);
+  html = removeOrdinarySurveyInvite(html);
   html = addPortalHeaderClass(html);
   html = addPortalDocumentationLink(html);
   html = restorePortalQrOnlyPresentation(html);

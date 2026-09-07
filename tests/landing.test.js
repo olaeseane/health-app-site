@@ -287,8 +287,34 @@ test("ordinary web footer omits the portal-only documentation link", () => {
   assert.match(styles, /\.site-footer p\s*\{[^}]*font-size: 0\.74rem;/);
 });
 
+test("ordinary v1 invites visitors to take the survey before the footer", () => {
+  const survey = section("survey");
+  const surveyUrl = "https://forms.yandex.ru/cloud/6a99299a84227c2b28bb9b76/";
+
+  assert.ok(survey);
+  assert.match(survey, /<p class="section-kicker">Опрос<\/p>/);
+  assert.match(survey, /<h2 id="survey-title">Помогите сделать приложение удобнее<\/h2>/);
+  assert.match(
+    survey,
+    /<p class="survey-invite__text">Ответьте на несколько вопросов&nbsp;—&nbsp;это займёт несколько минут<\/p>/,
+  );
+  assert.match(
+    survey,
+    new RegExp(`class="button button--primary survey-invite__button"\\s+href="${surveyUrl.replace(/[./?]/g, "\\$&")}"\\s+target="_blank"\\s+rel="noopener noreferrer"`),
+  );
+  assert.match(survey, />\s*Пройти опрос\s*<\/a>/);
+  assert.ok(landing.indexOf('id="survey"') < landing.indexOf('<footer class="site-footer">'));
+  assert.doesNotMatch(landing, /forms\.yandex\.ru\/_static\/embed\.js|<iframe[^>]+forms\.yandex\.ru/);
+  assert.match(styles, /\.survey-invite\s*\{[^}]*padding:/);
+  assert.match(styles, /\.survey-invite__panel\s*\{[^}]*display: grid;[^}]*grid-template-columns:/);
+  assert.match(
+    styles,
+    /@media \(max-width: 820px\)[\s\S]*?\.survey-invite__panel\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\);/,
+  );
+});
+
 test("section kickers use one shared visual format", () => {
-  assert.equal((landing.match(/class="section-kicker"/g) ?? []).length, 5);
+  assert.equal((landing.match(/class="section-kicker"/g) ?? []).length, 6);
   assert.doesNotMatch(
     landing,
     /class="(?:hero__kicker|section-heading__label)"/,
