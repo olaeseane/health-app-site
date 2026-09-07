@@ -461,12 +461,20 @@ test("simplicity becomes a native snap carousel with the four approved cards", (
   assert.match(styles, /\.carousel__track\s*\{[^}]*display: flex;/);
   assert.match(
     styles,
-    /\.carousel__footer\s*\{[^}]*display: flex;[^}]*align-items: center;[^}]*justify-content: space-between;[^}]*padding-inline: var\(--page-pad\);/s,
+    /\.carousel__footer\s*\{[^}]*display: flex;[^}]*flex-direction: column;[^}]*align-items: stretch;[^}]*padding-inline: var\(--page-pad\);/s,
+  );
+  assert.match(
+    styles,
+    /\.carousel__closing\s*\{[^}]*align-self: center;[^}]*text-align: center;/s,
+  );
+  assert.match(
+    styles,
+    /\.carousel__footer \.carousel__toolbar\s*\{[^}]*align-self: flex-end;/s,
   );
   assert.doesNotMatch(styles, /\.carousel__closing-rule\s*\{/);
   assert.match(
     styles,
-    /@media \(max-width: 600px\)[\s\S]*?\.carousel__footer\s*\{[^}]*flex-direction: column;[^}]*align-items: stretch;/,
+    /@media \(max-width: 600px\)[\s\S]*?\.carousel__closing\s*\{[^}]*align-self: stretch;[^}]*text-align: left;/,
   );
   assert.match(
     styles,
