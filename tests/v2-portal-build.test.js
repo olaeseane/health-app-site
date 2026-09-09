@@ -8,6 +8,18 @@ import { withBuildLock, stableSha256 } from "./helpers/build-lock.mjs";
 const root = new URL("../", import.meta.url);
 const v2PortalAsciiUrl = new URL("dist-v2/portal-inline-ascii.html", root);
 const v1PortalAsciiUrl = new URL("dist/portal-inline-ascii.html", root);
+const portalIosQrUrl = new URL("public/download/ios-testflight-qr.png", root);
+const portalAndroidQrUrl = new URL("public/download/android-apk-qr.png", root);
+const ordinaryV2IosQrUrl = new URL("v2/public/v2/download/ios-qr.png", root);
+const ordinaryV2AndroidQrUrl = new URL("v2/public/v2/download/android-qr.png", root);
+
+function dataUrlFor(path) {
+  return `data:image/png;base64,${readFileSync(path).toString("base64")}`;
+}
+
+function occurrenceCount(text, needle) {
+  return text.split(needle).length - 1;
+}
 
 test("build:v2:portal-inline emits one ASCII-safe self-contained artifact under 1 MB", async () => {
   await withBuildLock(async () => {
@@ -87,6 +99,10 @@ test("build:v2:portal-inline emits one ASCII-safe self-contained artifact under 
   assert.match(html, /<strong>iPhone<\/strong>/);
   assert.match(html, /<strong>Android<\/strong>/);
   assert.doesNotMatch(html, /href="\.\.\/go\//);
+  assert.equal(occurrenceCount(html, dataUrlFor(portalIosQrUrl)), 2);
+  assert.equal(occurrenceCount(html, dataUrlFor(portalAndroidQrUrl)), 2);
+  assert.equal(occurrenceCount(html, dataUrlFor(ordinaryV2IosQrUrl)), 0);
+  assert.equal(occurrenceCount(html, dataUrlFor(ordinaryV2AndroidQrUrl)), 0);
 
   assert.match(
     html,

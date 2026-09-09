@@ -8,6 +8,8 @@ const root = new URL("../", import.meta.url);
 const qrGeneratorUrl = new URL("scripts/generate-v2-download-qrs.py", root);
 const iosQrUrl = new URL("v2/public/v2/download/ios-qr.png", root);
 const androidQrUrl = new URL("v2/public/v2/download/android-qr.png", root);
+const portalIosQrUrl = new URL("public/download/ios-testflight-qr.png", root);
+const portalAndroidQrUrl = new URL("public/download/android-apk-qr.png", root);
 const v2RedirectScriptUrl = new URL("v2/go/redirect.js", root);
 const v2IosPageUrl = new URL("v2/go/ios/index.html", root);
 const v2AndroidPageUrl = new URL("v2/go/android/index.html", root);
@@ -71,6 +73,15 @@ test("v2 QR generator targets /install/go/ routes and QR images decode to the ex
     existsSync(new URL("public/download/android-apk-qr.png", root)),
     "v1 QR assets must remain in place",
   );
+});
+
+test("portal QR assets encode the root download routes", () => {
+  assert.deepEqual(decodeQr(portalIosQrUrl), [
+    { text: "https://predix-health.ru/go/ios/", format: "QRCode" },
+  ]);
+  assert.deepEqual(decodeQr(portalAndroidQrUrl), [
+    { text: "https://predix-health.ru/go/android/", format: "QRCode" },
+  ]);
 });
 
 test("v2 redirect pages send distinct v2 goals and keep the approved destinations", () => {

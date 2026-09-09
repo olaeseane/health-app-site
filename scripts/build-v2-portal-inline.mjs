@@ -27,6 +27,10 @@ const portalScreenshotPaths = new Set([
 
 const characterWebpPath = "public/v2/character/robot.webp";
 const characterPortalPath = "public/v2/character/robot-portal.jpg";
+const portalQrSourcePaths = new Map([
+  ["public/v2/download/ios-qr.png", "public/download/ios-testflight-qr.png"],
+  ["public/v2/download/android-qr.png", "public/download/android-apk-qr.png"],
+]);
 
 const mimeTypes = new Map([
   [".css", "text/css"],
@@ -55,6 +59,11 @@ async function dataUrlFromDist(relativePath) {
   );
 
   return `data:${mimeFor(safePath)};base64,${buffer.toString("base64")}`;
+}
+
+async function dataUrlFromProject(relativePath) {
+  const buffer = await readFile(new URL(relativePath, projectRoot));
+  return `data:${mimeFor(relativePath)};base64,${buffer.toString("base64")}`;
 }
 
 function portalOptimizedScreenshotPath(relativePath) {
@@ -200,7 +209,11 @@ async function inlineHtmlAssetUrls(html) {
     }
 
     let inlinePath = normalizedPath;
-    if (normalizedPath === characterWebpPath) {
+    if (portalQrSourcePaths.has(normalizedPath)) {
+      const dataUrl = await dataUrlFromProject(portalQrSourcePaths.get(normalizedPath));
+      inlinedHtml = inlinedHtml.replace(fullMatch, `${attribute}=${quote}${dataUrl}${quote}`);
+      continue;
+    } else if (normalizedPath === characterWebpPath) {
       inlinePath = characterPortalPath;
     } else if (portalOptimizedScreenshotPath(normalizedPath)) {
       inlinePath = await optimizePortalScreenshot(normalizedPath);
