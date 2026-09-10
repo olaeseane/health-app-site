@@ -1,5 +1,13 @@
 const { goal, destination } = document.documentElement.dataset;
 const fallbackLink = document.querySelector("[data-fallback-link]");
+const allowedGoals = new Set([
+  "internal_ios",
+  "internal_android",
+  "download_ios",
+  "download_android",
+  "external_ios",
+  "external_android",
+]);
 let redirected = false;
 
 function redirect() {
@@ -45,4 +53,6 @@ ym(112104449, "init", {
   trackLinks: true,
 });
 
-ym(112104449, "reachGoal", goal, {}, redirect);
+if (allowedGoals.has(goal)) {
+  ym(112104449, "reachGoal", goal, {}, redirect);
+}
