@@ -17,7 +17,6 @@ function redirect() {
 }
 
 fallbackLink.href = destination;
-window.setTimeout(redirect, 1200);
 
 (function (m, e, t, r, i, k, a) {
   m[i] =
@@ -53,6 +52,14 @@ ym(112104449, "init", {
   trackLinks: true,
 });
 
-if (allowedGoals.has(goal)) {
-  ym(112104449, "reachGoal", goal, {}, redirect);
-}
+window.addEventListener(
+  "load",
+  () => {
+    window.setTimeout(redirect, 1200);
+
+    if (allowedGoals.has(goal)) {
+      ym(112104449, "reachGoal", goal, {}, redirect);
+    }
+  },
+  { once: true },
+);

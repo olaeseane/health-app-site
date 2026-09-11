@@ -25,6 +25,7 @@ const attributedRoutes = [
 function executeRedirectScript(goal) {
   const source = readFileSync(redirectScriptUrl, "utf8");
   const fallbackLink = {};
+  const eventListeners = new Map();
   const timers = [];
   const replacements = [];
   const sandbox = {
@@ -44,6 +45,11 @@ function executeRedirectScript(goal) {
       href: "https://predix-health.ru/go/test/ios/",
       replace: (destination) => replacements.push(destination),
     },
+    addEventListener: (type, callback, options) => {
+      const listeners = eventListeners.get(type) ?? [];
+      listeners.push({ callback, options });
+      eventListeners.set(type, listeners);
+    },
     setTimeout: (callback, delay) => timers.push({ callback, delay }),
   };
   sandbox.window = sandbox;
@@ -55,14 +61,54 @@ function executeRedirectScript(goal) {
     { filename: "go/redirect.js" },
   );
 
+  function dispatchEvent(type) {
+    const listeners = eventListeners.get(type) ?? [];
+    eventListeners.set(
+      type,
+      listeners.filter(({ options }) => !options?.once),
+    );
+    listeners.forEach(({ callback }) => callback());
+  }
+
   return {
     allowedGoals: Array.from(sandbox.__allowedGoals),
-    calls: (sandbox.ym.a ?? []).map((args) => Array.from(args)),
+    get calls() {
+      return (sandbox.ym.a ?? []).map((args) => Array.from(args));
+    },
+    eventListeners,
+    dispatchEvent,
     fallbackLink,
     replacements,
     timers,
   };
 }
+
+test("redirect waits for window load before sending a goal or starting fallback", () => {
+  const execution = executeRedirectScript("internal_ios");
+  const goalCalls = execution.calls.filter((call) => call[1] === "reachGoal");
+  const loadListeners = execution.eventListeners.get("load") ?? [];
+
+  assert.equal(goalCalls.length, 0);
+  assert.equal(execution.timers.length, 0);
+  assert.equal(execution.replacements.length, 0);
+  assert.equal(loadListeners.length, 1);
+  assert.equal(loadListeners[0].options?.once, true);
+
+  execution.dispatchEvent("load");
+
+  const callsAfterLoad = execution.calls.filter((call) => call[1] === "reachGoal");
+  assert.equal(callsAfterLoad.length, 1);
+  assert.equal(callsAfterLoad[0][2], "internal_ios");
+  assert.deepEqual(execution.timers.map(({ delay }) => delay), [1200]);
+  execution.dispatchEvent("load");
+  assert.equal(execution.calls.filter((call) => call[1] === "reachGoal").length, 1);
+  assert.deepEqual(execution.timers.map(({ delay }) => delay), [1200]);
+
+  execution.timers[0].callback();
+  assert.deepEqual(execution.replacements, [testFlightDestination]);
+  execution.timers[0].callback();
+  assert.deepEqual(execution.replacements, [testFlightDestination]);
+  });
 
 test("download buttons and clickable QR images share platform redirect routes", () => {
   const download = landing.match(
@@ -170,7 +216,8 @@ test("redirect goal allowlist accepts only the six attributed goals", () => {
   );
 
   for (const goal of expectedGoals) {
-    const execution = executeRedirectScript(goal);
+    let execution = executeRedirectScript(goal);
+    execution.dispatchEvent("load");
     const goalCalls = execution.calls.filter((call) => call[1] === "reachGoal");
 
     assert.equal(goalCalls.length, 1);
@@ -182,9 +229,18 @@ test("redirect goal allowlist accepts only the six attributed goals", () => {
     goalCalls[0][4]();
     execution.timers[0].callback();
     assert.deepEqual(execution.replacements, [testFlightDestination]);
+
+    execution = executeRedirectScript(goal);
+    execution.dispatchEvent("load");
+    execution.timers[0].callback();
+    assert.deepEqual(execution.replacements, [testFlightDestination]);
+    const goalCallsAfter = execution.calls.filter((call) => call[1] === "reachGoal");
+    goalCallsAfter[0][4]();
+    assert.deepEqual(execution.replacements, [testFlightDestination]);
   }
 
   const rejected = executeRedirectScript("unapproved_goal");
+  rejected.dispatchEvent("load");
   assert.equal(rejected.calls.filter((call) => call[1] === "reachGoal").length, 0);
   assert.equal(rejected.fallbackLink.href, testFlightDestination);
   assert.deepEqual(rejected.timers.map(({ delay }) => delay), [1200]);
