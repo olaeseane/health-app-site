@@ -5,6 +5,7 @@ const v1Directory = new URL("dist/", projectRoot);
 const v2Directory = new URL("dist-v2/", projectRoot);
 const pagesDirectory = new URL("dist-pages/", projectRoot);
 const installDirectory = new URL("install/", pagesDirectory);
+const foodDirectory = new URL("food/", pagesDirectory);
 
 const portalArtifacts = ["portal-inline.html", "portal-inline-ascii.html"];
 const portalCharacter = "public/v2/character/robot-portal.jpg";
@@ -13,6 +14,7 @@ const pagesAndroidDestination =
 
 await rm(pagesDirectory, { recursive: true, force: true });
 await mkdir(installDirectory, { recursive: true });
+await mkdir(foodDirectory, { recursive: true });
 await cp(v1Directory, pagesDirectory, { recursive: true });
 await cp(v2Directory, installDirectory, { recursive: true });
 
