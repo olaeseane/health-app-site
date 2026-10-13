@@ -81,3 +81,20 @@ Do not invent metrics, testimonials, features, FAQ URLs, or medical outcomes.
 The landing page must not imply diagnosis, treatment, or replacement of
 professional care. FAQ and documentation controls stay disabled until real
 destinations are supplied.
+
+## Agent skills
+
+### Issue tracker
+
+Issues and specs live in GitHub Issues for `olaeseane/health-app-site`.
+See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use the five default triage labels.
+See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Use a single-context layout: root `GLOSSARY.md` and `docs/adr/`.
+See `docs/agents/domain.md`.
