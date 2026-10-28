@@ -1,0 +1,38 @@
+@font-face {
+  font-family: Manrope;
+  src: url("../fonts/manrope/manrope-cyrillic-variable.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: Manrope;
+  src: url("../fonts/manrope/manrope-latin-variable.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+:root { font-family: Manrope, system-ui, sans-serif; color: #153c3e; background: #f4fbfa; }
+* { box-sizing: border-box; }
+body { margin: 0; overflow-wrap: anywhere; }
+main { max-width: 688px; margin: auto; padding: 32px 24px 48px; }
+header { display: flex; align-items: center; gap: 12px; font-weight: 700; }
+h1 { font-size: clamp(2rem, 6vw, 3.25rem); line-height: 1.12; letter-spacing: -0.03em; margin: 36px 0 20px; text-wrap: balance; }
+p { font-size: 1rem; line-height: 1.65; margin: 12px 0 24px; }
+.intro { font-size: 1.125rem; }
+.actions { display: grid; gap: 12px; margin: 28px 0 20px; }
+a { color: #12686b; text-underline-offset: 4px; }
+.button { display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 14px 20px; border: 1px solid #12686b; border-radius: 12px; text-align: center; font-weight: 700; text-decoration: none; }
+.actions .button:first-child { background: #12686b; color: white; }
+a:hover { text-decoration: underline; }
+.button:hover { background: #e8f7f6; text-decoration: none; }
+.actions .button:first-child:hover { background: #153c3e; border-color: #153c3e; }
+a:focus-visible { outline: 3px solid #177f82; outline-offset: 4px; }
+.note { color: #3d6264; font-size: 0.875rem; }
+ol { list-style: none; padding: 0; margin: 48px 0 0; counter-reset: step; }
+li { counter-increment: step; padding: 32px 0; border-top: 1px solid #b8dfdc; }
+h2 { font-size: 1.5rem; line-height: 1.3; margin: 0 0 16px; letter-spacing: -0.02em; }
+h2::before { content: counter(step) ". "; color: #12686b; }
+li img { display: block; width: min(100%, 360px); height: auto; margin: 24px auto 0; border-radius: 12px; }
+@media (max-width: 360px) { main { padding-inline: 16px; } }
+
+.brand { color: #000000; }
+.brand span { color: #177f82; }

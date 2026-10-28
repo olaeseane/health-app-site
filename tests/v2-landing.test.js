@@ -681,7 +681,7 @@ test("download section keeps scan-only QR options without a decorative route", (
 test("v2 uses relative asset URLs that resolve beneath /install/", () => {
   const landing = readSource(v2IndexUrl);
   const styles = readSource(v2StylesUrl);
-  const redirectStyles = readSource(new URL("v2/go/styles.css", root));
+  const redirectStyles = readSource(new URL("public/install-guide/styles.css", root));
 
   for (const match of landing.matchAll(/(?:src|href)="(\.[^"]+)"/g)) {
     const relativePath = match[1].replace(/^\.\//, "");
@@ -701,7 +701,7 @@ test("v2 uses relative asset URLs that resolve beneath /install/", () => {
   assert.match(styles, /url\("\.\/public\/fonts\/manrope\/manrope-cyrillic-variable\.woff2"\)/);
   assert.match(styles, /url\("\.\/public\/fonts\/manrope\/manrope-latin-variable\.woff2"\)/);
   assert.doesNotMatch(styles, /url\(["']?\.\.\//);
-  assert.match(redirectStyles, /url\("\.\.\/public\/fonts\/manrope\/manrope-cyrillic-variable\.woff2"\)/);
+  assert.match(redirectStyles, /url\("\.\.\/fonts\/manrope\/manrope-cyrillic-variable\.woff2"\)/);
   assert.doesNotMatch(redirectStyles, /url\(["']?\.\.\/\.\.\//);
 });
 
@@ -961,8 +961,8 @@ test("build:v2 produces a self-contained dist-v2 tree without touching dist/", a
     "app.js",
     "go/ios/index.html",
     "go/android/index.html",
-    "go/redirect.js",
-    "go/styles.css",
+    "public/install-guide/guide.js",
+    "public/install-guide/styles.css",
     "public/fonts/manrope/manrope-cyrillic-variable.woff2",
     "public/logo-mark.png",
     "public/icons/chat-logo-96.png",

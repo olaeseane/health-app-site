@@ -206,3 +206,25 @@ Each v2 PR should state explicitly:
 - whether any shared asset changes affect v1;
 - the v1 and v2 validation commands run;
 - the generated artifact paths and verified sizes.
+
+## Mobile installation guides
+
+All existing `/go/` platform routes (including `external`, `internal`, and
+`download`) and `/install/go/` routes now show installation instructions.
+They never redirect automatically, including with JavaScript disabled.
+Existing QR images and source-specific goal IDs remain unchanged.
+
+Shared guide CSS, analytics script, and eight cropped reference screenshots
+live in `public/install-guide/`; the v2 build explicitly copies this subtree.
+The screenshots come from the supplied installation posters. Instruction
+text is HTML, and system screen appearance may vary by device.
+
+The existing route goal records entry to the guide. Create the JavaScript
+goal `install_guide_action` in counter `112104449` to record explicit clicks;
+parameters are `platform`, `source_goal`, and `action`. Action values are
+`install_testflight`, `open_invitation`, and `download_apk`. Neither entry nor
+click confirms installation. Analytics never gates navigation.
+
+GitHub Pages uses the absolute production APK URL rather than the former
+Hub document fallback. Portal artifacts retain their existing QR images and
+contain no guide analytics; scans open the ordinary-domain guide pages.

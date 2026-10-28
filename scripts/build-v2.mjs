@@ -5,6 +5,7 @@ const outputDirectory = new URL("../dist-v2/", import.meta.url);
 const sourceDirectory = new URL("../v2/", import.meta.url);
 
 const sharedPublicAssets = [
+  "install-guide/",
   "fonts/",
   "logo-mark.png",
   "icons/chat-logo-96.png",
