@@ -29,10 +29,10 @@ test("build:pages publishes v1 at root and v2 beneath install", () => {
   assert.ok(existsSync(new URL("install/go/ios/index.html", pages)));
   assert.ok(existsSync(new URL("install/go/android/index.html", pages)));
   const pagesAndroidRedirect = bytes("dist-pages/go/android/index.html").toString("utf8");
-  assert.doesNotMatch(pagesAndroidRedirect, /\/download\/predix-health-app\.apk/);
+  assert.doesNotMatch(pagesAndroidRedirect, /href="\/download\//);
   assert.match(
     pagesAndroidRedirect,
-    /https:\/\/hubthe\.team\/shared\/docs\/bcaa672e-9fd8-43a3-91e2-abe3189a88ae/,
+    /https:\/\/predix-health\.ru\/download\/predix-health-app\.apk/,
   );
 });
 

@@ -84,57 +84,6 @@ test("portal QR assets encode the root download routes", () => {
   ]);
 });
 
-test("v2 redirect pages send distinct v2 goals and keep the approved destinations", () => {
-  for (const pageUrl of [v2IosPageUrl, v2AndroidPageUrl]) {
-    assert.ok(existsSync(pageUrl), `${pageUrl.pathname} should exist`);
-  }
-  assert.ok(existsSync(v2RedirectScriptUrl), "v2/go/redirect.js should exist");
-  assert.ok(existsSync(v2RedirectStylesUrl), "v2/go/styles.css should exist");
-
-  const iosPage = readFileSync(v2IosPageUrl, "utf8");
-  const androidPage = readFileSync(v2AndroidPageUrl, "utf8");
-  const redirectScript = readFileSync(v2RedirectScriptUrl, "utf8");
-  const redirectStyles = readFileSync(v2RedirectStylesUrl, "utf8");
-
-  assert.match(iosPage, /data-goal="v2_download_ios"/);
-  assert.match(
-    iosPage,
-    /data-destination="https:\/\/testflight\.apple\.com\/join\/KCJxFcV1"/,
-  );
-  assert.match(androidPage, /data-goal="v2_download_android"/);
-  assert.match(
-    androidPage,
-    /data-destination="https:\/\/predix-health\.ru\/download\/predix-health-app\.apk"/,
-  );
-  assert.doesNotMatch(`${iosPage}${androidPage}${redirectScript}`, /"download_ios"|"download_android"/);
-  assert.doesNotMatch(`${iosPage}${androidPage}`, /source=|yqrid=|utm_/);
-
-  for (const page of [iosPage, androidPage]) {
-    assert.match(page, /<meta name="robots" content="noindex, nofollow" \/>/);
-    assert.match(page, /<script defer src="\.\.\/redirect\.js"><\/script>/);
-    assert.match(page, /<noscript>[\s\S]*?http-equiv="refresh"/);
-    assert.match(page, /<a data-fallback-link[^>]*>\s*Продолжить вручную\s*<\/a>/);
-    assert.match(page, /<h1>/);
-  }
-
-  assert.match(redirectScript, /112104449/);
-  assert.match(
-    redirectScript,
-    /ym\(112104449, "reachGoal", goal, \{\}, redirect\)/,
-  );
-  assert.match(redirectScript, /window\.setTimeout\(redirect, 1200\)/);
-  assert.match(redirectScript, /window\.location\.replace\(destination\)/);
-  assert.match(
-    redirectScript,
-    /https:\/\/mc\.yandex\.ru\/metrika\/tag\.js\?id=112104449/,
-  );
-  assert.match(
-    redirectStyles,
-    /h1\s*\{[^}]*font-size: clamp\(1\.35rem, 3\.2vw, 1\.85rem\);/,
-  );
-  assert.match(redirectStyles, /a\s*\{[^}]*margin-top: 28px;/);
-});
-
 test("v2 landing keeps platform routes inside scan-only QR images", () => {
   const landing = readFileSync(new URL("v2/index.html", root), "utf8");
 

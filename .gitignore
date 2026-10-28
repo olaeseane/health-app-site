@@ -30,3 +30,5 @@ pnpm-debug.log*
 .cache/
 .cursor/
 .playwright-cli/
+
+tmp/
