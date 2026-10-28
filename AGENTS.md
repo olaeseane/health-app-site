@@ -94,7 +94,7 @@ See `docs/agents/issue-tracker.md`.
 Use the five default triage labels.
 See `docs/agents/triage-labels.md`.
 
-### Domain docs
+### Repository scope
 
-Use a single-context layout: root `GLOSSARY.md` and `docs/adr/`.
-See `docs/agents/domain.md`.
+This repository is only for the landing pages. Keep application domain
+modeling and application architecture documentation in the application repository.
